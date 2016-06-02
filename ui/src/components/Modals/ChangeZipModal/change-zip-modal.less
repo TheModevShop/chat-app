@@ -1,0 +1,83 @@
+body .changeZipModal {
+  width: 90%;
+  max-width: 400px;
+  min-height: 200px;
+  padding: 20px;
+  h2 {
+    font-size: 22px;
+    padding-bottom: 10px;
+  }
+  h5 {
+    color: #ccc;
+    margin-top: -7px;
+    line-height: 12px;
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  p {
+    padding-bottom: 0;
+  }
+  .get-my-location {
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+  input {
+    width: 100%;
+    border-radius: 3px;
+    height: 40px;
+    outline-width: 0;
+    padding-left: 10px;
+    font-size: 14px;
+    line-height: normal;
+    -webkit-appearance: none;
+    padding-right: 40px;
+    border: 1px solid #ccc;
+  }
+  button {
+    width: 100%;
+    height: 40px;
+    margin-top: 10px;
+    font-size: 14px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    transition: all .25s ease;
+    outline: none;
+    margin-bottom: 5px;
+    background: rgb(29, 182, 116);
+    color: #fff;
+    cursor: pointer;
+    &:hover {
+      background: #239463;
+      color: #fff;
+    }
+    &:active {
+      background: #4FBD8D;
+      color: #999;
+    }
+    &:disabled {
+      background: #C5C5C5;
+      color: #999;
+      cursor: auto;
+    }
+  }
+  span {
+    width: 40px;
+    height: 40px;
+    background:url(@findMe) no-repeat center center;
+    position: absolute;
+    right: 0px;
+    border-left: 1px solid rgba(224, 224, 224, 0.55);
+    background-size: 50%;
+  }
+  [data-loader='circle'] {
+    position: absolute;
+    right: 12px;
+    top: 46px;
+    color: #000;
+    width: 15px;
+    height: 15px;
+  }
+}

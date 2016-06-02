@@ -1,0 +1,4 @@
+server/node_modules
+ui/node_modules
+server/dist
+ui/dist

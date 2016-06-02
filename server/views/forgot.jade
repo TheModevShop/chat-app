@@ -1,0 +1,9 @@
+extends layout
+
+block content
+	div.grid__container
+		h1 Tang Forgot Password
+		if error
+			div.oaerror.danger Error - #{error}
+		if success
+			div.oaerror.success Success - #{success}

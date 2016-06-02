@@ -1,0 +1,47 @@
+{
+  "name": "tang-api",
+  "version": "1.0.0",
+  "description": "API for Tang Application",
+  "main": "app.js",
+  "private": true,
+  "scripts": {
+    "start": "nodemon --watch ./ ./bin/www",
+    "prod": "NODE_ENV=production node ./bin/www",
+    "dev": "nodemon --debug --watch ./ ./bin/www",
+    "setup": "node setup"
+  },
+  "author": "ModDevShop",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "bluebird": "^3.0.5",
+    "body-parser": "^1.14.1",
+    "cloudinary": "^1.3.0",
+    "compression": "^1.6.0",
+    "cors": "^2.7.1",
+    "debug": "^2.2.0",
+    "express": "^4.13.3",
+    "express-flash": "0.0.2",
+    "google-geocoder": "0.1.4",
+    "handlebars": "^4.0.5",
+    "helmet": "0.15.0",
+    "jade": "1.11.0",
+    "jsonwebtoken": "^5.4.1",
+    "lodash": "^3.10.1",
+    "mailcomposer": "3.6.3",
+    "mailgun-js": "0.7.7",
+    "moment": "2.10.6",
+    "moment-timezone": "^0.5.3",
+    "mongoose": "^4.2.3",
+    "mongoose-dateonly": "^1.0.3",
+    "mongoose-deep-populate": "^2.0.3",
+    "mongoose-unique-validator": "^0.6.0",
+    "morgan": "^1.6.1",
+    "node-opensignal-api": "0.0.1",
+    "node-uuid": "^1.4.7",
+    "stripe": "^4.3.0"
+  },
+  "engines": {
+    "node": "4.2.1"
+  }
+}

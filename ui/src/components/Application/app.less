@@ -1,0 +1,35 @@
+@import '../../less/app.less';
+
+body, #container {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: #fff;
+}
+
+.main-container {
+  height: 100%;
+  overflow: hidden;
+}
+
+
+.pages {
+  position: fixed;
+  top: @appHeaderHeight;
+  left: @appNavWidth;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  padding: 50px;
+  &.login {
+    left: 0;
+  }
+  .page {
+    max-width: 100%;
+  }
+}
+

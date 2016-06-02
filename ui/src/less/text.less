@@ -1,0 +1,207 @@
+* {
+  font-family: 'Avenir Next';
+}
+
+h1 {
+  font-size: 18px;
+  font-family: 'Avenir Next';
+  &.large {
+    font-size: 28px;
+  }
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.disclaimer {
+  padding: 15px 6px;
+  font-style: italic;
+  position: relative;
+  line-height: 16px;
+  color: #6A6A6A;
+  padding-top: 0;
+  font-size: 12px;
+}
+
+.text-link {
+  font-family: 'Avenir Next';
+  text-transform: uppercase;
+  cursor: pointer;
+  font-size: 12px;
+
+  &:hover, &:active {
+    // text-decoration: underline;
+  }
+}
+h1, h2, h3, h4, h5 {
+  a {
+    color: @midnight;
+    text-decoration: none;
+  }
+}
+h2 {
+  font-size: 18px;
+  font-family: 'Avenir Next';
+  line-height: 24px;
+  &.bump {
+    font-size: 24px;
+    line-height: 30px;
+  }
+}
+h3 {
+  font-size: 14px;
+  font-family: 'Avenir Next';
+  line-height: 24px;
+  &.bump {
+    font-size: 16px;
+  }
+}
+h4 {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: @reef;
+  letter-spacing: .5px;
+  font-family: 'Avenir Next';
+  line-height: 24px;
+  &.bump {
+    font-size: 13px;
+  }
+}
+h5 {
+  font-family: 'Avenir Next';
+  font-size: 12px;
+  color: @nickel;
+  line-height: 24px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: normal;
+  &.bump {
+    font-size: 14px;
+  }
+}
+h6 {
+  color: @glacier;
+  font-family: 'Avenir Next';
+  text-transform: uppercase;
+  font-size: 12px;
+}
+.italic {
+  font-family: 'Avenir Next';
+  .secondary-link {
+    font-family: 'Avenir Next';
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+}
+.learn-more.secondary-link {
+  font-family: 'Avenir Next';
+  text-transform: uppercase;
+  font-size: 12px;
+}
+.bold, strong {
+  font-family: 'Avenir Next';
+  font-weight: bold;
+  font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.semi-bold {
+  font-family: 'Avenir Next';
+  font-weight: 500;
+  font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+.action {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.illustration-title {
+  font-size: 18px;
+  color: @slate;
+  font-family: 'Avenir Next';
+  font-smoothing: antialiased;
+}
+.disabled {
+  color: @silver;
+}
+
+.illustration-subtitle {
+  font-size: 18px;
+  color: @slate;
+  font-family: 'Avenir Next';
+}
+.primary-link, .primary-link a {
+  color: @palmetto;
+  cursor: pointer;
+  text-decoration: none;
+  &:hover {
+    color: @lime;
+  }
+  &:active {
+    color: @sage;
+    user-select: none;
+  }
+  &:disabled {
+    color: @aluminum;
+  }
+}
+
+.secondary-link, .secondary-link a {
+  color: @reef;
+  cursor: pointer;
+  text-decoration: none;
+  &:hover {
+    color: @glacier;
+  }
+  &:active {
+    color: @ice;
+    user-select: none;
+  }
+  &:disabled {
+    color: @aluminum;
+  }
+}
+
+.tertiary-link {
+  color: @nickel;
+  cursor: pointer;
+  &:hover {
+    color: @silver;
+  }
+  &:active {
+    color: fade(@silver, 20%);
+    user-select: none;
+  }
+  &:disabled {
+    color: @aluminum;
+  }
+}
+
+.title-link, .title-link a {
+  color: @midnight;
+  cursor: pointer;
+  text-decoration: none;
+  &:hover {
+    color: @slate;
+  }
+  &:active {
+    color: @slateSeventy;
+    user-select: none;
+  }
+}
+
+.tooltip-link {
+  border-bottom: 2px dotted @glacier;
+  color: @midnight;
+  cursor: pointer;
+  line-height: 20px;
+  &:hover {
+    color: @glacier;
+  }
+  &:active {
+    color: @glacier;
+  }
+}

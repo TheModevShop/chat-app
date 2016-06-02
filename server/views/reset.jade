@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  div.grid__container
+    form(method="POST").form.form--login
+      div.form__field
+        label.fontawesome-lock(for="password")
+          span.hidden New Password
+        input(type='password', name='password', value='', placeholder='New password', autofocus=true)#login__username
+      div.form__field
+        label.fontawesome-lock(for="confirm")
+          span.hidden Confirm Password
+        input#login__password(type='password', name='confirm', value='', placeholder='Confirm password')
+      div.form__field
+        input(type="submit" value="Update Password")
