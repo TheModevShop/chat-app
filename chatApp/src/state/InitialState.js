@@ -1,8 +1,19 @@
+const ChatFacet = require('./facets/ChatFacet')
+
 export default function getInitialState() {
   return {
     cursors: {
-      home: 'dsfasdfasdfasdfasdfasf'
+      classes: {},
+      modal: {},
+      chat: {
+        activeChat: {
+          user: null,
+          chats: []
+        }
+      },
     },
-    facets: {facets: {}}
+    facets: {facets: {Chat: ChatFacet}}
   };
 }
+
+

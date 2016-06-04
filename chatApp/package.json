@@ -8,12 +8,13 @@
   "dependencies": {
     "baobab": "^2.3.3",
     "baobab-react": "^1.0.1",
-    "bluebird": "^2.9.34",
+    "bluebird": "^2.10.2",
     "lodash": "^4.13.1",
-    "react": "15.0.2",
+    "react": "^15.0.2",
     "react-native": "^0.26.3",
     "react-native-communications": "^2.0.0",
     "react-native-extra-dimensions-android": "^0.17.0",
+    "react-native-facebook-login": "^1.2.0",
     "react-native-gifted-messenger": "^0.1.4",
     "react-native-router-flux": "^3.26.15",
     "superagent": "^1.8.3"

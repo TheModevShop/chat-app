@@ -1,4 +1,4 @@
-import xhr from 'utility/xhr';
+import xhr from '../../utility/xhr';
 import _ from 'lodash';
 import tree from '../StateTree';
 
@@ -55,7 +55,7 @@ export default class RESTLoader {
 
     // Return current item with loading mixin
     return _.assign({}, items, {
-      isLoading: true
+      $isLoading: true
     });
   }
 

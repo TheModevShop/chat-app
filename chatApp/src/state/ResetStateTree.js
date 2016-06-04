@@ -1,5 +1,5 @@
 import InitialState from './InitialState';
-import tree from './StateTree';
+import tree from 'state/StateTree';
 import _ from 'lodash';
 
 const {cursors, facets} = InitialState();
