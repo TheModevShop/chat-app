@@ -3,6 +3,7 @@ import {FBLogin, FBLoginManager} from 'react-native-facebook-login';
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import { Actions } from 'react-native-router-flux';
+import { Form, InputField} from 'react-native-form-generator';
 import {
   Text,
   View
@@ -20,6 +21,17 @@ class Home extends Component {
     return (
       <View style={{margin: 128}}>
         <Text onPress={goToPageTwo}>This is PageTwo!</Text>
+
+        <Form
+          ref='registrationForm'
+          onFocus={this.handleFormFocus.bind(this)}
+          onChange={this.handleFormChange.bind(this)}
+          label="Personal Information">
+          <InputField ref='email' label='Email' placeholder='Email'/>
+          <InputField ref='password' placeholder='Password'/>
+        </Form>
+
+
         <FBLogin style={{ marginBottom: 10, }}
           permissions={["email","user_friends"]}
           loginBehavior={FBLoginManager.LoginBehaviors.Native}
@@ -55,6 +67,9 @@ class Home extends Component {
         />
       </View>
     );
+  }
+  handleFormFocus(e) {
+
   }
 }
 

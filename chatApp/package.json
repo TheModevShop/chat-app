@@ -15,8 +15,10 @@
     "react-native-communications": "^2.0.0",
     "react-native-extra-dimensions-android": "^0.17.0",
     "react-native-facebook-login": "^1.2.0",
+    "react-native-form-generator": "^0.7.2",
     "react-native-gifted-messenger": "^0.1.4",
     "react-native-router-flux": "^3.26.15",
+    "socket.io-client": "^1.4.6",
     "superagent": "^1.8.3"
   }
 }
