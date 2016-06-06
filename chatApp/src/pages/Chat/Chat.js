@@ -280,6 +280,7 @@ class GiftedMessengerContainer extends Component {
 
 export default branch(GiftedMessengerContainer, {
   cursors: {
-    chat: ['facets', 'Chat']
+    conversation: ['facets','Conversation'],
+    chats: ['facets','Chat']
   }
 });

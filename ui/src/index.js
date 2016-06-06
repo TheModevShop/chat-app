@@ -9,8 +9,7 @@ import es6Promise from 'es6-promise';
 import "babel-core/polyfill";
 import $ from "jquery";
 import UAParser from 'ua-parser-js';
-import * as actions from 'actions/AppActions';
-import {checkSession} from 'actions/AuthenticationActions';
+import {checkSession} from './actions/AuthenticationActions';
 
 es6Promise.polyfill();
 const uaParser = new UAParser();

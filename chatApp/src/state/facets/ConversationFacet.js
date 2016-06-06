@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import RESTLoader from '../loaders/RESTLoader';
-import {BASE} from 'constants';
+import {BASE} from '../../constants';
 import Baobab from 'baobab';
 
 const loader = new RESTLoader({
@@ -31,7 +31,7 @@ export default function ConversationFacet() {
       if (!loader.cursor) {
         loader.setCursor(this.select(['conversation']));
       }
-    
+      
      request = _.clone(loader.fetch(data.user.details._id, data.chatWith._id));
 
       return request;

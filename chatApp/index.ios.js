@@ -9,6 +9,7 @@ import {
   View
 } from 'react-native';
 
+
 class chatApp extends Component {
   render() {
     return (
@@ -36,5 +37,7 @@ const styles = StyleSheet.create({
   },
 });
 
+
 let ComposedComponent = root(chatApp, tree);
 AppRegistry.registerComponent('chatApp', () => ComposedComponent);
+

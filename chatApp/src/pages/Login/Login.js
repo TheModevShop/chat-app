@@ -3,6 +3,7 @@ import {FBLogin, FBLoginManager} from 'react-native-facebook-login';
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import { Actions } from 'react-native-router-flux';
+import {getAuthentication} from '../../actions/AuthenticationActions';
 import {
   Text,
   View,
@@ -19,7 +20,19 @@ const Account = t.struct({
   password:t.String
 });
 
-var options = {}; // optional rendering options (see documentation)
+var options = {
+  fields: {
+    password: {
+      autoCapitalize: 'none',
+      autoCorrect: false,
+      password: true
+    },
+    email: {
+      autoCapitalize: 'none'
+    }
+  }
+
+}; // optional rendering options (see documentation)
 
 
 class Login extends Component {
@@ -30,7 +43,7 @@ class Login extends Component {
   }
 
   render() {
-    const goToPageTwo = () => Actions.chat({text: 'Hello World!'}); 
+    const goToPageTwo = () => Actions.home({text: 'Hello World!'}); 
     return (
       <View style={{margin: 128}}>
         <Text onPress={goToPageTwo}>This is PageTwo!</Text>
@@ -89,7 +102,8 @@ class Login extends Component {
     // call getValue() to get the values of the form
     const value = this.refs.form.getValue();
     if (value) { // if validation fails, value will be null
-      console.warn(value); // value here is an instance of Person
+      console.log(value)
+      getAuthentication(value)
     }
   }
 }

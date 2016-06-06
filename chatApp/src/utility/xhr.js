@@ -1,8 +1,12 @@
 import BPromise from 'bluebird';
 import request from 'superagent';
+import {AppRegistry, AsyncStorage} from 'react-native';
 
-export default function(method, url, data, options) {
-  const sessionData = localStorage.getItem('sessionData');
+export default async function(method, url, data, options) {
+  let sessionData;
+  try {
+    sessionData = await AsyncStorage.getItem('sessionData');
+  } catch(err) {}
   options = options || {};
   method = method || 'GET';
   return new BPromise((resolve, reject) => {

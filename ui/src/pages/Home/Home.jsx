@@ -15,7 +15,6 @@ class Home extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     const isLoading = _.get(this.props, 'users.$isLoading');
     const users = _.get(this.props, 'users');
     const className = classNames({
