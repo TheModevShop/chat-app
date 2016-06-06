@@ -42,14 +42,11 @@ users.updateById = function(id, params) {
 users.add = function(params) {
   var user = new Users({ 
     name: {
-      first: params.first,
-      last: params.last
+      first: 'vince',
+      last: 'profeta'
     },
     email: params.email,
-    password: params.password,
-    gyms: [{
-      gym: params.gyms
-    }]
+    password: params.password
   });
 
   return user.save(function(err) {

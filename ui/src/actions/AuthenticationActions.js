@@ -11,10 +11,10 @@ export async function getAuthentication(data) {
   const {email, password} = data;
   try {
     const token = await fetchToken({email, password});
-    await buildSession(token.body.token);
-    console.log('redirect')
-    history.push('/home');
-    return token;
+    // await buildSession(token.body.token);
+    // console.log('redirect')
+    // history.push('/home');
+    // return token;
   } catch (e) {
     authentication.set('error', e);
     return false;

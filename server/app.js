@@ -12,12 +12,17 @@ var helmet = require('helmet');
 var path = require('path');
 var cors = require('cors');
 var service = require('feathers-mongoose');
+var rest = require('feathers-rest');
+var socketio = require('feathers-socketio');
+var authentication = require('feathers-authentication');
+var hooks = require('feathers-hooks');
+
 
 // Start Express ============================================
-var app = express();
+var app = feathers();
 
 // Route Modules ============================================
-var v1 = require('./app/routes/v1/index');
+var services = require('./app/services/v1');
 
 // MongoDB ==================================================
 var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/app';
@@ -37,12 +42,17 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // FEATHERS
-app.configure(feathers.rest());
-app.configure(feathers.socketio());
+app.configure(hooks());
+app.configure(rest());
+app.configure(socketio());
+app.configure(authentication({
+  expiresIn: "1d",
+  payload: ['_id']
+}));
 
 
 // Routes ==================================================
-app.use('/v1', v1);
+app.configure(services)
 
 // Catch 404 ===============================================
 app.use(function(req, res, next) {
