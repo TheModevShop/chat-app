@@ -17,17 +17,6 @@ export async function createAccount(data) {
   });
 }
 
-export async function createAdmin(data, id) {
-  return new bluebird((resolve, reject) => {
-    xhr('POST', `${BASE}/gyms/${id}/add-admin`, data).then((data) => {
-      resolve(data);
-    }).catch((err) => {
-      reject(err);
-      console.log('err')
-    });
-  });
-}
-
 export async function fetchToken(data) {
   return new bluebird((resolve, reject) => {
     xhr('POST', `${BASE}/authenticate`, data).then((data) => {
