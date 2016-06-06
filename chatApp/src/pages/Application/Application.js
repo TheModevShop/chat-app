@@ -9,8 +9,8 @@ import Chat from '../Chat/Chat';
 
 const scenes = Actions.create(
   <Scene key="root">
-    <Scene key="home" component={Home} title="Home" initial={true}/>
-    <Scene key="login" component={Login} title="Login"/>
+    <Scene key="home" component={Home} title="Home"/>
+    <Scene key="login" component={Login} title="Login" initial={true}/>
     <Scene key="chat" component={Chat} title="Chat"/>
   </Scene>
 );

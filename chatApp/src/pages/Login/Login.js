@@ -3,13 +3,26 @@ import {FBLogin, FBLoginManager} from 'react-native-facebook-login';
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import { Actions } from 'react-native-router-flux';
-import { Form, InputField} from 'react-native-form-generator';
 import {
   Text,
-  View
+  View,
+  StyleSheet, TouchableHighlight
 } from 'react-native';
 
-class Home extends Component {
+import t from 'tcomb-form-native';
+
+const Form = t.form.Form;
+
+// here we are: define your domain model
+const Account = t.struct({
+  email: t.String,
+  password:t.String
+});
+
+var options = {}; // optional rendering options (see documentation)
+
+
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,13 +36,13 @@ class Home extends Component {
         <Text onPress={goToPageTwo}>This is PageTwo!</Text>
 
         <Form
-          ref='registrationForm'
-          onFocus={this.handleFormFocus.bind(this)}
-          onChange={this.handleFormChange.bind(this)}
-          label="Personal Information">
-          <InputField ref='email' label='Email' placeholder='Email'/>
-          <InputField ref='password' placeholder='Password'/>
-        </Form>
+          ref="form"
+          type={Account}
+          options={options}
+        />
+        <TouchableHighlight onPress={this.onPress.bind(this)} underlayColor='#99d9f4'>
+          <Text>Save</Text>
+        </TouchableHighlight>
 
 
         <FBLogin style={{ marginBottom: 10, }}
@@ -71,9 +84,17 @@ class Home extends Component {
   handleFormFocus(e) {
 
   }
+
+  onPress() {
+    // call getValue() to get the values of the form
+    const value = this.refs.form.getValue();
+    if (value) { // if validation fails, value will be null
+      console.warn(value); // value here is an instance of Person
+    }
+  }
 }
 
-export default branch(Home, {
+export default branch(Login, {
   cursors: {
     view: ['home']
   }

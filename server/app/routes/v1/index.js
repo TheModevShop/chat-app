@@ -1,8 +1,11 @@
 'use strict';
 
 var express = require('express');
-var router = express.Router();
-var cors = require('cors');
+
+var feathers = require('feathers'),
+  path = require('path'),
+  mongooseService = require('feathers-mongoose'),
+  Todo = require('./models/todo');
 
 // Utils
 var auth = require('../../utils/auth');
@@ -17,15 +20,14 @@ var forgot = require('./forgot');
 var chats = require('./chats');
 var conversations = require('./conversations');
 
-router.use(cors());
-
-router.use('/authenticate', authenticate);
-router.use('/me', auth, me);
-router.use('/roles', roles);
-router.use('/forgot', forgot);
-router.use('/users', users); 
-router.use('/conversations', conversations); 
-router.use('/chats', chats); 
 
 
-module.exports = router;
+module.exports = function(app){ 
+  app.use('/authenticate', authenticate);
+  app.use('/me', auth, me);
+  app.use('/roles', roles);
+  app.use('/forgot', forgot);
+  app.use('/users', users); 
+  app.use('/conversations', conversations); 
+  app.use('/chats', chats); 
+};

@@ -2,6 +2,7 @@
 
 // Modules ==================================================
 var express = require('express');
+var feathers = require('feathers');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
@@ -9,6 +10,8 @@ mongoose.Promise = require('bluebird');
 var compress = require('compression');
 var helmet = require('helmet');
 var path = require('path');
+var cors = require('cors');
+var service = require('feathers-mongoose');
 
 // Start Express ============================================
 var app = express();
@@ -25,12 +28,17 @@ app.set('superSecret', process.env.TOKEN_VARIABLE); // secret variable // Make e
 
 // App Middleware ===========================================
 app.use(helmet());
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false, limit: '5mb' }));
 app.use(bodyParser.json({limit: '5mb'}));
 app.use(compress());
 app.use(morgan('dev'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+// FEATHERS
+app.configure(feathers.rest());
+app.configure(feathers.socketio());
 
 
 // Routes ==================================================
