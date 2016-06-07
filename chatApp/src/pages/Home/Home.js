@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import { Actions } from 'react-native-router-flux';
-import {openChat} from '../../actions/ChatActions'
+import {openChat} from '../../actions/ChatActions';
 import _ from 'lodash';
 import {
   Text,

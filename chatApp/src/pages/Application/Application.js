@@ -24,9 +24,9 @@ class Application extends React.Component {
    async componentDidMount() {
     try {
       const session = await checkSession();
-      console.warn(session);
+      console.log(session);
     } catch (err) {
-      console.warn(session);
+      console.log(session);
     }
   }
 
