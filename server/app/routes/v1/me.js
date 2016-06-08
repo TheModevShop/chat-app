@@ -12,6 +12,7 @@ var Roles = require('../../models/roles');
 
 //Controllers
 var Users = require('../../controllers/users');
+var Conversations = require('../../controllers/conversations');
 
 
 router.route('/')
@@ -44,6 +45,21 @@ router.route('/')
       .deleteAccount(req.decoded)
       .then(function(user) {
         res.json(user);
+      })
+      .catch(function(err) {
+        res.status(422).json(err);
+      });
+  });
+
+  router.route('/conversations')
+  .get(function(req, res) {
+    Conversations
+      .getConversationsForUser(req.decoded._id)
+      .then(function(conversations) {
+        if (!conversations) {
+          res.status(404).json({error: 'no conversations found'});
+        }
+        res.json(conversations);
       })
       .catch(function(err) {
         res.status(422).json(err);

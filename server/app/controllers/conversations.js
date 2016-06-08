@@ -22,6 +22,7 @@ rooms.getById = function(id) {
   return Conversations.findOne({
     _id: id
   })
+  .populate()
   .exec(function(err, user) {
     return user;
   });
@@ -36,6 +37,7 @@ rooms.getByUsersInConversation = function(ids) {
     Conversations.findOne({
       users: ids
     })
+    .populate()
     .then(function(user) {
       if (!user) {
         return rooms.add({
@@ -56,10 +58,16 @@ rooms.getByUsersInConversation = function(ids) {
   })
 };
 
+rooms.getConversationsForUser = function(id) {
+ return Conversations.find({
+    users: {$in: [id]}
+  }).populate('lastMessage users')
+};
+
 rooms.updateById = function(id, params) {
   var updatedObj = {};
   var find = {_id: id};
-
+  updatedObj.lastMessage = params.lastMessage;
   return Conversations.update(find, updatedObj)
     .exec(function(err, updatedObj) {
       if(err) {

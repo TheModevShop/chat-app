@@ -2,13 +2,16 @@ import _ from 'lodash';
 import RESTLoader from '../loaders/RESTLoader';
 import {BASE} from '../../constants';
 import Baobab from 'baobab';
+import transformChat from '../../utility/transformChat';
 
 const loader = new RESTLoader({
   getResourceUrl: (conversationId) => {
     return `${BASE}/chats?conversationId=${conversationId}`;
   },
   successTransformer: (data, current) => {
-    return data.body;
+    return _.map(data.body, (chat) => {
+      return transformChat(chat)
+    })
   }
 });
 
@@ -32,7 +35,7 @@ export default function ChatFacet() {
         }
 
         request = _.clone(loader.fetch(data.conversation._id));
-        request = request.$isLoading ? data.chat.concat(request) : request;
+        console.log(request, 'request')
         return request;
       }
     }

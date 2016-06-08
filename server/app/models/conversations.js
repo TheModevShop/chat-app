@@ -15,6 +15,7 @@ var conversations = new Schema({
     type: Date, 
     default: Date.now 
   },
+  lastMessage: {type: mongoose.Schema.Types.ObjectId, ref: 'Chats'},
   deleted: {
     type: Date,
   }

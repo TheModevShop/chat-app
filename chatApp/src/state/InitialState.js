@@ -1,5 +1,6 @@
 const ChatFacet = require('./facets/ChatFacet').default();
 const ConversationFacet = require('./facets/ConversationFacet').default();
+const AllConversationFacet = require('./facets/AllConversationFacet').default();
 const UsersFacet = require('./facets/UsersFacet').default();
 
 export default function getInitialState() {
@@ -17,7 +18,8 @@ export default function getInitialState() {
     facets: {facets: {
       Chat: ChatFacet,
       Conversation: ConversationFacet,
-      Users: UsersFacet
+      Users: UsersFacet,
+      AllConversations: AllConversationFacet
     }}
   };
 }

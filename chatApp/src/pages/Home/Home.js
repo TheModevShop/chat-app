@@ -25,7 +25,7 @@ class Home extends Component {
   }
 
   registerList(props) {
-    const users = _.get(props, 'users', []);
+    const users = _.get(props, 'AllConversations', []);
     if (users.length) {
       var ds = new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 != r2
@@ -43,15 +43,22 @@ class Home extends Component {
        <ListView
         style={{marginTop: 128}}
         dataSource={this.state.dataSource}
-        renderRow={(rowData) => <Text onPress={this.goToChat.bind(this, rowData)}>{rowData.name.first + ' ' +rowData.name.last}</Text>}        
+        renderRow={(rowData) => {
+          return (
+            <View>
+              <Text onPress={this.goToChat.bind(this, rowData)}>{rowData.users[0].name.first + ' and ' +rowData.users[1].name.first}</Text>
+              <Text>{_.get(rowData.lastMessage, 'log', '')}</Text>
+            </View>
+          )
+        }}        
       /> : <View style={{margin: 128}}>
       <Text> loading</Text>
     </View>
     );
   }
 
-  goToChat(user) {
-    openChat(user);
+  goToChat(conversation) {
+    openChat(conversation);
     Actions.conversations({text: 'Hello World!'})
   }
 }
@@ -59,6 +66,7 @@ class Home extends Component {
 export default branch(Home, {
   cursors: {
     view: ['home'],
+    AllConversations: ['facets','AllConversations'],
     users: ['facets', 'Users']
   }
 });

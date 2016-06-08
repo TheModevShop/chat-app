@@ -1,7 +1,7 @@
 'use strict';
 import {branch} from 'baobab-react/higher-order';
 import {joinRoom} from '../../actions/AppActions';
-import {addChat, clearChat} from '../../actions/ChatActions';
+import {addChat, clearChat, saveLastChatInConversation} from '../../actions/ChatActions';
 import React, {
   Component,
 } from 'react';
@@ -44,27 +44,18 @@ class Conversations extends Component {
   }
 
   componentDidMount() {
-    this._isMounted = true;
+    setTimeout(() => {
+      this._isMounted = true;
+      this.setState({tr: true});
+    }, 320)
   }
 
   componentWillReceiveProps(newProps) {
     joinRoom({name: _.get(this.props.user, 'details.name.first'), user: _.get(this.props.user, 'details._id'), room: newProps.conversation._id})
   }
 
-  componentWillUnmount() {
-    this._isMounted = false;
-  }
-
   getInitialMessages() {
     return []
-    // {
-    //   text: 'Are you building a chat app?',
-    //   name: 'React-Bot',
-    //   image: {uri: 'https://facebook.github.io/react/img/logo_og.png'},
-    //   position: 'left',
-    //   date: new Date(2016, 3, 14, 13, 0),
-    //   uniqueId: Math.round(Math.random() * 10000), // simulating server-side unique id generation
-    // },
   }
 
   setMessageStatus(uniqueId, status) {
@@ -84,7 +75,7 @@ class Conversations extends Component {
     console.log(_.get(this.props.user, 'details._id'), _.get(this.props.conversation, '_id'))
     addChat({
       log: message.text,
-      user: _.get(this.props.user, 'details._id'),
+      user: _.get(this.props.user, 'details'),
       roomId: _.get(this.props.conversation, '_id')
     })
 
@@ -107,7 +98,6 @@ class Conversations extends Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <GiftedMessenger
         ref={(c) => this._GiftedMessenger = c}
@@ -120,10 +110,10 @@ class Conversations extends Component {
         }}
 
         autoFocus={false}
-        messages={this.state.messages}
+        messages={!this._isMounted || !this.props.chats || _.get(this.props.chats, '$isLoading') ? [] : this.props.chats}
         handleSend={this.handleSend.bind(this)}
         onErrorButtonPress={this.onErrorButtonPress.bind(this)}
-        maxHeight={Dimensions.get('window').height - Navigator.NavigationBar.Styles.General.NavBarHeight - STATUS_BAR_HEIGHT}
+        maxHeight={Dimensions.get('window').height - 0 - STATUS_BAR_HEIGHT}
 
         loadEarlierMessagesButton={!this.state.allLoaded}
         onLoadEarlierMessages={this.onLoadEarlierMessages.bind(this)}
@@ -159,12 +149,22 @@ class Conversations extends Component {
    
   }
 
+  componentWillUnmount() {
+    this._isMounted = false;
+    if (_.get(this.props.chats, 'length')) {
+      console.warn(_.last(this.props.chats))
+      saveLastChatInConversation(_.last(this.props.chats)._id, _.get(this.props.conversation, '_id'));
+    }    
+    clearChat();
+  }
+
+
 }
 
 
 export default branch(Conversations, {
   cursors: {
-    conversation: ['facets','Conversation'],
+    conversation: ['conversation'],
     chats: ['facets','Chat'],
     user: ['user']
   }

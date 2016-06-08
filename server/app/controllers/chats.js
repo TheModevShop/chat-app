@@ -28,6 +28,7 @@ chats.getChatsInConversation = function(conversationId) {
   return Chats.find({
     roomId: conversationId
   })
+  .populate('user')
   .exec(function(err, chats) {
     return chats;
   });

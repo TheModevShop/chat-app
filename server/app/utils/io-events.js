@@ -18,12 +18,14 @@ var ioListeners = {
       });
 
       socket.on('message', function(message){
-        io.to(message.roomId).emit('message', message);
         chats.add({ 
           roomId: message.roomId,
           log: message.log,
           user: message.user
-        });
+        }).then(function(chat) {
+          console.log(chat)
+          io.to(message.roomId).emit('message', chat);
+        })
       });
 
 

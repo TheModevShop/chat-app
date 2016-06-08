@@ -201,7 +201,6 @@ class GiftedMessengerContainer extends Component {
   }
 
   render() {
-    console.warn(this.props.chat)
     return (
       <GiftedMessenger
         ref={(c) => this._GiftedMessenger = c}
