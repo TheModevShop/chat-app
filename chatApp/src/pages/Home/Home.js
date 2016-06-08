@@ -5,10 +5,25 @@ import { Actions } from 'react-native-router-flux';
 import {openChat} from '../../actions/ChatActions';
 import _ from 'lodash';
 import {
+  StyleSheet,
   Text,
   View,
-  ListView
+  ScrollView,
+  Dimensions,
+  ListView,
+  PixelRatio,
+  Image
 } from 'react-native';
+
+import ResponsiveImage from 'react-native-responsive-image';
+
+var IMAGE_WIDTH = Dimensions.get('window').width;
+var IMAGE_HEIGHT = IMAGE_WIDTH / 2;
+var PIXEL_RATIO = PixelRatio.get();
+var PARALLAX_FACTOR = 0.3;
+
+var IMAGE_URI_PREFIX = 'http://loremflickr.com/' + (IMAGE_WIDTH * PIXEL_RATIO) + '/' + Math.round(IMAGE_HEIGHT * (1 + PARALLAX_FACTOR * 2) * PIXEL_RATIO) + '/'
+
 
 class Home extends Component {
   constructor(...args) {
@@ -41,13 +56,13 @@ class Home extends Component {
     return (
       this.state.dataSource ?
        <ListView
-        style={{marginTop: 128}}
+        style={{marginTop: 60}}
         dataSource={this.state.dataSource}
         renderRow={(rowData) => {
           return (
             <View>
-              <Text onPress={this.goToChat.bind(this, rowData)}>{rowData.users[0].name.first + ' and ' +rowData.users[1].name.first}</Text>
-              <Text>{_.get(rowData.lastMessage, 'log', '')}</Text>
+               <ResponsiveImage source={{uri: IMAGE_URI_PREFIX}} initWidth="100%" initHeight="250"/>
+               <Text style={styles.backgroundImage}>Text 1</Text>
             </View>
           )
         }}        
@@ -62,6 +77,16 @@ class Home extends Component {
     Actions.conversations({text: 'Hello World!'})
   }
 }
+
+let styles = StyleSheet.create({
+  backgroundImage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0
+  }
+});
 
 export default branch(Home, {
   cursors: {

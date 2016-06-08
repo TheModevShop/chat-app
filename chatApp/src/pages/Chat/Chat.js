@@ -1,5 +1,7 @@
 'use strict';
 import {branch} from 'baobab-react/higher-order';
+import {joinRoom} from '../../actions/AppActions';
+import {addChat, clearChat, saveLastChatInConversation} from '../../actions/ChatActions';
 import React, {
   Component,
 } from 'react';
@@ -24,7 +26,7 @@ if (Platform.OS === 'android') {
 }
 
 
-class GiftedMessengerContainer extends Component {
+class Chat extends Component {
 
   constructor(props) {
     super(props);
@@ -42,76 +44,22 @@ class GiftedMessengerContainer extends Component {
   }
 
   componentDidMount() {
-    this._isMounted = true;
-
     setTimeout(() => {
-      this.setState({
-        typingMessage: 'React-Bot is typing a message...',
-      });
-    }, 1000); // simulating network
-
-    setTimeout(() => {
-      this.setState({
-        typingMessage: '',
-      });
-    }, 3000); // simulating network
-
-
-    setTimeout(() => {
-      this.handleReceive({
-        text: 'Hello Awesome Developer',
-        name: 'React-Bot',
-        image: {uri: 'https://facebook.github.io/react/img/logo_og.png'},
-        position: 'left',
-        date: new Date(),
-        uniqueId: Math.round(Math.random() * 10000), // simulating server-side unique id generation
-      });
-    }, 3300); // simulating network
+      this._isMounted = true;
+      this.setState({tr: true});
+    }, 320)
   }
 
-  componentWillUnmount() {
-    this._isMounted = false;
+  componentWillReceiveProps(newProps) {
+    joinRoom({name: _.get(this.props.user, 'details.name.first'), user: _.get(this.props.user, 'details._id'), room: newProps.conversation._id})
   }
 
   getInitialMessages() {
-    return [
-      {
-        text: 'Are you building a chat app?',
-        name: 'React-Bot',
-        image: {uri: 'https://facebook.github.io/react/img/logo_og.png'},
-        position: 'left',
-        date: new Date(2016, 3, 14, 13, 0),
-        uniqueId: Math.round(Math.random() * 10000), // simulating server-side unique id generation
-      },
-      {
-        text: "Yes, and I use Gifted Messenger!",
-        name: 'Awesome Developer',
-        image: null,
-        position: 'right',
-        date: new Date(2016, 3, 14, 13, 1),
-        uniqueId: Math.round(Math.random() * 10000), // simulating server-side unique id generation
-      },
-    ];
+    return []
   }
 
   setMessageStatus(uniqueId, status) {
-    let messages = [];
-    let found = false;
-
-    for (let i = 0; i < this._messages.length; i++) {
-      if (this._messages[i].uniqueId === uniqueId) {
-        let clone = Object.assign({}, this._messages[i]);
-        clone.status = status;
-        messages.push(clone);
-        found = true;
-      } else {
-        messages.push(this._messages[i]);
-      }
-    }
-
-    if (found === true) {
-      this.setMessages(messages);
-    }
+    
   }
 
   setMessages(messages) {
@@ -124,80 +72,29 @@ class GiftedMessengerContainer extends Component {
   }
 
   handleSend(message = {}) {
+    console.log(_.get(this.props.user, 'details._id'), _.get(this.props.conversation, '_id'))
+    addChat({
+      log: message.text,
+      user: _.get(this.props.user, 'details'),
+      roomId: _.get(this.props.conversation, '_id')
+    })
 
-    // Your logic here
-    // Send message.text to your server
-
-    message.uniqueId = Math.round(Math.random() * 10000); // simulating server-side unique id generation
-    this.setMessages(this._messages.concat(message));
-
-    // mark the sent message as Seen
-    setTimeout(() => {
-      this.setMessageStatus(message.uniqueId, 'Seen'); // here you can replace 'Seen' by any string you want
-    }, 1000);
-
-    // if you couldn't send the message to your server :
-    // this.setMessageStatus(message.uniqueId, 'ErrorButton');
   }
 
   onLoadEarlierMessages() {
 
-    // display a loader until you retrieve the messages from your server
-    this.setState({
-      isLoadingEarlierMessages: true,
-    });
-
-    // Your logic here
-    // Eg: Retrieve old messages from your server
-
-    // IMPORTANT
-    // Oldest messages have to be at the begining of the array
-    var earlierMessages = [
-      {
-        text: 'React Native enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and React. https://github.com/facebook/react-native',
-        name: 'React-Bot',
-        image: {uri: 'https://facebook.github.io/react/img/logo_og.png'},
-        position: 'left',
-        date: new Date(2016, 0, 1, 20, 0),
-        uniqueId: Math.round(Math.random() * 10000), // simulating server-side unique id generation
-      }, {
-        text: 'This is a touchable phone number 0606060606 parsed by taskrabbit/react-native-parsed-text',
-        name: 'Awesome Developer',
-        image: null,
-        position: 'right',
-        date: new Date(2016, 0, 2, 12, 0),
-        uniqueId: Math.round(Math.random() * 10000), // simulating server-side unique id generation
-      },
-    ];
-
-    setTimeout(() => {
-      this.setMessages(earlierMessages.concat(this._messages)); // prepend the earlier messages to your list
-      this.setState({
-        isLoadingEarlierMessages: false, // hide the loader
-        allLoaded: true, // hide the `Load earlier messages` button
-      });
-    }, 1000); // simulating network
-
   }
 
   handleReceive(message = {}) {
-    // make sure that your message contains :
-    // text, name, image, position: 'left', date, uniqueId
-    this.setMessages(this._messages.concat(message));
+   
   }
 
   onErrorButtonPress(message = {}) {
-    // Your logic here
-    // re-send the failed message
-
-    // remove the status
-    this.setMessageStatus(message.uniqueId, '');
+   
   }
 
-  // will be triggered when the Image of a row is touched
   onImagePress(message = {}) {
-    // Your logic here
-    // Eg: Navigate to the user profile
+   
   }
 
   render() {
@@ -213,10 +110,10 @@ class GiftedMessengerContainer extends Component {
         }}
 
         autoFocus={false}
-        messages={this.state.messages}
+        messages={!this._isMounted || !this.props.chats || _.get(this.props.chats, '$isLoading') ? [] : this.props.chats}
         handleSend={this.handleSend.bind(this)}
         onErrorButtonPress={this.onErrorButtonPress.bind(this)}
-        maxHeight={Dimensions.get('window').height - Navigator.NavigationBar.Styles.General.NavBarHeight - STATUS_BAR_HEIGHT}
+        maxHeight={Dimensions.get('window').height - 0 - STATUS_BAR_HEIGHT}
 
         loadEarlierMessagesButton={!this.state.allLoaded}
         onLoadEarlierMessages={this.onLoadEarlierMessages.bind(this)}
@@ -245,41 +142,30 @@ class GiftedMessengerContainer extends Component {
   // TODO
   // make this compatible with Android
   handlePhonePress(phone) {
-    if (Platform.OS !== 'android') {
-      var BUTTONS = [
-        'Text message',
-        'Call',
-        'Cancel',
-      ];
-      var CANCEL_INDEX = 2;
-
-      ActionSheetIOS.showActionSheetWithOptions({
-        options: BUTTONS,
-        cancelButtonIndex: CANCEL_INDEX
-      },
-      (buttonIndex) => {
-        switch (buttonIndex) {
-          case 0:
-            Communications.phonecall(phone, true);
-            break;
-          case 1:
-            Communications.text(phone);
-            break;
-        }
-      });
-    }
+    
   }
 
   handleEmailPress(email) {
-    Communications.email(email, null, null, null, null);
+   
   }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+    if (_.get(this.props.chats, 'length')) {
+      console.warn(_.last(this.props.chats))
+      saveLastChatInConversation(_.last(this.props.chats)._id, _.get(this.props.conversation, '_id'));
+    }    
+    clearChat();
+  }
+
 
 }
 
 
-export default branch(GiftedMessengerContainer, {
+export default branch(Chat, {
   cursors: {
-    conversation: ['facets','Conversation'],
-    chats: ['facets','Chat']
+    conversation: ['conversation'],
+    chats: ['facets','Chat'],
+    user: ['user']
   }
 });

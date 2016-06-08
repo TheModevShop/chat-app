@@ -6,6 +6,7 @@ mongoose.Promise = require('bluebird');
 // Models
 var RolesModel = require('./app/models/roles');
 var UsersModel = require('./app/models/users');
+var ConversationsModel = require('./app/models/conversations');
 
 // MongoDB ==================================================
 var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/app';
@@ -13,6 +14,7 @@ mongoose.connect(mongoUri);
 
 var promisesRoles = [];
 var promisesUsers = [];
+var promisesConversations = [];
 
 var rolesId;
 var gymsId;
@@ -26,6 +28,10 @@ UsersModel.remove({}, function() {
    console.log('Users Removed');
 });
 
+ConversationsModel.remove({}, function() { 
+   console.log('ConversationsModel Removed');
+});
+
 
 // Add roles
 var roles = ['user', 'app-owner'];
@@ -35,6 +41,8 @@ roles.forEach(function(item) {
 	promisesRoles.push(toSave.save());
 });
 
+
+// Add Users
 var user = new UsersModel({ 
   name: {
     first: 'admin',
@@ -53,8 +61,18 @@ var userTwo = new UsersModel({
 });
 
 
+// Add Conversations
+var con = new ConversationsModel({ 
+  users: [user, userTwo],
+  creationDate: Date.now(),
+  roomId: 234
+});
+
+
 promisesUsers.push(user.save());
 promisesUsers.push(userTwo.save());
+
+promisesUsers.push(con.save());
 
 Promise.all(promisesRoles)
 	// All roles

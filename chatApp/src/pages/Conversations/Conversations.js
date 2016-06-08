@@ -1,171 +1,72 @@
 'use strict';
+import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
-import {joinRoom} from '../../actions/AppActions';
-import {addChat, clearChat, saveLastChatInConversation} from '../../actions/ChatActions';
-import React, {
-  Component,
-} from 'react';
+import { Actions } from 'react-native-router-flux';
+import {openChat} from '../../actions/ChatActions';
+import _ from 'lodash';
 import {
-  Linking,
-  Platform,
-  ActionSheetIOS,
-  Dimensions,
-  View,
   Text,
-  Navigator,
+  View,
+  ListView
 } from 'react-native';
 
-var GiftedMessenger = require('react-native-gifted-messenger');
-var Communications = require('react-native-communications');
-
-
-var STATUS_BAR_HEIGHT = Navigator.NavigationBar.Styles.General.StatusBarHeight;
-if (Platform.OS === 'android') {
-  var ExtraDimensions = require('react-native-extra-dimensions-android');
-  var STATUS_BAR_HEIGHT = ExtraDimensions.get('STATUS_BAR_HEIGHT');
-}
-
-
 class Conversations extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this._isMounted = false;
-    this._messages = this.getInitialMessages();
-
-    this.state = {
-      messages: this._messages,
-      isLoadingEarlierMessages: false,
-      typingMessage: '',
-      allLoaded: false,
-    };
-
+  constructor(...args) {
+    super(...args);
+    this.state = {};
   }
 
-  componentDidMount() {
-    setTimeout(() => {
-      this._isMounted = true;
-      this.setState({tr: true});
-    }, 320)
+  componentWillMount() {
+    this.registerList(this.props);
   }
 
-  componentWillReceiveProps(newProps) {
-    joinRoom({name: _.get(this.props.user, 'details.name.first'), user: _.get(this.props.user, 'details._id'), room: newProps.conversation._id})
+  componentWillReceiveProps(nextProps) {
+    this.registerList(nextProps);
   }
 
-  getInitialMessages() {
-    return []
-  }
-
-  setMessageStatus(uniqueId, status) {
-    
-  }
-
-  setMessages(messages) {
-    this._messages = messages;
-
-    // append the message
-    this.setState({
-      messages: messages,
-    });
-  }
-
-  handleSend(message = {}) {
-    console.log(_.get(this.props.user, 'details._id'), _.get(this.props.conversation, '_id'))
-    addChat({
-      log: message.text,
-      user: _.get(this.props.user, 'details'),
-      roomId: _.get(this.props.conversation, '_id')
-    })
-
-  }
-
-  onLoadEarlierMessages() {
-
-  }
-
-  handleReceive(message = {}) {
-   
-  }
-
-  onErrorButtonPress(message = {}) {
-   
-  }
-
-  onImagePress(message = {}) {
-   
+  registerList(props) {
+    const users = _.get(props, 'AllConversations', []);
+    if (users.length) {
+      var ds = new ListView.DataSource({
+        rowHasChanged: (r1, r2) => r1 != r2
+      });
+      this.setState({
+        dataSource: ds.cloneWithRows(users),
+      });
+    }
   }
 
   render() {
+    const goToPageTwo = () => Actions.conversations({text: 'Hello World!'});
     return (
-      <GiftedMessenger
-        ref={(c) => this._GiftedMessenger = c}
-
-        styles={{
-          bubbleRight: {
-            marginLeft: 70,
-            backgroundColor: '#007aff',
-          },
-        }}
-
-        autoFocus={false}
-        messages={!this._isMounted || !this.props.chats || _.get(this.props.chats, '$isLoading') ? [] : this.props.chats}
-        handleSend={this.handleSend.bind(this)}
-        onErrorButtonPress={this.onErrorButtonPress.bind(this)}
-        maxHeight={Dimensions.get('window').height - 0 - STATUS_BAR_HEIGHT}
-
-        loadEarlierMessagesButton={!this.state.allLoaded}
-        onLoadEarlierMessages={this.onLoadEarlierMessages.bind(this)}
-
-        senderName='Awesome Developer'
-        senderImage={null}
-        onImagePress={this.onImagePress}
-        displayNames={true}
-
-        parseText={true} // enable handlePhonePress, handleUrlPress and handleEmailPress
-        handlePhonePress={this.handlePhonePress}
-        handleUrlPress={this.handleUrlPress}
-        handleEmailPress={this.handleEmailPress}
-
-        isLoadingEarlierMessages={this.state.isLoadingEarlierMessages}
-
-        typingMessage={this.state.typingMessage}
-      />
+      this.state.dataSource ?
+       <ListView
+        style={{marginTop: 128}}
+        dataSource={this.state.dataSource}
+        renderRow={(rowData) => {
+          return (
+            <View>
+              <Text onPress={this.goToChat.bind(this, rowData)}>{rowData.users[0].name.first + ' and ' +rowData.users[1].name.first}</Text>
+              <Text>{_.get(rowData.lastMessage, 'log', '')}</Text>
+            </View>
+          )
+        }}        
+      /> : <View style={{margin: 128}}>
+      <Text> loading</Text>
+    </View>
     );
   }
 
-  handleUrlPress(url) {
-    Linking.openURL(url);
+  goToChat(conversation) {
+    openChat(conversation);
+    Actions.chat({text: 'Hello World!'})
   }
-
-  // TODO
-  // make this compatible with Android
-  handlePhonePress(phone) {
-    
-  }
-
-  handleEmailPress(email) {
-   
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false;
-    if (_.get(this.props.chats, 'length')) {
-      console.warn(_.last(this.props.chats))
-      saveLastChatInConversation(_.last(this.props.chats)._id, _.get(this.props.conversation, '_id'));
-    }    
-    clearChat();
-  }
-
-
 }
-
 
 export default branch(Conversations, {
   cursors: {
-    conversation: ['conversation'],
-    chats: ['facets','Chat'],
-    user: ['user']
+    view: ['home'],
+    AllConversations: ['facets','AllConversations'],
+    users: ['facets', 'Users']
   }
 });
