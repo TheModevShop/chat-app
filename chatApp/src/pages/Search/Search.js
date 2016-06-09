@@ -23,13 +23,6 @@ class Home extends Component {
     this.state = {};
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (_.get(nextProps, 'AllConversations', []).length === _.get(this.props, 'AllConversations', []).length) {
-      return false
-    }
-    return true;
-  }
-
   componentWillMount() {
     this.registerList(this.props);
   }
@@ -39,35 +32,30 @@ class Home extends Component {
   }
 
   registerList(props) {
-    const users = _.get(props, 'AllConversations', []);
-    if (users.length) {
+    const search = _.get(props, 'search.items', []);
+    if (search.length) {
       var ds = new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 != r2
       });
       this.setState({
-        dataSource: ds.cloneWithRows([]),
+        dataSource: ds.cloneWithRows(search),
       });
     }
   }
 
   render() {
-    const goToPageTwo = () => Actions.conversations({text: 'Hello World!'});
     return (
       <View style={{marginTop: 0, flex: 1, flexDirection: 'column'}}>
-        <View style={{height: 60, backgroundColor: 'transparent'}}>
-          
-        </View>
         {
           this.state.dataSource ?
           <ListView
             dataSource={this.state.dataSource}
-            onScroll={this.props.scrollEvent.bind(this)}
             renderRow={(rowData, i) => {
               return (
-                <View style={styles.wrapper} key={1}>
+                <View>
                   <TouchableHighlight onPress={this.onPress.bind(this)} underlayColor='#999'>
                     <View>
-                      
+                      <Text>fasfasdf</Text>
                     </View>
                   </TouchableHighlight>
                 </View>
@@ -81,6 +69,9 @@ class Home extends Component {
     </View>
     );
   }
+  onPress() {
+
+  }
 }
 
 let styles = StyleSheet.create({
@@ -90,5 +81,6 @@ let styles = StyleSheet.create({
 export default branch(Home, {
   cursors: {
     view: ['search'],
+    search: ['facets', 'Search']
   }
 });

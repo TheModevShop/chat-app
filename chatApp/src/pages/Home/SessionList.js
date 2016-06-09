@@ -55,7 +55,6 @@ class Home extends Component {
 
   registerList(props) {
     const sessions = _.get(props, 'AllSessionsFacet', []);
-    console.log(sessions, 'sessions')
     if (sessions.length) {
       var ds = new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 != r2

@@ -17,6 +17,7 @@ var forgot = require('./forgot');
 var chats = require('./chats');
 var conversations = require('./conversations');
 var sessions = require('./sessions');
+var search = require('./search');
 
 router.use(cors());
 
@@ -28,6 +29,7 @@ router.use('/users', users);
 router.use('/conversations', conversations); 
 router.use('/chats', chats); 
 router.use('/sessions', sessions);
+router.use('/search', search);
 
 
 module.exports = router;

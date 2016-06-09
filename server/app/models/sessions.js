@@ -4,12 +4,15 @@ var mongoose = require('mongoose');
 var uniqueValidator = require('mongoose-unique-validator');
 var deepPopulate = require('mongoose-deep-populate')(mongoose);
 var DateOnly = require('mongoose-dateonly')(mongoose);
+var mongoosastic = require('mongoosastic');
+
 
 var Schema = mongoose.Schema;
 
 var sessions = new Schema({
   name: {
     type: String,
+    es_indexed:true
   },
   complete: {
     type: Boolean
@@ -47,8 +50,12 @@ var sessions = new Schema({
       type: String,
     }
   },
-  description: String,
+  description: {
+    type: String,
+    es_indexed:true
+  },
   instructor: { type: mongoose.Schema.Types.ObjectId, ref: 'Users' },
+  categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'SessionCategories' }],
   enrolled: [
     { 
       type: mongoose.Schema.Types.ObjectId, 
@@ -60,6 +67,8 @@ var sessions = new Schema({
   }
 });
 
+
+sessions.plugin(mongoosastic)
 sessions.plugin(uniqueValidator);
 sessions.plugin(deepPopulate);
 sessions.index( { 'instructor' : 1,  'date' : 1, 'time' : 1, 'cancelled' : 1, 'removed': 1 }, { 'unique' : true } )

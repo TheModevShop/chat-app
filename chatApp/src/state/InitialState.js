@@ -4,6 +4,7 @@ const AllConversationFacet = require('./facets/AllConversationFacet').default();
 const UsersFacet = require('./facets/UsersFacet').default();
 const AllSessionsFacet = require('./facets/AllSessionsFacet').default();
 const SessionDetailsFacet = require('./facets/SessionDetailsFacet').default();
+const SearchFacet = require('./facets/SearchFacet').default();
 
 export default function getInitialState() {
   return {
@@ -11,6 +12,10 @@ export default function getInitialState() {
       sessionDetails: {
         id: null,
         details: null
+      },
+      sessionSearch: {
+        query: '',
+        results: ''
       },
       classes: {},
       modal: {},
@@ -27,7 +32,8 @@ export default function getInitialState() {
       Users: UsersFacet,
       AllConversations: AllConversationFacet,
       AllSessionsFacet: AllSessionsFacet,
-      SessionDetails: SessionDetailsFacet
+      SessionDetails: SessionDetailsFacet,
+      Search: SearchFacet
     }}
   };
 }

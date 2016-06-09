@@ -4,6 +4,9 @@ import { Actions } from 'react-native-router-flux';
 import {branch} from 'baobab-react/higher-order';
 import SessionList from './SessionList';
 import Search from '../Search/Search';
+
+import {setSearch} from '../../actions/SearchActions';
+
 import {
   StatusBar,
   StyleSheet,
@@ -45,16 +48,17 @@ class Home extends Component {
   render() {
     return (
        <View style={{marginTop: 0, flex: 1, flexDirection: 'column'}}>
-        <StatusBar hidden={this.state.searchOpen} />
+        
         <SessionList scrollEvent={this.scrollEvent.bind(this)} />
         <TouchableHighlight style={{position: 'absolute', left: this.state.left, right: this.state.right, top: this.state.top, flex: 1, borderRadius: this.state.br, backgroundColor: '#fff', height: 50}} onPress={this.onPress.bind(this)} underlayColor='#99d9f4'>
-          <View style={{marginTop: 0, flex: 1, flexDirection: 'column'}}>
+          <View style={{marginTop: 0, flex: 1, flexDirection: 'column',  borderColor: 'gray', borderBottomWidth: 1}}>
             {
               this.state.searchOpen ?
               <TextInput
-                style={{flex: 4, height: 40, borderColor: 'gray', borderWidth: 1}}
-                onChangeText={(query) => this.setState({query})}
-                value={this.state.query}
+                autoFocus={true}
+                style={{paddingLeft: 15, flex: 4, height: 40}}
+                onChangeText={this.onSearch.bind(this)}
+                value={this.props.sessionSearch.query}
               /> : null
             }
           </View> 
@@ -63,7 +67,7 @@ class Home extends Component {
           style={{
             position: 'absolute',
             height: WINDOW_Height,
-            backgroundColor: 'red',
+            backgroundColor: '#fff',
             bottom: 0,
             left: 0,
             right: 0,
@@ -93,13 +97,18 @@ class Home extends Component {
     
     Animated.spring(          // Uses easing functions
        this.state.search,    // The value to drive
-       {toValue: 48, friction: 6, tension: 15}            // Configuration
+       {toValue: 50, friction: 6, tension: 20}            // Configuration
      ).start(); 
+  }
+
+  onSearch(val) {
+    setSearch(val);
   }
 }
 
 export default branch(Home, {
   cursors: {
-    view: ['home']
+    view: ['home'],
+    sessionSearch: ['sessionSearch']
   }
 });

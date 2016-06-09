@@ -33,6 +33,15 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 
+var elasticsearch = require('elasticsearch');
+var client = new elasticsearch.Client({
+  host: 'localhost:9200',
+  log: 'trace'
+});
+
+console.log(client)
+
+
 // Routes ==================================================
 app.use('/v1', v1);
 
