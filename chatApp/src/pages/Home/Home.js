@@ -1,97 +1,105 @@
 'use strict';
 import React, { Component } from 'react';
-import {branch} from 'baobab-react/higher-order';
 import { Actions } from 'react-native-router-flux';
-import {openChat} from '../../actions/ChatActions';
-import _ from 'lodash';
+import {branch} from 'baobab-react/higher-order';
+import SessionList from './SessionList';
+import Search from '../Search/Search';
 import {
+  StatusBar,
   StyleSheet,
+  Animated,
+  LayoutAnimation,
   Text,
+  TextInput,
   View,
   ScrollView,
   Dimensions,
   ListView,
   PixelRatio,
-  Image
+  Image,
+  TouchableHighlight
 } from 'react-native';
 
-import ResponsiveImage from 'react-native-responsive-image';
-
-var IMAGE_WIDTH = Dimensions.get('window').width;
-var IMAGE_HEIGHT = IMAGE_WIDTH / 2;
-var PIXEL_RATIO = PixelRatio.get();
-var PARALLAX_FACTOR = 0.3;
-
-var IMAGE_URI_PREFIX = 'http://loremflickr.com/' + (IMAGE_WIDTH * PIXEL_RATIO) + '/' + Math.round(IMAGE_HEIGHT * (1 + PARALLAX_FACTOR * 2) * PIXEL_RATIO) + '/'
+var WINDOW_WIDTH = Dimensions.get('window').width;
+var WINDOW_Height = Dimensions.get('window').height;
 
 
 class Home extends Component {
   constructor(...args) {
     super(...args);
-    this.state = {};
+    this.state = {
+      br: 3,
+      right: 25,
+      left: 25,
+      top: 25,
+      search: new Animated.Value(WINDOW_Height),
+      searchOpen: false,
+      query: ''
+    };
   }
 
   componentWillMount() {
-    this.registerList(this.props);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.registerList(nextProps);
-  }
-
-  registerList(props) {
-    const users = _.get(props, 'AllConversations', []);
-    if (users.length) {
-      var ds = new ListView.DataSource({
-        rowHasChanged: (r1, r2) => r1 != r2
-      });
-      this.setState({
-        dataSource: ds.cloneWithRows(users),
-      });
-    }
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
   }
 
   render() {
-    const goToPageTwo = () => Actions.conversations({text: 'Hello World!'});
     return (
-      this.state.dataSource ?
-       <ListView
-        style={{marginTop: 60}}
-        dataSource={this.state.dataSource}
-        renderRow={(rowData) => {
-          return (
-            <View>
-               <ResponsiveImage source={{uri: IMAGE_URI_PREFIX}} initWidth="100%" initHeight="250"/>
-               <Text style={styles.backgroundImage}>Text 1</Text>
-            </View>
-          )
-        }}        
-      /> : <View style={{margin: 128}}>
-      <Text> loading</Text>
-    </View>
+       <View style={{marginTop: 0, flex: 1, flexDirection: 'column'}}>
+        <StatusBar hidden={this.state.searchOpen} />
+        <SessionList scrollEvent={this.scrollEvent.bind(this)} />
+        <TouchableHighlight style={{position: 'absolute', left: this.state.left, right: this.state.right, top: this.state.top, flex: 1, borderRadius: this.state.br, backgroundColor: '#fff', height: 50}} onPress={this.onPress.bind(this)} underlayColor='#99d9f4'>
+          <View style={{marginTop: 0, flex: 1, flexDirection: 'column'}}>
+            {
+              this.state.searchOpen ?
+              <TextInput
+                style={{flex: 4, height: 40, borderColor: 'gray', borderWidth: 1}}
+                onChangeText={(query) => this.setState({query})}
+                value={this.state.query}
+              /> : null
+            }
+          </View> 
+        </TouchableHighlight>
+        <Animated.View                         // Base: Image, Text, View
+          style={{
+            position: 'absolute',
+            height: WINDOW_Height,
+            backgroundColor: 'red',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            transform: [                        
+              {translateY: this.state.search}
+            ]
+          }}>
+          <Search />
+        </Animated.View>
+      </View>
     );
   }
+  scrollEvent(e) {
+    const offset = e.nativeEvent.contentOffset.y;
+    if (offset > 100) {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+      this.setState({br: 100, right: WINDOW_WIDTH - 75})
+    } else if(offset < 100) {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+      this.setState({br: 3, right: 25})
+    }
+  }
 
-  goToChat(conversation) {
-    openChat(conversation);
-    Actions.conversations({text: 'Hello World!'})
+  onPress() {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+    this.setState({br: 3, right: 0, left:0, top: 0, searchOpen: !this.state.searchOpen})
+    
+    Animated.spring(          // Uses easing functions
+       this.state.search,    // The value to drive
+       {toValue: 48, friction: 6, tension: 15}            // Configuration
+     ).start(); 
   }
 }
 
-let styles = StyleSheet.create({
-  backgroundImage: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0
-  }
-});
-
 export default branch(Home, {
   cursors: {
-    view: ['home'],
-    AllConversations: ['facets','AllConversations'],
-    users: ['facets', 'Users']
+    view: ['home']
   }
 });
