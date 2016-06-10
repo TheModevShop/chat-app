@@ -56,7 +56,7 @@ class Home extends Component {
               this.state.searchOpen ?
               <TextInput
                 autoFocus={true}
-                style={{paddingLeft: 15, flex: 4, height: 40}}
+                style={{paddingLeft: 15, flex: 4, height: 50}}
                 onChangeText={this.onSearch.bind(this)}
                 value={this.props.sessionSearch.query} /> : null
             }
@@ -108,7 +108,7 @@ class Home extends Component {
 
   closeSearch() {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-    this.setState({br: 3, right: 25, left:25, top: 25, searchOpen: false})
+    this.setState({br: 3, right: 25, left:25, top: 25, searchOpen: false, search: new Animated.Value(WINDOW_Height)})
     
     Animated.spring(      
        this.state.search,
@@ -118,6 +118,10 @@ class Home extends Component {
 
   onSearch(val) {
     setSearch(val);
+  }
+
+  componentWillUnmount() {
+    this.closeSearch();
   }
 }
 
