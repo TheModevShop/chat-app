@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
 import {branch} from 'baobab-react/higher-order';
 import _ from 'lodash';
+import {resetActiveSession} from '../../actions/SessionActions';
 import ResponsiveImage from 'react-native-responsive-image';
 import {
   StyleSheet,
@@ -29,6 +30,9 @@ class SessionDetails extends Component {
         }
       </View>
     );
+  }
+  componentWillUnmount() {
+    resetActiveSession()
   }
 }
 

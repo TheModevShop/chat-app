@@ -51,15 +51,20 @@ class Home extends Component {
         
         <SessionList scrollEvent={this.scrollEvent.bind(this)} />
         <TouchableHighlight style={{position: 'absolute', left: this.state.left, right: this.state.right, top: this.state.top, flex: 1, borderRadius: this.state.br, backgroundColor: '#fff', height: 50}} onPress={this.onPress.bind(this)} underlayColor='#99d9f4'>
-          <View style={{marginTop: 0, flex: 1, flexDirection: 'column',  borderColor: 'gray', borderBottomWidth: 1}}>
+          <View style={{marginTop: 0, flex: 1, flexDirection: 'row',  borderColor: 'gray', borderBottomWidth: 1}}>
             {
               this.state.searchOpen ?
               <TextInput
                 autoFocus={true}
                 style={{paddingLeft: 15, flex: 4, height: 40}}
                 onChangeText={this.onSearch.bind(this)}
-                value={this.props.sessionSearch.query}
-              /> : null
+                value={this.props.sessionSearch.query} /> : null
+            }
+            {
+              this.state.searchOpen ?
+              <TouchableHighlight style={{flex: 1, padding: 20}} onPress={this.closeSearch.bind(this)} underlayColor='#99d9f4'>
+                <Text>Cancel</Text>
+              </TouchableHighlight> : null
             }
           </View> 
         </TouchableHighlight>
@@ -95,9 +100,19 @@ class Home extends Component {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     this.setState({br: 3, right: 0, left:0, top: 0, searchOpen: !this.state.searchOpen})
     
-    Animated.spring(          // Uses easing functions
-       this.state.search,    // The value to drive
-       {toValue: 50, friction: 6, tension: 20}            // Configuration
+    Animated.spring(
+       this.state.search,
+       {toValue: 50, friction: 9, tension: 50}
+     ).start(); 
+  }
+
+  closeSearch() {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+    this.setState({br: 3, right: 25, left:25, top: 25, searchOpen: false})
+    
+    Animated.spring(      
+       this.state.search,
+       {toValue: WINDOW_Height, friction: 9, tension: 50}
      ).start(); 
   }
 

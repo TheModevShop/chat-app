@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import { Actions } from 'react-native-router-flux';
 import {openChat} from '../../actions/ChatActions';
+import {setActiveSession} from '../../actions/SessionActions';
 import _ from 'lodash';
 import {
   StyleSheet,
@@ -47,23 +48,24 @@ class Home extends Component {
     return (
       <View style={{marginTop: 0, flex: 1, flexDirection: 'column'}}>
         {
-          this.state.dataSource ?
+          _.get(this.props, 'search.items.length', false) ?
           <ListView
             dataSource={this.state.dataSource}
             renderRow={(rowData, i) => {
               return (
                 <View>
-                  <TouchableHighlight onPress={this.onPress.bind(this)} underlayColor='#999'>
-                    <View>
-                      <Text>fasfasdf</Text>
+                  <TouchableHighlight onPress={this.onPressSession.bind(this, rowData._id)} underlayColor='#999'>
+                    <View style={styles.result}>
+                      <Text style={styles.h2}>{rowData.name}</Text>
+                      <Text>{rowData.description}</Text>
                     </View>
                   </TouchableHighlight>
                 </View>
               )
             }}        
           /> : 
-        <View style={{margin: 128}}>
-          <Text> search</Text>
+        <View style={{margin: 30}}>
+          <Text>Search for something you would like to learn</Text>
         </View>
       }
     </View>
@@ -72,10 +74,22 @@ class Home extends Component {
   onPress() {
 
   }
+  onPressSession(id) {
+    setActiveSession(id);
+    Actions.sessionDetails()
+  }
 }
 
 let styles = StyleSheet.create({
- 
+  result: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc'
+  },
+  h2: {
+    fontSize: 18,
+    fontWeight: 'bold'
+  }
 });
 
 export default branch(Home, {

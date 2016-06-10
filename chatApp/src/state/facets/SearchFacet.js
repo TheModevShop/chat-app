@@ -5,7 +5,6 @@ import Baobab from 'baobab';
 
 const loader = new RESTLoader({
   getResourceUrl: (query) => {
-    console.log(query)
     return `${BASE}/search?query=${query}`;
   },
   successTransformer: (data, current) => {
@@ -15,7 +14,7 @@ const loader = new RESTLoader({
   }
 });
 
-export default function AllConversationFacet() {
+export default function SearchFacet() {
   return Baobab.monkey({
     cursors: {
       sessionSearch: ['sessionSearch']
