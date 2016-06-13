@@ -16,6 +16,7 @@
     "react": "0.14.5",
     "react-native": "^0.25.0",
     "react-native-communications": "^2.0.0",
+    "react-native-drawer": "^2.2.3",
     "react-native-drawer-layout": "^1.0.0",
     "react-native-extra-dimensions-android": "^0.17.0",
     "react-native-facebook-login": "^1.2.0",

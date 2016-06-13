@@ -102,7 +102,7 @@ class Home extends Component {
     
     Animated.spring(
        this.state.search,
-       {toValue: 50, friction: 9, tension: 50}
+       {toValue: 110, friction: 9, tension: 50}
      ).start(); 
   }
 
