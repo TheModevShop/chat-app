@@ -1,4 +1,5 @@
 import tree from '../state/StateTree';
+import _ from 'lodash';
 import {addChatToUi} from './ChatActions';
 const sessionDetails = tree.select(['sessionDetails']);
 

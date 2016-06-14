@@ -1,4 +1,5 @@
 import tree from '../state/StateTree';
+import _ from 'lodash';
 const sessionSearch = tree.select(['sessionSearch']);
 const debounceSearch = _.debounce(search, 300);
 

@@ -113,7 +113,7 @@ class Chat extends Component {
         messages={!this._isMounted || !this.props.chats || _.get(this.props.chats, '$isLoading') ? [] : this.props.chats}
         handleSend={this.handleSend.bind(this)}
         onErrorButtonPress={this.onErrorButtonPress.bind(this)}
-        maxHeight={Dimensions.get('window').height - 0 - STATUS_BAR_HEIGHT}
+        maxHeight={Dimensions.get('window').height - 50 - STATUS_BAR_HEIGHT}
 
         loadEarlierMessagesButton={!this.state.allLoaded}
         onLoadEarlierMessages={this.onLoadEarlierMessages.bind(this)}
@@ -152,7 +152,6 @@ class Chat extends Component {
   componentWillUnmount() {
     this._isMounted = false;
     if (_.get(this.props.chats, 'length')) {
-      console.warn(_.last(this.props.chats))
       saveLastChatInConversation(_.last(this.props.chats)._id, _.get(this.props.conversation, '_id'));
     }    
     clearChat();

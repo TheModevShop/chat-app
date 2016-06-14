@@ -1,4 +1,5 @@
 'use strict';
+import _ from 'lodash';
 import {FBLogin, FBLoginManager} from 'react-native-facebook-login';
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';

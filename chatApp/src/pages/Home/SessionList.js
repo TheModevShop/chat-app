@@ -79,8 +79,8 @@ class Home extends Component {
                   <View>
                      <ResponsiveImage source={{uri: rowData.image}} initWidth="100%" initHeight="250"/>
                      <View style={styles.backgroundImage}>
-                        <Text style={styles.text}>{rowData.name}</Text> 
-                        <Text style={styles.subtext}>Instructed by {rowData.instructor.name.first}</Text> 
+                        <Text style={styles.text}>Test</Text> 
+                        <Text style={styles.subtext}>sub title test for image</Text> 
                      </View>
                   </View>
                 </TouchableHighlight>

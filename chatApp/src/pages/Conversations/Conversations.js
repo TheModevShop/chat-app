@@ -59,7 +59,7 @@ class Conversations extends Component {
 
   goToChat(conversation) {
     openChat(conversation);
-    Actions.chat({text: 'Hello World!'})
+    Actions.conversation({text: 'Hello World!'})
   }
 }
 

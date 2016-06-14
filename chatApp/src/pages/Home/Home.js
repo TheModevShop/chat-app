@@ -51,7 +51,7 @@ class Home extends Component {
         
         <SessionList scrollEvent={this.scrollEvent.bind(this)} />
         <TouchableHighlight style={{position: 'absolute', left: this.state.left, right: this.state.right, top: this.state.top, flex: 1, borderRadius: this.state.br, backgroundColor: '#fff', height: 50}} onPress={this.onPress.bind(this)} underlayColor='#99d9f4'>
-          <View style={{marginTop: 0, flex: 1, flexDirection: 'row',  borderColor: 'gray', borderBottomWidth: 1}}>
+          <View style={{marginTop: 0, flex: 1, flexDirection: 'row',  borderColor: 'gray', borderBottomWidth: this.state.searchOpen ? 1 : 0}}>
             {
               this.state.searchOpen ?
               <TextInput
@@ -102,7 +102,7 @@ class Home extends Component {
     
     Animated.spring(
        this.state.search,
-       {toValue: 110, friction: 9, tension: 50}
+       {toValue: 50, friction: 9, tension: 50}
      ).start(); 
   }
 
