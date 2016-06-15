@@ -1,8 +1,8 @@
 'use strict';
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
-import {Text, View, Navigator, StyleSheet} from 'react-native';
-import {Actions, Scene, Router, TabBar, Tab, TabView, Reducer} from 'react-native-router-flux';
+import {Text, View, Navigator, StyleSheet, StatusBar} from 'react-native';
+import {Actions, Scene, Router, Tab, TabView, Reducer} from 'react-native-router-flux';
 import Home from '../Home/Home';
 import Login from '../Login/Login';
 import Chat from '../Chat/Chat';
@@ -14,62 +14,51 @@ import DrawerLayout from 'react-native-drawer-layout';
 import Drawer from 'react-native-drawer'
 import Icon from 'react-native-vector-icons/Ionicons';
 import _ from 'lodash';
-import Tabs from 'react-native-tabs';
+
+import TabBar from './TabBar';
 
 let _drawer;
 
 class DrawerIcon extends React.Component {
   render(){
+    const selected = this.props.selected;
     return (
-        <Icon name="ios-options-outline" size={30} color="#900" />
+        <Icon name={selected ? 'ios-options' : 'ios-options-outline'} size={30} color="#999" />
     );
   }
 }
 
 class ChatIcon extends React.Component {
   render(){
+    const selected = this.props.selected;
     return (
-        <Icon name="ios-text-outline" size={30} color="#900" />
+        <Icon name={selected ? 'ios-text' : 'ios-text-outline'} size={30} color="#999" />
     );
   }
 }
 
 class SessionIcon extends React.Component {
   render(){
+    const selected = this.props.selected;
     return (
-        <Icon name="ios-analytics" size={28} color="#900" />
+        <Icon name={selected ? "ios-analytics" : "ios-analytics-outline"} size={28} color="#999" />
     );
   }
 }
 
 class StarIcon extends React.Component {
   render(){
+    const selected = this.props.selected;
     return (
-        <Icon name="ios-star-outline" size={30} color="#900" />
+        <Icon name={selected ? "ios-star" : "ios-star-outline"} size={30} color="#999" />
     );
   }
 }
 class HistoryIcon extends React.Component {
   render(){
+    const selected = this.props.selected;
     return (
-        <Icon name="ios-recording-outline" size={30} color="#900" />
-    );
-  }
-}
-
-
-class TabsBar extends React.Component {
-  render() {
-    console.log(this.props)
-    return (
-      <Tabs style={{backgroundColor:'white', position: 'absolute', bottom: 0, left: 0, right: 0}}
-      selectedStyle={{color:'red'}} onSelect={this.setPage.bind(this)}>
-      <Text name="sessions">Session</Text>
-      <Text name="chat" selectedIconStyle={{borderTopWidth:2,borderTopColor:'red'}}>Chat</Text>
-      <Text name="third">NA</Text>
-      <Text name="fourth" selectedStyle={{color:'green'}}>NA</Text>
-      <Text name="drawer">Drawer</Text>
-    </Tabs>
+        <Icon name={selected ? 'ios-recording' : "ios-recording-outline"} size={30} color="#999" />
     );
   }
 }
@@ -78,12 +67,12 @@ class TabsBar extends React.Component {
 const scenes = Actions.create(
   <Scene key="root">
     <Scene key="login" component={Login} title="Login" initial={true} hideNavBar={true}/>
-    <Scene key="home" tabs={true} >
+    <Scene key="home" component={TabBar} tabs={true} >
         <Scene key="sessions" initial={true} title="session" icon={SessionIcon}>
             <Scene key="sessionsList" hideNavBar={true} component={Home} title="Tab #1_1" />
             <Scene key="sessionDetails" hideNavBar={false} component={SessionDetails} title="Tab #1_2"/>
         </Scene>
-        <Scene key="chat" title="chat" icon={ChatIcon}>
+        <Scene key="chat" title="chat" leftButtonImage={''} icon={ChatIcon}>
             <Scene key="conversations" initial={true}  component={Conversations} title="All Convs" />
             <Scene key="conversation" component={Chat} title="Conversation" />
         </Scene>
@@ -95,25 +84,21 @@ const scenes = Actions.create(
             <Scene key="conversations" initial={true}  component={Conversations} title="All Convs" />
             <Scene key="conversation" component={Chat} title="Conversation" />
         </Scene>
-        <Scene key="tab3" component={Conversations} title="Tab #3" icon={DrawerIcon}/>
+        <Scene key="tab3" onSelect={openDrawer} component={Conversations} title="Tab #3" icon={DrawerIcon}/>
     </Scene>
   </Scene>
-
-
 );
 
-const reducerCreate = params=>{
-    const defaultReducer = Reducer(params);
-    return (state, action)=>{
-      if (action.scene && action.scene.name === 'tab3') {
-        _drawer.open();
-         console.log("ACTION:", action);
-      }
-        return defaultReducer(state, action);
-    }
-};
+function openDrawer() {
+  _drawer.open();
+}
+
 
 class Application extends React.Component {
+  constructor(...args) {
+    super(...args);
+    this.state = {};
+  }
   
    async componentDidMount() {
     try {
@@ -135,6 +120,8 @@ class Application extends React.Component {
         content={app}
         openDrawerOffset={0.5} // 20% gap on the right side of drawer
         panCloseMask={0.9}
+        onOpen={this.drawerOpen.bind(this)}
+        onClose={this.drawerClose.bind(this)}
         captureGestures={true}
         closedDrawerOffset={-3}
         tweenDuration={120}
@@ -142,13 +129,17 @@ class Application extends React.Component {
         tweenHandler={(ratio) => ({
           main: { opacity:(2-ratio)/2}
         })}>
-        <Router createReducer={reducerCreate} scenes={scenes}/>
+        <StatusBar showHideTransition={'fade'} animated={true} backgroundColor="#fff" barStyle="default" hidden={this.state.hidden}/>
+        <Router drawerImage={''} scenes={scenes}/>
       </Drawer>
       </View>
     );
   }
-  setPage(el) {
-    return true
+  drawerOpen() {
+   this.setState({hidden: true});
+  }
+  drawerClose() {
+   this.setState({hidden: false});
   }
 }
 

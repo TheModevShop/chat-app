@@ -103,6 +103,10 @@ class Home extends Component {
     openChat(conversation);
     Actions.conversations()
   }
+
+  componentWillUnmount() {
+    console.log('unmount 22222')
+  }
 }
 
 let styles = StyleSheet.create({

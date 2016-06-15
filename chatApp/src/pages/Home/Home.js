@@ -1,10 +1,9 @@
-'use strict';
 import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
 import {branch} from 'baobab-react/higher-order';
 import SessionList from './SessionList';
 import Search from '../Search/Search';
-
+import Icon from 'react-native-vector-icons/Ionicons';
 import {setSearch} from '../../actions/SearchActions';
 
 import {
@@ -15,10 +14,8 @@ import {
   Text,
   TextInput,
   View,
-  ScrollView,
   Dimensions,
   ListView,
-  PixelRatio,
   Image,
   TouchableHighlight
 } from 'react-native';
@@ -43,15 +40,17 @@ class Home extends Component {
 
   componentWillMount() {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+    StatusBar.setBarStyle('light-content', true);
   }
 
   render() {
     return (
-       <View style={{marginTop: 0, flex: 1, flexDirection: 'column'}}>
+       <View style={{marginBottom: 50, marginTop: 0, flex: 1, flexDirection: 'column'}}>
         
         <SessionList scrollEvent={this.scrollEvent.bind(this)} />
         <TouchableHighlight style={{position: 'absolute', left: this.state.left, right: this.state.right, top: this.state.top, flex: 1, borderRadius: this.state.br, backgroundColor: '#fff', height: 50}} onPress={this.onPress.bind(this)} underlayColor='#99d9f4'>
           <View style={{marginTop: 0, flex: 1, flexDirection: 'row',  borderColor: 'gray', borderBottomWidth: this.state.searchOpen ? 1 : 0}}>
+            <Icon name={'ios-search-outline'} style={{backgroundColor: 'transparent', padding: 10, paddingLeft: 14}} size={30} color="#999" />
             {
               this.state.searchOpen ?
               <TextInput
@@ -71,7 +70,7 @@ class Home extends Component {
         <Animated.View                         // Base: Image, Text, View
           style={{
             position: 'absolute',
-            height: WINDOW_Height,
+            height: WINDOW_Height-50,
             backgroundColor: '#fff',
             bottom: 0,
             left: 0,
@@ -120,8 +119,8 @@ class Home extends Component {
     setSearch(val);
   }
 
-  componentWillUnmount() {
-    this.closeSearch();
+  componentDidUpdate(prevProps) {
+    console.log(this.props, prevProps, 'ROUTTITITNG')
   }
 }
 

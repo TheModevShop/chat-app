@@ -28,7 +28,6 @@ export default function UsersFacet() {
         loader.setCursor(this.select(['users']));
       }
      request = _.clone(loader.fetch());
-    console.log(request);
       return request;
     }
   });

@@ -28,7 +28,6 @@ export default function AllSessionsFacet() {
         loader.setCursor(this.select(['sessions']));
       }
       request = _.clone(loader.fetch());
-      console.log(request)
       return request;
     }
   });

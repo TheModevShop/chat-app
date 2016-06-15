@@ -35,7 +35,6 @@ export default function ChatFacet() {
         }
 
         request = _.clone(loader.fetch(data.conversation._id));
-        console.log(request, 'request')
         return request;
       }
     }

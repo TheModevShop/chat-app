@@ -29,7 +29,6 @@ export default function AllConversationFacet() {
         loader.setCursor(this.select(['conversations']));
       }
       request = _.clone(loader.fetch());
-      console.log(request)
       return request;
     }
   });

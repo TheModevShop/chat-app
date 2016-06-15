@@ -27,6 +27,7 @@
     "react-native-router-flux": "^3.26.15",
     "react-native-tabs": "^1.0.7",
     "react-native-vector-icons": "^2.0.3",
+    "react-static-container": "^1.0.1",
     "socket.io-client": "^1.4.6",
     "superagent": "^1.8.3",
     "tcomb-form-native": "^0.5.1"
