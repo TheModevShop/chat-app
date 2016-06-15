@@ -1,6 +1,7 @@
 import tree from '../state/StateTree';
 import _ from 'lodash';
 const sessionSearch = tree.select(['sessionSearch']);
+const searchView = tree.select(['searchView']);
 const debounceSearch = _.debounce(search, 300);
 
 export async function setSearch(query) {
@@ -15,6 +16,12 @@ export function clearSearch() {
   sessionSearch.set({
     query: '',
     results: ''
+  });
+}
+
+export function toggleSearch(val) {
+  searchView.set({
+    open: val
   });
 }
 

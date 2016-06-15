@@ -1,4 +1,5 @@
 'use strict';
+import tree from '../../state/StateTree';
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import {Text, View, Navigator, StyleSheet, StatusBar} from 'react-native';
@@ -17,6 +18,7 @@ import _ from 'lodash';
 
 import TabBar from './TabBar';
 
+const searchView = tree.select(['searchView']);
 let _drawer;
 
 class DrawerIcon extends React.Component {
@@ -101,6 +103,13 @@ class Application extends React.Component {
   }
   
    async componentDidMount() {
+    searchView.on('update', (e) => {
+      if (e.target.get().open) {
+        this.setState({tabsHidden: true});
+      } else {
+        this.setState({tabsHidden: false});
+      }
+    });
     try {
       const session = await checkSession();
       console.log(session);

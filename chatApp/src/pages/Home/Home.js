@@ -4,7 +4,7 @@ import {branch} from 'baobab-react/higher-order';
 import SessionList from './SessionList';
 import Search from '../Search/Search';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {setSearch} from '../../actions/SearchActions';
+import {setSearch, toggleSearch} from '../../actions/SearchActions';
 
 import {
   StatusBar,
@@ -96,6 +96,7 @@ class Home extends Component {
   }
 
   onPress() {
+    toggleSearch(true);
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     this.setState({br: 3, right: 0, left:0, top: 0, searchOpen: !this.state.searchOpen})
     
