@@ -57,7 +57,8 @@ class Home extends Component {
                 autoFocus={true}
                 style={{paddingLeft: 15, flex: 4, height: 50}}
                 onChangeText={this.onSearch.bind(this)}
-                value={this.props.sessionSearch.query} /> : null
+                value={this.props.sessionSearch.query} /> : !this.state.scrolled ? 
+                <Text style={{backgroundColor: 'transparent', color: '#999'}}>What do you want to learn?</Text> : null
             }
             {
               this.state.searchOpen ?
@@ -88,10 +89,10 @@ class Home extends Component {
     const offset = e.nativeEvent.contentOffset.y;
     if (offset > 100) {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-      this.setState({br: 100, right: WINDOW_WIDTH - 75})
+      this.setState({br: 100, right: WINDOW_WIDTH - 75, scrolled: true})
     } else if(offset < 100) {
       LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-      this.setState({br: 3, right: 25})
+      this.setState({br: 3, right: 25, scrolled: false})
     }
   }
 
@@ -108,8 +109,8 @@ class Home extends Component {
 
   closeSearch() {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-    this.setState({br: 3, right: 25, left:25, top: 25, searchOpen: false, search: new Animated.Value(WINDOW_Height)})
-    
+    this.setState({br: this.state.scrolled ? 100 : 3, right: this.state.scrolled ? WINDOW_WIDTH - 75 : 25, left:25, top: 25, searchOpen: false, search: new Animated.Value(WINDOW_Height)})
+      
     Animated.spring(      
        this.state.search,
        {toValue: WINDOW_Height, friction: 9, tension: 50}
@@ -120,9 +121,6 @@ class Home extends Component {
     setSearch(val);
   }
 
-  componentDidUpdate(prevProps) {
-    console.log(this.props, prevProps, 'ROUTTITITNG')
-  }
 }
 
 export default branch(Home, {

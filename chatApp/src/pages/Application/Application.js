@@ -2,14 +2,16 @@
 import tree from '../../state/StateTree';
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
-import {Text, View, Navigator, StyleSheet, StatusBar} from 'react-native';
+import {Text, View, Navigator, StyleSheet, StatusBar, TouchableHighlight} from 'react-native';
 import {Actions, Scene, Router, Tab, TabView, Reducer} from 'react-native-router-flux';
 import Home from '../Home/Home';
 import Login from '../Login/Login';
 import Chat from '../Chat/Chat';
+import Initial from '../Initial/Initial';
 import Conversations from '../Conversations/Conversations';
 import Search from '../Search/Search';
 import SessionDetails from '../SessionDetails/SessionDetails';
+import AddSession from '../AddSession/AddSession';
 import {checkSession} from '../../actions/AuthenticationActions';
 import DrawerLayout from 'react-native-drawer-layout';
 import Drawer from 'react-native-drawer'
@@ -65,11 +67,31 @@ class HistoryIcon extends React.Component {
   }
 }
 
+function DrawerContent() {
+    return (
+      <View style={{flex: 1, backgroundColor: '#fff', justifyContent: 'space-between'}}>
+        <View style={{backgroundColor: '#ccc'}}>
+          
+        </View>
+        <View style={{borderTopWidth: 1, borderTopColor: '#ccc'}}>
+          <TouchableHighlight onPress={() => onDrawerLinks(Actions.admin)} underlayColor='#99d9f4'>
+            <Text style={{padding: 20}}>Login or Sign up</Text>
+          </TouchableHighlight>
+        </View>
+      </View>
+  );
+}
 
-const scenes = Actions.create(
-  <Scene key="root">
-    <Scene key="login" component={Login} title="Login" initial={true} hideNavBar={true}/>
-    <Scene key="home" component={TabBar} tabs={true} >
+function onDrawerLinks(link) {
+   _drawer.close();
+   setTimeout(() => {
+    link();
+   }, 300);
+}
+
+function sc(d) {
+  return (
+    <Scene key={`home${d}`} component={TabBar} tabs={true} duration={d === 1 ? null : 0}>
         <Scene key="sessions" initial={true} title="session" icon={SessionIcon}>
             <Scene key="sessionsList" hideNavBar={true} component={Home} title="Tab #1_1" />
             <Scene key="sessionDetails" hideNavBar={false} component={SessionDetails} title="Tab #1_2"/>
@@ -88,6 +110,27 @@ const scenes = Actions.create(
         </Scene>
         <Scene key="tab3" onSelect={openDrawer} component={Conversations} title="Tab #3" icon={DrawerIcon}/>
     </Scene>
+  )
+}
+
+function adminViews(d) {
+  return (
+    <Scene key={`admin`} component={TabBar} tabs={true} duration={0}>
+        <Scene key="addSession" initial={true} title="session" icon={SessionIcon}>
+            <Scene key="addSessionInfo" initial={true} hideNavBar={true} component={AddSession} title="Tab #1_1" />
+        </Scene>
+        <Scene key="tab3" onSelect={openDrawer} component={Conversations} title="Tab #3" icon={DrawerIcon}/>
+    </Scene>
+  )
+}
+
+const scenes = Actions.create(
+  <Scene key="root">
+    <Scene key="login" component={Login} direction="vertical" title="Login" hideNavBar={true}/>
+    <Scene key="initial" component={Initial} title="Initial" initial={true} hideNavBar={true}/>
+    {sc(0)}
+    {sc(1)}
+    {adminViews()}
   </Scene>
 );
 
@@ -112,9 +155,11 @@ class Application extends React.Component {
     });
     try {
       const session = await checkSession();
-      console.log(session);
+      setTimeout(() => {
+        Actions.home0();
+      }, 800)
     } catch (err) {
-      console.log(session);
+      Actions.login();
     }
   }
 
@@ -126,9 +171,9 @@ class Application extends React.Component {
         ref={(ref) => _drawer = ref}
         type="overlay"
         side="right"
-        content={app}
+        content={DrawerContent()}
         openDrawerOffset={0.5} // 20% gap on the right side of drawer
-        panCloseMask={0.9}
+        panCloseMask={0.5}
         onOpen={this.drawerOpen.bind(this)}
         onClose={this.drawerClose.bind(this)}
         captureGestures={true}
