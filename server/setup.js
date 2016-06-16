@@ -8,6 +8,7 @@ var RolesModel = require('./app/models/roles');
 var UsersModel = require('./app/models/users');
 var ConversationsModel = require('./app/models/conversations');
 var SessionsModel = require('./app/models/sessions');
+var SkillsModel = require('./app/models/skills');
 
 // MongoDB ==================================================
 var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/app';
@@ -30,6 +31,14 @@ UsersModel.remove({}, function() {
 });
 
 ConversationsModel.remove({}, function() { 
+   console.log('ConversationsModel Removed');
+});
+
+SessionsModel.remove({}, function() { 
+   console.log('ConversationsModel Removed');
+});
+
+SkillsModel.remove({}, function() { 
    console.log('ConversationsModel Removed');
 });
 
@@ -141,6 +150,21 @@ var sessionfour = new SessionsModel({
   location: {}
 })
 
+var skill = new SkillsModel({ 
+  name: 'Soccer',
+  description: 'soccer drills'
+});
+
+var skill2 = new SkillsModel({ 
+  name: 'Guitar',
+  description: 'Guitar drills'
+});
+
+var skill3 = new SkillsModel({ 
+  name: 'Science',
+  description: 'Science problems'
+});
+
 
 promisesUsers.push(user.save());
 promisesUsers.push(userTwo.save());
@@ -150,6 +174,10 @@ promisesUsers.push(session.save());
 promisesUsers.push(sessiontwo.save());
 promisesUsers.push(sessionthree.save());
 promisesUsers.push(sessionfour.save());
+
+promisesUsers.push(skill.save());
+promisesUsers.push(skill2.save());
+promisesUsers.push(skill3.save());
 
 Promise.all(promisesRoles)
 	// All roles

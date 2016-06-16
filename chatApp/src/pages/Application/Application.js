@@ -85,13 +85,13 @@ function DrawerContent() {
 function onDrawerLinks(link) {
    _drawer.close();
    setTimeout(() => {
-    link();
+    Actions.admin();
    }, 300);
 }
 
 function sc(d) {
   return (
-    <Scene key={`home${d}`} component={TabBar} tabs={true} duration={d === 1 ? null : 0}>
+    <Scene key={`home`} component={TabBar} tabs={true} duration={d === 1 ? null : 0}>
         <Scene key="sessions" initial={true} title="session" icon={SessionIcon}>
             <Scene key="sessionsList" hideNavBar={true} component={Home} title="Tab #1_1" />
             <Scene key="sessionDetails" hideNavBar={false} component={SessionDetails} title="Tab #1_2"/>
@@ -119,7 +119,7 @@ function adminViews(d) {
         <Scene key="addSession" initial={true} title="session" icon={SessionIcon}>
             <Scene key="addSessionInfo" initial={true} hideNavBar={true} component={AddSession} title="Tab #1_1" />
         </Scene>
-        <Scene key="tab3" onSelect={openDrawer} component={Conversations} title="Tab #3" icon={DrawerIcon}/>
+        <Scene key="drawer-admin" onSelect={openDrawer} component={Conversations} title="drawer-admin" icon={DrawerIcon}/>
     </Scene>
   )
 }
@@ -129,7 +129,6 @@ const scenes = Actions.create(
     <Scene key="login" component={Login} direction="vertical" title="Login" hideNavBar={true}/>
     <Scene key="initial" component={Initial} title="Initial" initial={true} hideNavBar={true}/>
     {sc(0)}
-    {sc(1)}
     {adminViews()}
   </Scene>
 );
@@ -156,7 +155,7 @@ class Application extends React.Component {
     try {
       const session = await checkSession();
       setTimeout(() => {
-        Actions.home0();
+        Actions.home();
       }, 800)
     } catch (err) {
       Actions.login();

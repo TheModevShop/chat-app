@@ -29,6 +29,7 @@ router.use('/users', users);
 router.use('/conversations', conversations); 
 router.use('/chats', chats); 
 router.use('/sessions', sessions);
+router.use('/skills', skills);
 router.use('/search', search);
 
 
