@@ -49,13 +49,14 @@ class Home extends Component {
         
         <SessionList scrollEvent={this.scrollEvent.bind(this)} />
         <TouchableHighlight style={{position: 'absolute', left: this.state.left, right: this.state.right, top: this.state.top, flex: 1, borderRadius: this.state.br, backgroundColor: '#fff', height: 50}} onPress={this.onPress.bind(this)} underlayColor='#99d9f4'>
-          <View style={{marginTop: 0, flex: 1, flexDirection: 'row',  borderColor: 'gray', borderBottomWidth: this.state.searchOpen ? 1 : 0}}>
+          <View style={{marginTop: 0, alignItems: 'center', flex: 1, flexDirection: 'row',  borderColor: 'gray', borderBottomWidth: this.state.searchOpen ? 1 : 0}}>
             <Icon name={'ios-search-outline'} style={{backgroundColor: 'transparent', padding: 10, paddingLeft: 14}} size={30} color="#999" />
             {
               this.state.searchOpen ?
               <TextInput
                 autoFocus={true}
-                style={{paddingLeft: 15, flex: 4, height: 50}}
+                placeholder="What would you like to learn"
+                style={{fontSize: 14, paddingLeft: 5, flex: 4, height: 50}}
                 onChangeText={this.onSearch.bind(this)}
                 value={this.props.sessionSearch.query} /> : !this.state.scrolled ? 
                 <Text style={{backgroundColor: 'transparent', color: '#999'}}>What do you want to learn?</Text> : null
@@ -71,7 +72,7 @@ class Home extends Component {
         <Animated.View                         // Base: Image, Text, View
           style={{
             position: 'absolute',
-            height: WINDOW_Height-50,
+            height: WINDOW_Height-50-this.props.STATUS_BAR_HEIGHT,
             backgroundColor: '#fff',
             bottom: 0,
             left: 0,
@@ -109,7 +110,7 @@ class Home extends Component {
 
   closeSearch() {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-    this.setState({br: this.state.scrolled ? 100 : 3, right: this.state.scrolled ? WINDOW_WIDTH - 75 : 25, left:25, top: 25, searchOpen: false, search: new Animated.Value(WINDOW_Height)})
+    this.setState({br: this.state.scrolled ? 100 : 3, right: this.state.scrolled ? WINDOW_WIDTH - 75 : 25, left:25, top: 25, searchOpen: false})
       
     Animated.spring(      
        this.state.search,
@@ -126,6 +127,7 @@ class Home extends Component {
 export default branch(Home, {
   cursors: {
     view: ['home'],
-    sessionSearch: ['sessionSearch']
+    sessionSearch: ['sessionSearch'],
+    STATUS_BAR_HEIGHT: ['STATUS_BAR_HEIGHT']
   }
 });

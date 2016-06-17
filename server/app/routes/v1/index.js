@@ -18,6 +18,7 @@ var chats = require('./chats');
 var conversations = require('./conversations');
 var sessions = require('./sessions');
 var search = require('./search');
+var skills = require('./skills');
 
 router.use(cors());
 

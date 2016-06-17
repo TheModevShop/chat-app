@@ -2,7 +2,7 @@
 import tree from '../../state/StateTree';
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
-import {Text, View, Navigator, StyleSheet, StatusBar, TouchableHighlight} from 'react-native';
+import {Text, View, Navigator, StyleSheet, StatusBar, Platform, TouchableHighlight} from 'react-native';
 import {Actions, Scene, Router, Tab, TabView, Reducer} from 'react-native-router-flux';
 import Home from '../Home/Home';
 import Login from '../Login/Login';
@@ -19,6 +19,14 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import _ from 'lodash';
 
 import TabBar from './TabBar';
+
+let STATUS_BAR_HEIGHT = Navigator.NavigationBar.Styles.General.StatusBarHeight;
+let ExtraDimensions;
+if (Platform.OS === 'android') {
+  ExtraDimensions = require('react-native-extra-dimensions-android');
+  STATUS_BAR_HEIGHT = ExtraDimensions.get('STATUS_BAR_HEIGHT');
+}
+tree.set('STATUS_BAR_HEIGHT', STATUS_BAR_HEIGHT);
 
 const searchView = tree.select(['searchView']);
 let _drawer;
@@ -183,7 +191,9 @@ class Application extends React.Component {
           main: { opacity:(2-ratio)/2}
         })}>
         <StatusBar showHideTransition={'fade'} animated={true} backgroundColor="#fff" barStyle="default" hidden={this.state.hidden}/>
-        <Router drawerImage={''} scenes={scenes}/>
+        <View style={{flex: 1, marginTop: STATUS_BAR_HEIGHT}}>
+          <Router navigationBarStyle={{padding: 0, height: 50, backgroundColor: 'rgba(0,0,0,0.2)'}} drawerImage={''} scenes={scenes}/>
+        </View>
       </Drawer>
       </View>
     );

@@ -35,11 +35,21 @@ class Home extends Component {
   registerList(props) {
     const search = _.get(props, 'search.items', []);
     if (search.length) {
-      var ds = new ListView.DataSource({
+      const ds = new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 != r2
       });
       this.setState({
         dataSource: ds.cloneWithRows(search),
+      });
+    }
+
+    const skills = _.get(props, 'skills', []);
+    if (skills.length) {
+      const skillsDs = new ListView.DataSource({
+        rowHasChanged: (r1, r2) => r1 != r2
+      });
+      this.setState({
+        skillsSource: skillsDs.cloneWithRows(skills),
       });
     }
   }
@@ -65,7 +75,24 @@ class Home extends Component {
             }}        
           /> : 
         <View style={{margin: 30}}>
-          <Text>Search for something you would like to learn</Text>
+          {
+            _.get(this.props, 'skills.length', false) ?
+              <ListView
+                dataSource={this.state.skillsSource}
+                renderRow={(rowData, i) => {
+                  return (
+                    <View>
+                      <TouchableHighlight onPress={this.onPressSession.bind(this, rowData._id)} underlayColor='#999'>
+                        <View style={styles.result}>
+                          <Text style={styles.h2}>{rowData.name}</Text>
+                          <Text>{rowData.description}</Text>
+                        </View>
+                      </TouchableHighlight>
+                    </View>
+                  )
+                }}        
+              /> : null
+          }
         </View>
       }
     </View>
@@ -95,6 +122,7 @@ let styles = StyleSheet.create({
 export default branch(Home, {
   cursors: {
     view: ['search'],
-    search: ['facets', 'Search']
+    search: ['facets', 'Search'],
+    skills: ['facets', 'Skills']
   }
 });

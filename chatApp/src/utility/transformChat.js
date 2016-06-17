@@ -1,5 +1,6 @@
 
 import _ from 'lodash';
+import tree from '../state/StateTree';
 export default function transformChat(chat, position) {
   return {
       text: chat.log,

@@ -112,7 +112,7 @@ class Chat extends Component {
         messages={!this._isMounted || !this.props.chats || _.get(this.props.chats, '$isLoading') ? [] : this.props.chats}
         handleSend={this.handleSend.bind(this)}
         onErrorButtonPress={this.onErrorButtonPress.bind(this)}
-        maxHeight={Dimensions.get('window').height - 30 - STATUS_BAR_HEIGHT}
+        maxHeight={Dimensions.get('window').height - 50 - STATUS_BAR_HEIGHT}
 
         loadEarlierMessagesButton={!this.state.allLoaded}
         onLoadEarlierMessages={this.onLoadEarlierMessages.bind(this)}

@@ -5,6 +5,7 @@ const UsersFacet = require('./facets/UsersFacet').default();
 const AllSessionsFacet = require('./facets/AllSessionsFacet').default();
 const SessionDetailsFacet = require('./facets/SessionDetailsFacet').default();
 const SearchFacet = require('./facets/SearchFacet').default();
+const SkillsFacet = require('./facets/SkillsFacet').default();
 
 export default function getInitialState() {
   return {
@@ -33,7 +34,8 @@ export default function getInitialState() {
       AllConversations: AllConversationFacet,
       AllSessionsFacet: AllSessionsFacet,
       SessionDetails: SessionDetailsFacet,
-      Search: SearchFacet
+      Search: SearchFacet,
+      Skills: SkillsFacet
     }}
   };
 }

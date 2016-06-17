@@ -77,6 +77,6 @@ class AddSession extends Component {
 
 export default branch(AddSession, {
   cursors: {
-    view: ['home']
+    skills: ['facets', 'Skills']
   }
 });

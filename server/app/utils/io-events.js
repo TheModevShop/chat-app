@@ -23,8 +23,7 @@ var ioListeners = {
           log: message.log,
           user: message.user
         }).then(function(chat) {
-          console.log(chat)
-          io.to(message.roomId).emit('message', chat);
+          io.to(message.roomId).emit('message', message);
         })
       });
 
