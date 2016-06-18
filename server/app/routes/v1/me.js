@@ -13,6 +13,7 @@ var Roles = require('../../models/roles');
 //Controllers
 var Users = require('../../controllers/users');
 var Conversations = require('../../controllers/conversations');
+var Sessions = require('../../controllers/sessions');
 
 
 router.route('/')
@@ -64,6 +65,31 @@ router.route('/')
       .catch(function(err) {
         res.status(422).json(err);
       });
+  });
+
+  router.route('/session')
+  .post(function(req, res) {
+    var session;
+    if (req.body.session) {
+      try {
+        session = JSON.parse(req.body.session);
+        console.log(session)
+        session.instructor = req.decoded._id;
+      } catch(err) {
+        console.log(err)
+        res.status(422).json({error: 'invalid format'});
+        return;
+      }
+      Sessions
+        .add(session)
+        .then(function(response) {
+          res.json(response);
+        })
+        .catch(function(err) {
+          console.log(err)
+          res.status(422).json(err);
+        });
+    }
   });
 
 module.exports = router;

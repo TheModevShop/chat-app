@@ -87,8 +87,8 @@ var session = new SessionsModel({
   dateAndTime: new Date(),
   date: '060216',
   time: {
-    start: '15:00',
-    end: '16:00'
+    start: '6:00',
+    end: '8:00'
   },
   description: 'This is a class about learning javascript with people who understand the space and techology.',
   instructor: user,

@@ -50,13 +50,10 @@ sessions.updateById = function(id, params) {
     });
 };
 
-sessions.add = function(params) {
-  var newSession = new Sessions({ 
-    users: [params.userOne, params.userTwo],
-    roomId: params.roomId
-  });
-
-  return conversation.save()
+sessions.add = function(session) {
+  var newSession = new Sessions(session);
+  console.log(newSession)
+  return newSession.save()
 };
 
 

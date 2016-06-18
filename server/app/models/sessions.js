@@ -14,6 +14,9 @@ var sessions = new Schema({
     type: String,
     es_indexed:true
   },
+  skill: {
+    type: { type: mongoose.Schema.Types.ObjectId, ref: 'Skills' }
+  },
   complete: {
     type: Boolean
   },
