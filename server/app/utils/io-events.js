@@ -1,4 +1,5 @@
 var chats = require('../controllers/chats');
+var conversations = require('../controllers/conversations');
 var rooms = []
 var io;
 var ioListeners = {
@@ -6,6 +7,8 @@ var ioListeners = {
   start: function(server) {
     io = require('socket.io')(server);
     io.on('connection', function(socket){
+      console.log(socket.handshake.query)
+      // socket.set('nickname', name)
       console.log('a user connected');
       io.emit('hi', { for: 'everyone' });
 
@@ -24,6 +27,7 @@ var ioListeners = {
           user: message.user
         }).then(function(chat) {
           io.to(message.roomId).emit('message', message);
+          conversations.updateById(message.roomId, {lastMessage: chat})
         })
       });
 

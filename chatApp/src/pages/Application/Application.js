@@ -196,7 +196,11 @@ class Application extends React.Component {
         })}>
         <StatusBar showHideTransition={'fade'} animated={true} backgroundColor="#fff" barStyle="default" hidden={this.state.hidden}/>
         <View style={{flex: 1, marginTop: STATUS_BAR_HEIGHT}}>
-          <Router navigationBarStyle={{padding: 0, height: 50, backgroundColor: 'rgba(0,0,0,0.2)'}} drawerImage={''} scenes={scenes}/>
+          <Router 
+            navigationBarStyle={{padding: 0, backgroundColor: 'rgba(0,0,0,0.2)'}} 
+            
+            drawerImage={''} 
+            scenes={scenes}/>
         </View>
       </Drawer>
       </View>
