@@ -52,6 +52,7 @@ class Chat extends Component {
   }
 
   componentWillReceiveProps(newProps) {
+    console.log('adihaslifaslfhsdifhsdfhi')
     joinRoom({name: _.get(this.props.user, 'details.name.first'), user: _.get(this.props.user, 'details._id'), room: newProps.conversation._id})
   }
 

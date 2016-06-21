@@ -2,7 +2,6 @@ import tree from '../state/StateTree';
 import {addChatToUi} from './ChatActions';
 window.navigator.userAgent = "react-native";
 var io = require('socket.io-client/socket.io');
-
 const socket = io('http://localhost:5050', {jsonp: false});
 const authentication = tree.select(['authentication']);
 
