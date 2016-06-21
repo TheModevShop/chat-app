@@ -20,6 +20,7 @@ import _ from 'lodash';
 
 import TabBar from './TabBar';
 
+let ADMIN_OPEN = false;
 let STATUS_BAR_HEIGHT = Navigator.NavigationBar.Styles.General.StatusBarHeight;
 let ExtraDimensions;
 if (Platform.OS === 'android') {
@@ -75,25 +76,28 @@ class HistoryIcon extends React.Component {
   }
 }
 
-function DrawerContent() {
+function DrawerContent(self) {
     return (
       <View style={{flex: 1, backgroundColor: '#fff', justifyContent: 'space-between'}}>
         <View style={{backgroundColor: '#ccc'}}>
           
         </View>
         <View style={{borderTopWidth: 1, borderTopColor: '#ccc'}}>
-          <TouchableHighlight onPress={() => onDrawerLinks(Actions.admin)} underlayColor='#99d9f4'>
-            <Text style={{padding: 20}}>Login or Sign up</Text>
+          <TouchableHighlight onPress={() => onDrawerLinks(!ADMIN_OPEN ? Actions.admin : Actions.home, 'admin')} underlayColor='#99d9f4'>
+            <Text style={{padding: 20}}>{!ADMIN_OPEN ? 'Switch to Admin' : 'Switch to User'}</Text>
           </TouchableHighlight>
         </View>
       </View>
   );
 }
 
-function onDrawerLinks(link) {
+function onDrawerLinks(link, admin) {
    _drawer.close();
    setTimeout(() => {
-    Actions.admin();
+    link();
+    if (admin) {
+      ADMIN_OPEN = !ADMIN_OPEN;
+     }
    }, 300);
 }
 
@@ -160,12 +164,12 @@ class Application extends React.Component {
         this.setState({tabsHidden: false});
       }
     });
-    try {
-      const session = await checkSession();
+    const session = await checkSession();
+    if (session) {
       setTimeout(() => {
         Actions.home();
       }, 800)
-    } catch (err) {
+    } else {
       Actions.login();
     }
   }
@@ -178,7 +182,7 @@ class Application extends React.Component {
         ref={(ref) => _drawer = ref}
         type="overlay"
         side="right"
-        content={DrawerContent()}
+        content={DrawerContent(this)}
         openDrawerOffset={0.5} // 20% gap on the right side of drawer
         panCloseMask={0.5}
         onOpen={this.drawerOpen.bind(this)}

@@ -39,8 +39,6 @@ var client = new elasticsearch.Client({
   log: 'trace'
 });
 
-console.log(client)
-
 
 // Routes ==================================================
 app.use('/v1', v1);

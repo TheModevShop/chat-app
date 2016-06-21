@@ -1,6 +1,7 @@
 'use strict';
 import {branch} from 'baobab-react/higher-order';
 import {joinRoom} from '../../actions/AppActions';
+import _ from 'lodash';
 import {addChat, clearChat, saveLastChatInConversation} from '../../actions/ChatActions';
 import React, {
   Component,

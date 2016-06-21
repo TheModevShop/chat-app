@@ -4,6 +4,7 @@ import {branch} from 'baobab-react/higher-order';
 import { Actions } from 'react-native-router-flux';
 import {openChat} from '../../actions/ChatActions';
 import {setActiveSession} from '../../actions/SessionActions';
+import ellipsize from 'ellipsize';
 import _ from 'lodash';
 import {
   StyleSheet,
@@ -79,8 +80,8 @@ class Home extends Component {
                   <View>
                      <ResponsiveImage source={{uri: rowData.image}} initWidth="100%" initHeight="250"/>
                      <View style={styles.backgroundImage}>
-                        <Text style={styles.text}>Test</Text> 
-                        <Text style={styles.subtext}>sub title test for image</Text> 
+                        <Text style={styles.text}>{rowData.name}</Text> 
+                        <Text style={styles.subtext}>{ellipsize(rowData.description, 60)}</Text> 
                      </View>
                   </View>
                 </TouchableHighlight>
@@ -132,12 +133,24 @@ let styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 32,
-    paddingBottom: 5
+    paddingBottom: 5,
+    textShadowColor: "rgba(0,0,0,0.3)",
+    textShadowRadius: 2,
+    textShadowOffset: {
+      width: 1,
+      height: 1
+    }
   },
   subtext: {
     color: '#fff',
     textAlign: 'center',
-    fontSize: 17
+    fontSize: 17,
+    textShadowColor: "rgba(0,0,0,0.3)",
+    textShadowRadius: 1,
+    textShadowOffset: {
+      width: 1,
+      height: 1
+    }
   }
 });
 

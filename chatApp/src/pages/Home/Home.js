@@ -17,7 +17,8 @@ import {
   Dimensions,
   ListView,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  Easing
 } from 'react-native';
 
 var WINDOW_WIDTH = Dimensions.get('window').width;
@@ -43,6 +44,14 @@ class Home extends Component {
     StatusBar.setBarStyle('light-content', true);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevState.searchOpen && this.state.searchOpen) {
+      setTimeout(() => {
+        this._searchInput.focus();
+      }, 430)
+    }
+  }
+
   render() {
     return (
        <View style={{marginBottom: 50, marginTop: 0, flex: 1, flexDirection: 'column'}}>
@@ -54,7 +63,8 @@ class Home extends Component {
             {
               this.state.searchOpen ?
               <TextInput
-                autoFocus={true}
+                ref={(c) => this._searchInput = c}
+                autoFocus={false}
                 placeholder="What would you like to learn"
                 style={{fontSize: 14, paddingLeft: 5, flex: 4, height: 50}}
                 onChangeText={this.onSearch.bind(this)}
@@ -99,23 +109,30 @@ class Home extends Component {
 
   onPress() {
     toggleSearch(true);
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-    this.setState({br: 3, right: 0, left:0, top: 0, searchOpen: !this.state.searchOpen})
+    LayoutAnimation.spring();
+    this.setState({br: 0, right: 0, left:0, top: 0, searchOpen: !this.state.searchOpen})
     
-    Animated.spring(
+    Animated.timing(
        this.state.search,
-       {toValue: 50, friction: 9, tension: 50}
+       {toValue: 50, duration: 250}
      ).start(); 
   }
 
-  closeSearch() {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-    this.setState({br: this.state.scrolled ? 100 : 3, right: this.state.scrolled ? WINDOW_WIDTH - 75 : 25, left:25, top: 25, searchOpen: false})
-      
-    Animated.spring(      
+  closeSearch() { 
+    this._searchInput.blur();
+
+    setTimeout(() => {
+      Animated.timing(      
        this.state.search,
-       {toValue: WINDOW_Height, friction: 9, tension: 50}
-     ).start(); 
+       {toValue: WINDOW_Height, duration: 250}
+     ).start();
+    },150) 
+
+    setTimeout(() => {
+      LayoutAnimation.spring();
+      this.setState({br: this.state.scrolled ? 100 : 3, right: this.state.scrolled ? WINDOW_WIDTH - 75 : 25, left:25, top: 25, searchOpen: false})
+    }, 240) 
+  
   }
 
   onSearch(val) {

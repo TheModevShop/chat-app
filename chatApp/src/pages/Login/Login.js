@@ -54,7 +54,7 @@ class Login extends Component {
           type={Account}
           options={options}
         />
-        <TouchableHighlight onPress={this.onPress.bind(this)} underlayColor='#99d9f4'>
+        <TouchableHighlight onPress={this.onLogin.bind(this)} underlayColor='#99d9f4'>
           <Text>Save</Text>
         </TouchableHighlight>
 
@@ -99,12 +99,13 @@ class Login extends Component {
 
   }
 
-  onPress() {
-    // call getValue() to get the values of the form
+  async onLogin() {
     const value = this.refs.form.getValue();
-    if (value) { // if validation fails, value will be null
-      console.log(value)
-      getAuthentication(value)
+    if (value) {
+      const token = await getAuthentication(value);
+      if (token) {
+        Actions.home();
+      }
     }
   }
 }

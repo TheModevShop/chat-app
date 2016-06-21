@@ -26,6 +26,7 @@ export async function checkSession() {
       const session = await AsyncStorage.getItem('sessionData');
       authentication.set(['sessionData'], session);
       tree.commit();
+      return true;
     } else {
       // go to login
       teardownSession();
