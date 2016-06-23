@@ -26,6 +26,9 @@ export default function getInitialState() {
           chats: []
         }
       },
+      newPaymentMethod: {
+        card: {}
+      }
     },
     facets: {facets: {
       Chat: ChatFacet,
