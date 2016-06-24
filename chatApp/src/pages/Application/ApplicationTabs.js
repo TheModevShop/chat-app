@@ -45,7 +45,7 @@ class Application extends React.Component {
     const session = await checkSession();
     if (session) {
       setTimeout(() => {
-        this.setState({selectedTab: 'home'})
+        this.setState({selectedTab: 'login'})
       }, 800)
     } else {
       this.setState({selectedTab: 'login'})
@@ -138,8 +138,33 @@ class Application extends React.Component {
       </TabNavigator>
     );
   }
-}
 
+
+  renderAdminTabs() {
+    return (
+      <TabNavigator>
+        <TabNavigator.Item
+          selected={this.state.selectedTab === 'home'}
+          renderIcon={() => <Icon name={'ios-analytics-outline'} size={25} color="#999" />}
+          renderSelectedIcon={() => <Icon name={'ios-analytics'} size={25} color="#999" />}
+          badgeText=""
+          onPress={() => this.setState({ selectedTab: 'home' })}>
+          <HomeController />
+        </TabNavigator.Item>
+        <TabNavigator.Item
+          selected={this.state.drawerOpen}
+          renderIcon={() => <Icon name={'ios-options-outline'} size={25} color="#999" />}
+          renderSelectedIcon={() => <Icon name={'ios-options'} size={25} color="#999" />}
+          badgeText=""
+          onPress={() => openDrawer()}>
+            <View></View>
+        </TabNavigator.Item>
+      </TabNavigator>
+    );
+  }
+  
+
+}
 
 function DrawerContent(self) {
     return (

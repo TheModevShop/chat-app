@@ -3,23 +3,6 @@
     "./"
   ],
   "env": {
-    "PUSH_KEY": "MGE1MThhZmUtOWM3Yy00MzI2LWFmMWYtZTM2MGE1ZGM1NGVi",
-    "PUSH_ID": "19600073-1235-4cb6-a6ff-8e08c8e7fa50",
-
-    "CLOUDINARY_NAME": "tang",
-    "CLOUDINARY_KEY": "376976686693631",
-    "CLOUDINARY_SECRET": "upQ-blegcMNxHQ2U0D-MwoOW5gw",
-
-    "GEOCODER_KEY": "AIzaSyBNfnzxRTDyHuR7Ws5tncjX5JN0hz5OMss",
-
-    "TOKEN_VARIABLE": "ilovescotch",
-
-    "MONGOLAB_URI": "mongodb://localhost/app",
-    "MONGOHQ_URL": "mongodb://localhost/app",
-
-    "STRIPE_SECRET": "sk_test_MceqQwwwqCHebwuydApW3v4A",
-
-    "MAIL_KEY": "key-c2c719f0864e8870fb947bf64756c6b0",
-    "MAIL_DOMAIN": "sandbox7d4f2b7fe2954554af14a509290482a8.mailgun.org"
+    
   }
 }

@@ -38,6 +38,9 @@ var users = new Schema({
   resetPasswordExpires: Date,
   deleted: {
     type: Date,
+  },
+  facebookCredentials: {
+    type: Object
   }
 });
 
