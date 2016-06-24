@@ -7,25 +7,25 @@ var router = express.Router();
 var hasRole = require('../../utils/roleMiddleware');
 
 // Models
-var Sessions = require('../../models/sessions');
+var Listings = require('../../models/listings');
 
 router.route('/')
   .post(function(req, res) {
     
   })
   .get(function(req, res) {
-    Sessions.find({}, function(err, response) {
+    Listings.find({}, function(err, response) {
       res.json(response);
-    }).populate('listing');
+    }).populate('instructor');
   });
 
 
 router.route('/:id')
   .get(function(req, res) {
-    Sessions.findOne({
+    Listings.findOne({
       _id: req.params.id
     })
-    .populate('listing')
+    .populate('instructor')
     .exec(function(err, response) {
       res.json(response);
     });

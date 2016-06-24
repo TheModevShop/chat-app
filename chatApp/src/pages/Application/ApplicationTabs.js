@@ -29,6 +29,8 @@ if (Platform.OS === 'android') {
   ExtraDimensions = require('react-native-extra-dimensions-android');
   STATUS_BAR_HEIGHT = ExtraDimensions.get('STATUS_BAR_HEIGHT');
 }
+tree.set('STATUS_BAR_HEIGHT', STATUS_BAR_HEIGHT);
+const searchView = tree.select(['searchView']);
 
 
 class Application extends React.Component {
@@ -72,7 +74,7 @@ class Application extends React.Component {
         <StatusBar showHideTransition={'fade'} animated={true} backgroundColor="#fff" barStyle="default" hidden={this.state.hidden}/>
         <View style={{flex: 1, backgroundColor: 'rgb(251, 251, 251)', marginTop: STATUS_BAR_HEIGHT}}>
           {
-            true ? 
+            this.state.selectedTab === 'settings' ? 
             <Settings /> :
             this.state.selectedTab === 'initial' ?
             <Initial /> :
@@ -91,7 +93,6 @@ class Application extends React.Component {
   drawerClose() {}
 
   renderTabs() {
-    console.log(this.state.selectedTab)
     return (
       <TabNavigator>
         <TabNavigator.Item

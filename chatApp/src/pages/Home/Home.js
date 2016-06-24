@@ -54,7 +54,7 @@ class Home extends Component {
 
   render() {
     return (
-       <View style={{marginBottom: 50, marginTop: 0, flex: 1, flexDirection: 'column'}}>
+       <View style={{flex: 1}}>
         
         <SessionList goToSessionDetails={this.props.onNavigation} scrollEvent={this.scrollEvent.bind(this)} />
         <TouchableHighlight style={{position: 'absolute', left: this.state.left, right: this.state.right, top: this.state.top, flex: 1, borderRadius: this.state.br, backgroundColor: '#fff', height: 50}} onPress={this.onPress.bind(this)} underlayColor='#99d9f4'>
@@ -114,7 +114,7 @@ class Home extends Component {
     
     Animated.timing(
        this.state.search,
-       {toValue: 50, duration: 250}
+       {toValue: 49, duration: 250}
      ).start(); 
   }
 

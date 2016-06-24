@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var uniqueValidator = require('mongoose-unique-validator');
 var Schema = mongoose.Schema;
 
-var sessionCategories = new Schema({ 
+var sessionTags = new Schema({ 
   name: {
     type: String,
     unique: true
@@ -15,6 +15,6 @@ var sessionCategories = new Schema({
   }
 });
 
-sessionCategories.plugin(uniqueValidator);
+sessionTags.plugin(uniqueValidator);
 
-module.exports = mongoose.model('SessionCategories', sessionCategories);
+module.exports = mongoose.model('SessionTags', sessionTags);
