@@ -45,7 +45,8 @@ class Application extends React.Component {
     const session = await checkSession();
     if (session) {
       setTimeout(() => {
-        this.setState({selectedTab: 'login'})
+        // this.setState({selectedTab: 'login'})
+        this.setState({selectedTab: 'home'})
       }, 800)
     } else {
       this.setState({selectedTab: 'login'})

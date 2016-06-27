@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import { Actions } from 'react-native-router-flux';
 import {addFacebookCredentials} from '../../actions/UserActions';
-import {getAuthentication} from '../../actions/AuthenticationActions';
+import {getAuthentication, teardownSession} from '../../actions/AuthenticationActions';
 import {
   Text,
   View,
@@ -45,22 +45,19 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    FBLoginManager.loginWithPermissions(["email","user_friends"], function(error, data){
-      if (!error) {
-        addFacebookCredentials(data.credentials);
-      } else {
-        console.log("Error: ", data);
-      }
-    })
+    // FBLoginManager.loginWithPermissions(["email","user_friends"], function(error, data){
+    //   if (!error) {        
+    //     addFacebookCredentials({userId: data.credentials.userId, tokenExpiration: data.credentials.tokenExpirationDate});
+    //   } else {
+    //     console.log("Error: ", data);
+    //   }
+    // })
   }
 
 
   render() {
-    const goToPageTwo = () => Actions.home({text: 'Hello World!'}); 
     return (
       <View style={{margin: 128}}>
-        <Text onPress={goToPageTwo}>This is PageTwo!</Text>
-
         <Form
           ref="form"
           type={Account}
@@ -76,12 +73,10 @@ class Login extends Component {
           loginBehavior={FBLoginManager.LoginBehaviors.Native}
           onLogin={(data) => {
             console.log("Logged in!");
-            console.log(data);
-            // this.setState({ user : data.credentials });
+            addFacebookCredentials({userId: data.credentials.userId, tokenExpiration: data.credentials.tokenExpirationDate});
           }}
           onLogout={() => {
-            console.log("Logged out.");
-            // this.setState({ user : null });
+            teardownSession();
           }}
           onLoginFound={(data) => {
             console.log("Existing login found.");

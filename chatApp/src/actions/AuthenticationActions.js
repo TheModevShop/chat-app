@@ -4,6 +4,7 @@ import {fetchToken} from '../api/authApi';
 import {getMe} from '../actions/UserActions';
 import resetState from '../state/ResetStateTree';
 import {AppRegistry, AsyncStorage} from 'react-native';
+import {FBLoginManager} from 'react-native-facebook-login';
 
 const authentication = tree.select(['authentication']);
 
@@ -17,6 +18,18 @@ export async function getAuthentication(data) {
     authentication.set('error', e);
     return false;
   }
+}
+
+function checkFacebookForSession() {
+  return new bluebird((resolve, reject) => {    
+     FBLoginManager.loginWithPermissions(["email","user_friends"], function(error, data){
+      if (!error) {
+        resolve(data)            
+      } else {
+        reject(error)
+      }
+    })
+  });
 }
 
 export async function checkSession() {
