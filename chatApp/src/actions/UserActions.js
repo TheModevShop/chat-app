@@ -1,5 +1,5 @@
 import tree from '../state/StateTree';
-import {editMeApi, getUser} from '../api/userApi';
+import {getUser, updateUser} from '../api/userApi';
 import _ from 'lodash';
 import {teardownSession} from '../actions/AuthenticationActions';
 const userCursor = tree.select(['user']);
@@ -20,5 +20,14 @@ export async function getMe() {
   } catch(err) {
     teardownSession();
     // history.push('/login');
+  }
+}
+
+export async function addFacebookCredentials(creds) {
+  try {
+    const addedFacebookCredentials = await updateUser({data: JSON.stringify({facebookCredentials: creds})});
+    console.log(addedFacebookCredentials);
+  } catch(err) {
+    console.log(err)
   }
 }

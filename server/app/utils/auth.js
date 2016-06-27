@@ -3,6 +3,8 @@
 var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
+var request = require('request');
+
 
 router.use(function(req, res, next) {
 

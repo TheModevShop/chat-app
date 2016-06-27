@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import tree from './src/state/StateTree';
-import Application from './src/pages/Application/Application';
+import Application from './src/pages/Application/ApplicationTabs';
 import {root} from 'baobab-react/higher-order';
 import {
   AppRegistry,

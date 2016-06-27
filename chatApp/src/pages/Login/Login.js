@@ -4,6 +4,7 @@ import {FBLogin, FBLoginManager} from 'react-native-facebook-login';
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import { Actions } from 'react-native-router-flux';
+import {addFacebookCredentials} from '../../actions/UserActions';
 import {getAuthentication} from '../../actions/AuthenticationActions';
 import {
   Text,
@@ -42,6 +43,17 @@ class Login extends Component {
     this.state = {
     };
   }
+
+  componentDidMount() {
+    FBLoginManager.loginWithPermissions(["email","user_friends"], function(error, data){
+      if (!error) {
+        addFacebookCredentials(data.credentials);
+      } else {
+        console.log("Error: ", data);
+      }
+    })
+  }
+
 
   render() {
     const goToPageTwo = () => Actions.home({text: 'Hello World!'}); 
@@ -104,7 +116,7 @@ class Login extends Component {
     if (value) {
       const token = await getAuthentication(value);
       if (token) {
-        Actions.home();
+        // Actions.home();
       }
     }
   }

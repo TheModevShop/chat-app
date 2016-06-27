@@ -20,14 +20,17 @@ class Conversations extends Component {
   }
 
   componentWillMount() {
+    console.log('props', 'propssssss')
     this.registerList(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('props', 'propssssss')
     this.registerList(nextProps);
   }
 
   registerList(props) {
+    console.log(props, 'propssssss')
     const users = _.get(props, 'AllConversations', []);
     if (users.length) {
       var ds = new ListView.DataSource({
@@ -40,7 +43,6 @@ class Conversations extends Component {
   }
 
   render() {
-    const goToPageTwo = () => Actions.conversations({text: 'Hello World!'});
     return (
       this.state.dataSource ?
        <ListView
@@ -62,14 +64,14 @@ class Conversations extends Component {
           )
         }}        
       /> : <View style={{margin: 128}}>
-      <Text> loading</Text>
+      <Text> loading chats</Text>
     </View>
     );
   }
 
   goToChat(conversation) {
     openChat(conversation);
-    Actions.conversation({text: 'Hello World!'})
+    this.props.onNavigation({ type: 'push', key: 'Chat' });
   }
   componentWillUnmount() {
     console.log('unmount')

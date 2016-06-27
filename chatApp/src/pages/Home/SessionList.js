@@ -19,6 +19,7 @@ import {
 } from 'react-native';
 
 import ResponsiveImage from 'react-native-responsive-image';
+import Swiper from 'react-native-swiper';
 
 var IMAGE_WIDTH = Dimensions.get('window').width;
 var IMAGE_HEIGHT = IMAGE_WIDTH / 2;
@@ -75,16 +76,27 @@ class Home extends Component {
           onScroll={this.props.scrollEvent.bind(this)}
           renderRow={(rowData, i) => {
             return (
-              <View style={styles.wrapper} key={1}>
-                <TouchableHighlight onPress={this.onPress.bind(this, rowData._id)} underlayColor='#999'>
-                  <View>
-                     <ResponsiveImage source={{uri: rowData.image}} initWidth="100%" initHeight="250"/>
-                     <View style={styles.backgroundImage}>
-                        <Text style={styles.text}>{rowData.name}</Text> 
-                        <Text style={styles.subtext}>{ellipsize(rowData.description, 60)}</Text> 
-                     </View>
-                  </View>
-                </TouchableHighlight>
+              <View key={1}>
+                <Swiper height={228}>
+                  <TouchableHighlight onPress={this.onPress.bind(this, rowData._id)} underlayColor='#999'>
+                    <View>
+                       <ResponsiveImage source={{uri: rowData.image}} initWidth="100%" initHeight="250"/>
+                       <View style={styles.backgroundImage}>
+                          <Text style={styles.text}>{rowData.name}</Text> 
+                          <Text style={styles.subtext}>{ellipsize(rowData.description, 60)}</Text> 
+                       </View>
+                    </View>
+                  </TouchableHighlight>
+                  <TouchableHighlight onPress={this.onPress.bind(this, rowData._id)} underlayColor='#999'>
+                    <View>
+                       <ResponsiveImage source={{uri: rowData.image}} initWidth="100%" initHeight="250"/>
+                       <View style={styles.backgroundImage}>
+                          <Text style={styles.text}>{rowData.name}</Text> 
+                          <Text style={styles.subtext}>{ellipsize(rowData.description, 60)}</Text> 
+                       </View>
+                    </View>
+                  </TouchableHighlight>
+                </Swiper>
               </View>
             )
           }}        
@@ -97,7 +109,7 @@ class Home extends Component {
 
   onPress(id) {
     setActiveSession(id);
-    Actions.sessionDetails()
+    this.props.goToSessionDetails()
   }
 
   goToChat(conversation) {

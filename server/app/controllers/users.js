@@ -25,12 +25,25 @@ users.getById = function(id) {
 };
 
 users.updateById = function(id, params) {
+  try {    
+    var parse = JSON.parse(params.data);
+    params = parse;
+  } catch(err) {
+    console.log(err)
+  }
+
   var updatedObj = {};
   var find = {_id: id};
+
+  if (params.facebookCredentials) {
+    updatedObj.facebookCredentials = params.facebookCredentials;
+  }
+
+  console.log(updatedObj)
   
   return Users.update(
     find, updatedObj)
-    .exec(function(err, updatedObj) {
+    .exec(function(err, updatedObj) {      
       if(err) {
         throw err; 
       }else{

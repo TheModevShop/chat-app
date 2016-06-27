@@ -24,7 +24,7 @@ class SessionDetails extends Component {
             <ResponsiveImage source={{uri: details.image}} initWidth="100%" initHeight="250"/>
             <View>
               <Text>{details.name}</Text> 
-              <Text>Instructed by {details.instructor.name.first}</Text> 
+              <Text>Instructed by</Text> 
             </View>
           </View> : null
         }
