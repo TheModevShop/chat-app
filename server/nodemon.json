@@ -3,6 +3,9 @@
     "./"
   ],
   "env": {
-    
+    "TOKEN_VARIABLE": "ilovescotch",
+    "MONGOLAB_URI": "mongodb://localhost/app",
+    "MONGOHQ_URL": "mongodb://localhost/app",
   }
+
 }
