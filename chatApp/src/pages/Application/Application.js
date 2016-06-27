@@ -19,6 +19,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import _ from 'lodash';
 
 import TabBar from './TabBar';
+import backButton from '../../images/back.png';
+
 
 let ADMIN_OPEN = false;
 let STATUS_BAR_HEIGHT = Navigator.NavigationBar.Styles.General.StatusBarHeight;
@@ -106,21 +108,21 @@ function sc(d) {
     <Scene key={`home`} component={TabBar} tabs={true} duration={d === 1 ? null : 0}>
         <Scene key="sessions" initial={true} title="session" icon={SessionIcon}>
             <Scene key="sessionsList" hideNavBar={true} component={Home} title="Tab #1_1" />
-            <Scene key="sessionDetails" hideNavBar={false} component={SessionDetails} title="Tab #1_2"/>
+            <Scene key="sessionDetails" hideNavBar={false} component={SessionDetails} title="Session Details"/>
         </Scene>
         <Scene key="chat" title="chat" leftButtonImage={''} icon={ChatIcon}>
-            <Scene key="conversations" initial={true}  component={Conversations} title="All Convs" />
+            <Scene key="conversations" initial={true}  component={Conversations} title="Conversations" />
             <Scene key="conversation" component={Chat} title="Conversation" />
         </Scene>
         <Scene key="favorites" title="favorites" icon={StarIcon}>
-            <Scene key="conversations" initial={true}  component={Conversations} title="All Convs" />
+            <Scene key="conversations" initial={true}  component={Conversations} title="Favorites" />
             <Scene key="conversation" component={Chat} title="Conversation" />
         </Scene>
         <Scene key="history" title="history" icon={HistoryIcon}>
-            <Scene key="conversations" initial={true}  component={Conversations} title="All Convs" />
+            <Scene key="conversations" initial={true}  component={Conversations} title="History" />
             <Scene key="conversation" component={Chat} title="Conversation" />
         </Scene>
-        <Scene key="tab3" onSelect={openDrawer} component={Conversations} title="Tab #3" icon={DrawerIcon}/>
+        <Scene key="tab3" onSelect={openDrawer} component={Conversations} title="Drawer" icon={DrawerIcon}/>
     </Scene>
   )
 }
@@ -129,7 +131,7 @@ function adminViews(d) {
   return (
     <Scene key={`admin`} component={TabBar} tabs={true} duration={0}>
         <Scene key="addSession" initial={true} title="session" icon={SessionIcon}>
-            <Scene key="addSessionInfo" initial={true} hideNavBar={true} component={AddSession} title="Tab #1_1" />
+            <Scene key="addSessionInfo" initial={true} hideNavBar={true} component={AddSession} title="Add Session" />
         </Scene>
         <Scene key="drawer-admin" onSelect={openDrawer} component={Conversations} title="drawer-admin" icon={DrawerIcon}/>
     </Scene>
@@ -194,11 +196,12 @@ class Application extends React.Component {
         tweenHandler={(ratio) => ({
           main: { opacity:(2-ratio)/2}
         })}>
-        <StatusBar showHideTransition={'fade'} animated={true} backgroundColor="#fff" barStyle="default" hidden={this.state.hidden}/>
+        <StatusBar showHideTransition={'fade'} animated={true} backgroundColor="#fff" barStyle="light-content" hidden={this.state.hidden}/>
         <View style={{flex: 1, marginTop: STATUS_BAR_HEIGHT}}>
           <Router 
-            navigationBarStyle={{padding: 0, backgroundColor: 'rgba(0,0,0,0.2)'}} 
-            
+            navigationBarStyle={{backgroundColor: 'rgba(255,255,255,1)'}} 
+            backButtonImage={backButton}
+            leftButtonIconStyle={{width: 30, height: 20}}
             drawerImage={''} 
             scenes={scenes}/>
         </View>
