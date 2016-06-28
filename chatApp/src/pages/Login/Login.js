@@ -71,15 +71,16 @@ class Login extends Component {
         <FBLogin style={{ marginBottom: 10, }}
           permissions={["email","user_friends"]}
           loginBehavior={FBLoginManager.LoginBehaviors.Native}
-          onLogin={(data) => {
-            console.log("Logged in!");
-            addFacebookCredentials({userId: data.credentials.userId, tokenExpiration: data.credentials.tokenExpirationDate});
+          onLogin={async (data) => {
+            await getAuthentication({facebookUser: _.get(data, 'credentials.userId'), facebook: _.get(data, 'credentials.token')});
+            await addFacebookCredentials(data.credentials); // MAY NOT NEED
           }}
           onLogout={() => {
             teardownSession();
           }}
           onLoginFound={(data) => {
             console.log("Existing login found.");
+            getAuthentication({facebook: _.get(data, 'credentials.token')});
             console.log(data);
             // this.setState({ user : data.credentials });
           }}

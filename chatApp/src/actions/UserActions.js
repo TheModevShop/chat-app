@@ -26,7 +26,7 @@ export async function getMe() {
 export async function addFacebookCredentials(creds) {
   try {
     const addedFacebookCredentials = await updateUser({data: JSON.stringify({facebookCredentials: creds})});
-    console.log(addedFacebookCredentials);
+    console.log(addedFacebookCredentials, 'SUCCESS');
   } catch(err) {
     console.log(err)
   }

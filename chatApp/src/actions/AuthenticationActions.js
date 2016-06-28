@@ -5,13 +5,14 @@ import {getMe} from '../actions/UserActions';
 import resetState from '../state/ResetStateTree';
 import {AppRegistry, AsyncStorage} from 'react-native';
 import {FBLoginManager} from 'react-native-facebook-login';
+import _ from 'lodash';
 
 const authentication = tree.select(['authentication']);
 
 export async function getAuthentication(data) {
-  const {email, password} = data;
+  const {email, password, facebook, facebookUser} = data;
   try {
-    const token = await fetchToken({email, password});
+    const token = facebook ? await fetchToken({facebookUser: facebookUser, facebookToken: facebook}) : await fetchToken({email, password});
     await buildSession(token.body.token);
     return token;
   } catch (e) {
@@ -26,7 +27,7 @@ function checkFacebookForSession() {
       if (!error) {
         resolve(data)            
       } else {
-        reject(error)
+        reject({error})
       }
     })
   });
@@ -35,7 +36,8 @@ function checkFacebookForSession() {
 export async function checkSession() {
   try {
     const user = await getMe();
-    if (user._id) {
+    const facebook = await checkFacebookForSession();
+    if (user._id && !facebook.error) {
       const session = await AsyncStorage.getItem('sessionData');
       authentication.set(['sessionData'], session);
       tree.commit();

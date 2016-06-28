@@ -18,7 +18,8 @@ var request = require('request');
 
 router.route('/')
   .post(function(req, res) {
-    if (req.body.facebook) {
+    console.log(req.body.facebookToken)
+    if (req.body.facebookToken) {
       facebookLogin(req, res);
     } else {
       Users.findOne({
@@ -50,9 +51,10 @@ router.route('/')
 
   function facebookLogin(req, res) {
     Users.findOne({
-      'facebookCredentials.userId': req.body.userId
+      'facebookCredentials.userId': req.body.facebookUser
     })
     .exec(function(err, user) {
+      console.log(user)
       if (err) throw err; // Change to send error
       if (!user) {
         res.status(401).json({ success: false, message: 'Authentication failed. User not found.' });
@@ -62,7 +64,7 @@ router.route('/')
             var token = jwt.sign({ _id: user._id, user: user }, req.app.get('superSecret'), {
               expiresIn: 2592000 // expires in 24 hours
             });
-            res.json({token: user});
+            res.json({token: token});
           } else {
             res.status(401).json({ success: false, message: 'Authentication failed. Wrong password.' });
           }
