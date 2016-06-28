@@ -8,6 +8,7 @@ import {
   Text,
   View,
   StyleSheet,
+  Image,
   TouchableHighlight,
   TextInput
 } from 'react-native';
@@ -26,10 +27,13 @@ class Settings extends Component {
   }
 
   render() {
+    const userId = _.get(this.props.user, 'details.facebookCredentials.userId');
     return (
-      <View style={{flex: 1, margin: 0}}>
+      <View style={{flex: 1, margin: 0}}> 
         <View style={{height: 150, backgroundColor: '#ccc', alignItems: 'center', justifyContent: 'center'}}>
-          <View style={{borderWidth: 3, borderColor: '#fff', borderRadius: 100, backgroundColor: '#999', height: 90, width: 90}}></View>
+          <View style={{overflow: 'hidden', position: 'relative', borderWidth: 3, borderColor: '#fff', borderRadius: 100, backgroundColor: '#999', height: 90, width: 90}}>
+          <Image style={{height: 90, width: 90, position: 'absolute'}} source={{uri: `https://graph.facebook.com/${userId}/picture?width=100&height=100`}}/>
+          </View>
         </View>
         <View style={{margin: 20}}>
           <View style={{flex:1, flexDirection: 'row'}}>
@@ -76,4 +80,7 @@ class Settings extends Component {
 }
 
 export default branch(Settings, {
+   cursors: {
+    user: ['user']
+  }
 });

@@ -69,7 +69,7 @@ class Login extends Component {
 
 
         <FBLogin style={{ marginBottom: 10, }}
-          permissions={["email","user_friends"]}
+          permissions={["email","user_friends", "public_profile", "user_about_me", "user_photos", "user_likes", "user_work_history", "user_website"]}
           loginBehavior={FBLoginManager.LoginBehaviors.Native}
           onLogin={async (data) => {
             await getAuthentication({facebookUser: _.get(data, 'credentials.userId'), facebook: _.get(data, 'credentials.token')});
