@@ -4,12 +4,7 @@ import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import {Text, View, Navigator, StyleSheet, StatusBar, Platform, TouchableHighlight} from 'react-native';
 
-import Login from '../Login/Login';
-import Initial from '../Initial/Initial';
-import Settings from '../Settings/Settings';
 
-
-import AddSession from '../AddSession/AddSession';
 import {checkSession} from '../../actions/AuthenticationActions';
 import Drawer from 'react-native-drawer'
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -20,6 +15,15 @@ import HomeController from './Controllers/HomeController';
 import ChatController from './Controllers/ChatController';
 import FavoritesController from './Controllers/FavoritesController';
 import HistoryController from './Controllers/HistoryController';
+import ListingsController from './Controllers/ListingsController';
+import InstructorScheduleController from './Controllers/InstructorScheduleController';
+
+//VIEWS
+import AddListing from '../AddListing/AddListing';
+import Login from '../Login/Login';
+import Initial from '../Initial/Initial';
+import Settings from '../Settings/Settings';
+import AddSession from '../AddSession/AddSession';
 
 let _drawer;
 let ADMIN_OPEN = false;
@@ -59,7 +63,7 @@ class Application extends React.Component {
         ref={(ref) => _drawer = ref}
         type="overlay"
         side="right"
-        content={DrawerContent(this)}
+        content={this.DrawerContent(this)}
         openDrawerOffset={0.5} // 20% gap on the right side of drawer
         panCloseMask={0.5}
         onOpen={this.drawerOpen.bind(this)}
@@ -80,6 +84,8 @@ class Application extends React.Component {
             <Initial /> :
             this.state.selectedTab === 'login' ?
             <Login /> :
+            this.state.instructor ? 
+            this.renderInstructorTabs() :
             this.renderTabs()
           }
         </View>
@@ -140,16 +146,32 @@ class Application extends React.Component {
   }
 
 
-  renderAdminTabs() {
+  renderInstructorTabs() {
     return (
       <TabNavigator>
         <TabNavigator.Item
-          selected={this.state.selectedTab === 'home'}
+          selected={this.state.selectedTab === 'instructor-home'}
           renderIcon={() => <Icon name={'ios-analytics-outline'} size={25} color="#999" />}
           renderSelectedIcon={() => <Icon name={'ios-analytics'} size={25} color="#999" />}
           badgeText=""
-          onPress={() => this.setState({ selectedTab: 'home' })}>
-          <HomeController />
+          onPress={() => this.setState({ selectedTab: 'instructor-home' })}>
+          <InstructorScheduleController />
+        </TabNavigator.Item>
+        <TabNavigator.Item
+          selected={this.state.selectedTab === 'listings'}
+          renderIcon={() => <Icon name={'ios-analytics-outline'} size={25} color="#999" />}
+          renderSelectedIcon={() => <Icon name={'ios-analytics'} size={25} color="#999" />}
+          badgeText=""
+          onPress={() => this.setState({ selectedTab: 'listings' })}>
+          <ListingsController />
+        </TabNavigator.Item>
+        <TabNavigator.Item
+          selected={this.state.selectedTab === 'add-listings'}
+          renderIcon={() => <Icon name={'ios-analytics-outline'} size={25} color="#999" />}
+          renderSelectedIcon={() => <Icon name={'ios-analytics'} size={25} color="#999" />}
+          badgeText=""
+          onPress={() => this.setState({ selectedTab: 'add-listings' })}>
+          <AddListing />
         </TabNavigator.Item>
         <TabNavigator.Item
           selected={this.state.drawerOpen}
@@ -162,11 +184,8 @@ class Application extends React.Component {
       </TabNavigator>
     );
   }
-  
 
-}
-
-function DrawerContent(self) {
+  this.DrawerContent(self) {
     return (
       <View style={{flex: 1, backgroundColor: '#fff', justifyContent: 'space-between'}}>
         <View style={{backgroundColor: '#ccc'}}>
@@ -178,7 +197,9 @@ function DrawerContent(self) {
           </TouchableHighlight>
         </View>
       </View>
-  );
+    );
+  } 
+
 }
 
 
