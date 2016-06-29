@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import Icon from 'react-native-vector-icons/Ionicons';
+import ListingsList from './ListingsList';
 
 import {
   StatusBar,
@@ -31,10 +32,11 @@ class Listings extends Component {
   }
 
   render() {
+    console.log(this.props.MyListings)
     return (
        <View style={{flex: 1}}>
         <Text>Listings</Text>
-        
+        <ListingsList />
       </View>
     );
   }
@@ -43,6 +45,7 @@ class Listings extends Component {
 
 export default branch(Listings, {
   cursors: {
-    view: ['listings'] 
+    view: ['listings'],
+    MyListings: ['facets','MyListings'],
   }
 });

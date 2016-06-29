@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Text,
   View,
+  TouchableHighlight
 } from 'react-native';
 
 class SessionDetails extends Component {
@@ -25,6 +26,7 @@ class SessionDetails extends Component {
             <View>
               <Text>{details.name}</Text> 
               <Text>Instructed by</Text> 
+              <TouchableHighlight onPress={this.props.goBack.bind(this)} underlayColor='#999'><Text>Back</Text></TouchableHighlight>
             </View>
           </View> : null
         }

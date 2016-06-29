@@ -13,9 +13,20 @@ listings.getAll = function(limit, offset) {
   return Listings.find({})
     .limit(limit || 10)
     .skip(offset || 0)
-    .exec(function(err, chatrooms) {
-      return chatrooms;
+    .exec(function(err, listings) {
+      return listings;
     });
+};
+
+listings.getForListingsForInstructor = function(id, limit, offset) {
+  return Listings.find({
+    instructor: id
+  })
+  .limit(limit || 10)
+  .skip(offset || 0)
+  .exec(function(err, listings) {
+    return listings;
+  });
 };
 
 listings.getById = function(id) {
@@ -46,8 +57,8 @@ listings.updateById = function(id, params) {
 
 
 listings.add = function(session) {
-  var newSession = new Listings(session);
-  return newSession.save()
+  var newListing = new Listings(session);
+  return newListing.save()
 };
 
 

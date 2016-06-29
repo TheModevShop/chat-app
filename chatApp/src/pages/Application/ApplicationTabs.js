@@ -138,7 +138,7 @@ class Application extends React.Component {
           renderIcon={() => <Icon name={'ios-options-outline'} size={25} color="#999" />}
           renderSelectedIcon={() => <Icon name={'ios-options'} size={25} color="#999" />}
           badgeText=""
-          onPress={() => openDrawer()}>
+          onPress={this.openDrawer.bind(this)}>
             <View></View>
           </TabNavigator.Item>
       </TabNavigator>
@@ -178,21 +178,21 @@ class Application extends React.Component {
           renderIcon={() => <Icon name={'ios-options-outline'} size={25} color="#999" />}
           renderSelectedIcon={() => <Icon name={'ios-options'} size={25} color="#999" />}
           badgeText=""
-          onPress={() => openDrawer()}>
+          onPress={this.openDrawer.bind(this)}>
             <View></View>
         </TabNavigator.Item>
       </TabNavigator>
     );
   }
 
-  this.DrawerContent(self) {
+  DrawerContent(self) {
     return (
       <View style={{flex: 1, backgroundColor: '#fff', justifyContent: 'space-between'}}>
         <View style={{backgroundColor: '#ccc'}}>
           
         </View>
         <View style={{borderTopWidth: 1, borderTopColor: '#ccc'}}>
-          <TouchableHighlight onPress={() => onDrawerLinks(!ADMIN_OPEN ? Actions.admin : Actions.home, 'admin')} underlayColor='#99d9f4'>
+          <TouchableHighlight onPress={() => this.onDrawerLinks(!ADMIN_OPEN ? 'admin' : 'home', 'admin')} underlayColor='#99d9f4'>
             <Text style={{padding: 20}}>{!ADMIN_OPEN ? 'Switch to Admin' : 'Switch to User'}</Text>
           </TouchableHighlight>
         </View>
@@ -200,21 +200,22 @@ class Application extends React.Component {
     );
   } 
 
-}
+  onDrawerLinks(link, admin) {
+     _drawer.close();
+     setTimeout(() => {
+      if (admin === 'admin') {
+        ADMIN_OPEN = !ADMIN_OPEN;
+        this.setState({instructor: !this.state.instructor, selectedTab: ADMIN_OPEN ? 'instructor-home' : 'home' });
+      } else {
+        this.setState({selectedTab: link});
+      }
+     }, 300);
+  }
 
+   openDrawer() {
+    _drawer.open();
+  }
 
-function onDrawerLinks(link, admin) {
-   _drawer.close();
-   setTimeout(() => {
-    link();
-    if (admin) {
-      ADMIN_OPEN = !ADMIN_OPEN;
-     }
-   }, 300);
-}
-
-function openDrawer() {
-  _drawer.open();
 }
 
 const drawerStyles = StyleSheet.create({

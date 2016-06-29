@@ -14,6 +14,7 @@ var Roles = require('../../models/roles');
 var Users = require('../../controllers/users');
 var Conversations = require('../../controllers/conversations');
 var Sessions = require('../../controllers/sessions');
+var Listings = require('../../controllers/listings');
 
 
 router.route('/')
@@ -82,6 +83,37 @@ router.route('/')
       }
       Sessions
         .add(session)
+        .then(function(response) {
+          res.json(response);
+        })
+        .catch(function(err) {
+          console.log(err)
+          res.status(422).json(err);
+        });
+    }
+  });
+
+  router.route('/listings')
+  .get(function(req, res) {
+    Listings.getForListingsForInstructor(req.decoded._id)
+    .then(function(response) {
+      console.log(response)
+      res.json(response);
+    });
+  })
+  .post(function(req, res) {
+    var listing;
+    if (req.body.listing) {
+      try {
+        listing = JSON.parse(req.body.listing);
+        listing.instructor = req.decoded._id;
+      } catch(err) {
+        console.log(err)
+        res.status(422).json({error: 'invalid format'});
+        return;
+      }
+      Listings
+        .add(listing)
         .then(function(response) {
           res.json(response);
         })

@@ -23,6 +23,8 @@ function createReducer(initialState) {
         return NavigationStateUtils.push(currentState, {key: action.key});
       case 'pop':
         return currentState.index > 0 ? NavigationStateUtils.pop(currentState) : currentState;
+      case 'back':
+        return currentState.index > 0 ? NavigationStateUtils.pop(currentState) : currentState;
       default:
         return currentState;
     }
