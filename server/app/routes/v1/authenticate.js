@@ -17,8 +17,7 @@ var request = require('request');
 // })
 
 router.route('/')
-  .post(function(req, res) {
-    console.log(req.body.facebookToken)
+  .post(function(req, res) { 
     if (req.body.facebookToken) {
       facebookLogin(req, res);
     } else {
@@ -54,7 +53,6 @@ router.route('/')
       'facebookCredentials.userId': req.body.facebookUser
     })
     .exec(function(err, user) {
-      console.log(user)
       if (err) throw err; // Change to send error
       if (!user) {
         res.status(401).json({ success: false, message: 'Authentication failed. User not found.' });
