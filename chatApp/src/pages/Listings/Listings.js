@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ListingsList from './ListingsList';
+import {setActiveListing} from '../../actions/ListingActions';
 
 import {
   StatusBar,
@@ -32,13 +33,21 @@ class Listings extends Component {
   }
 
   render() {
-    console.log(this.props.MyListings)
     return (
        <View style={{flex: 1}}>
         <Text>Listings</Text>
-        <ListingsList />
+        <ListingsList scrollEvent={this.scrollEvent.bind(this)} goToActiveListing={this.goToActiveListing.bind(this)}/>
       </View>
     );
+  }
+
+  goToActiveListing(id) {
+    setActiveListing(id);
+    this.props.onNavigation({ type: 'push', key: 'SessionDetails' })
+  }
+
+  scrollEvent() {
+
   }
 
 }

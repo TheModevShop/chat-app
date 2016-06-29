@@ -74,7 +74,7 @@ class Home extends Component {
               )
             }}        
           /> : 
-        <View style={{margin: 30}}>
+        <View style={{margin: 0}}>
           {
             _.get(this.props, 'skills.length', false) ?
               <ListView

@@ -60,11 +60,11 @@ class ListingsList extends Component {
       this.state.dataSource ?
          <ListView
           dataSource={this.state.dataSource}
-          onScroll={this.scrollEvent.bind(this)}
+          onScroll={this.props.scrollEvent.bind(this)}
           renderRow={(rowData, i) => {
             return (
               <View key={1}>
-                <TouchableHighlight onPress={this.onPress.bind(this, rowData._id)} underlayColor='#999'>
+                <TouchableHighlight onPress={this.props.goToActiveListing.bind(this, rowData._id)} underlayColor='#999'>
                   <View>
                      <ResponsiveImage source={{uri: rowData.image}} initWidth="100%" initHeight="250"/>
                      <View style={styles.backgroundImage}>
@@ -81,13 +81,6 @@ class ListingsList extends Component {
       <Text> loading</Text>
     </View>
     );
-  }
-
-  scrollEvent() {
-
-  }
-
-  onPress(id) {
   }
 
 }

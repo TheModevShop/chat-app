@@ -7,11 +7,16 @@ const SessionDetailsFacet = require('./facets/SessionDetailsFacet').default();
 const SearchFacet = require('./facets/SearchFacet').default();
 const SkillsFacet = require('./facets/SkillsFacet').default();
 const MyListingsFacet = require('./facets/MyListingsFacet').default();
+const ListingDetailsFacet = require('./facets/ListingDetailsFacet').default();
 
 export default function getInitialState() {
   return {
     cursors: {
       sessionDetails: {
+        id: null,
+        details: null
+      },
+      listingDetails: {
         id: null,
         details: null
       },
@@ -40,7 +45,8 @@ export default function getInitialState() {
       SessionDetails: SessionDetailsFacet,
       Search: SearchFacet,
       Skills: SkillsFacet,
-      MyListings: MyListingsFacet
+      MyListings: MyListingsFacet,
+      ListingDetails: ListingDetailsFacet
     }}
   };
 }

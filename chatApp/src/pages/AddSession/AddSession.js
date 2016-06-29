@@ -81,21 +81,15 @@ class AddSession extends Component {
   createSession(form) {
     const time = moment();
     return {
-      name: form.name,
-      skill: this.state.selectedSkill,
-      image: 'http://images.unsplash.com/photo-1453733190371-0a9bedd82893?format=auto&auto=compress&dpr=2&crop=entropy&fit=crop&w=1266&h=950&q=80',
-      capacity: 1,
-      price: 3200,
       notes: '',
       dateAndTime: time,
       date:  moment(time).format('YYYYMMDD'),
       time: {
-        start: '3:00',
-        end: '5:00'
-      },
-      description: form.description,
+        start: '13:00',
+        end: '18:00'
+      },      
       enrolled: [],
-      location: {}
+      listing: this.props.listingId
     }
   }
 }
@@ -103,6 +97,7 @@ class AddSession extends Component {
 export default branch(AddSession, {
   cursors: {
     skills: ['facets', 'Skills'],
-    user: ['user']
+    user: ['user'],
+    listingId: ['listingDetails', 'id']
   }
 });

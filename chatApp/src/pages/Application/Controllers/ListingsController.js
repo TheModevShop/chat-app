@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Listings from '../../Listings/Listings';
+import ListingDetails from '../../ListingDetails/ListingDetails';
+import AddSession from '../../AddSession/AddSession';
 import {
   AppRegistry,
   StyleSheet,
@@ -21,6 +23,8 @@ function createReducer(initialState) {
       case 'push':
         return NavigationStateUtils.push(currentState, {key: action.key});
       case 'pop':
+        return currentState.index > 0 ? NavigationStateUtils.pop(currentState) : currentState;
+      case 'back':
         return currentState.index > 0 ? NavigationStateUtils.pop(currentState) : currentState;
       default:
         return currentState;
@@ -59,7 +63,9 @@ class ListingsController extends Component {
   }
 
   _renderRoute (key) {
-    if (key === 'Listings') return <Listings onNavigation={this._handleAction.bind(this, { type: 'push', key: 'SessionDetails' })} />
+    if (key === 'Listings') return <Listings onNavigation={this._handleAction.bind(this, { type: 'push', key: 'ListingDetails' })} />
+    if (key === 'ListingDetails') return <ListingDetails goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    if (key === 'AddSessionForListing') return <AddSession goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
   }
 
   _renderScene(props) {
