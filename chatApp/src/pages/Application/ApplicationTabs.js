@@ -24,6 +24,7 @@ import Login from '../Login/Login';
 import Initial from '../Initial/Initial';
 import Settings from '../Settings/Settings';
 import AddSession from '../AddSession/AddSession';
+import CustomCalendar from '../CustomCalendar/CustomCalendar';
 
 let _drawer;
 let ADMIN_OPEN = false;
@@ -78,6 +79,8 @@ class Application extends React.Component {
         <StatusBar showHideTransition={'fade'} animated={true} backgroundColor="#fff" barStyle="default" hidden={this.state.hidden}/>
         <View style={{flex: 1, backgroundColor: 'rgb(251, 251, 251)', marginTop: STATUS_BAR_HEIGHT}}>
           {
+            true ? 
+            <CustomCalendar /> :
             this.state.selectedTab === 'settings' ? 
             <Settings /> :
             this.state.selectedTab === 'initial' ?
