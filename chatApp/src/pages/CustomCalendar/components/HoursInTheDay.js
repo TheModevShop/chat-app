@@ -1,6 +1,7 @@
 'use strict';
 import React, { Component } from 'react';
 import _ from 'lodash';
+import BPromise from 'bluebird';
 import {
   StyleSheet,
   Text,
@@ -15,60 +16,99 @@ class HoursInTheDay extends Component {
   
   componentWillMount() {
     this.components = [];
+    this.activeDays = [];
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponder: (evt, gestureState) => true,
       onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
       onMoveShouldSetPanResponder: (evt, gestureState) => true,
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
       onPanResponderGrant: () => this.setState({scroll: false}),
-      onPanResponderMove: this.panMove,
-      onPanResponderRelease: this.panEnd
+      onPanResponderMove: this.panMove.bind(this),
+      onPanResponderRelease: this.panEnd.bind(this)
     })
   }
 
   componentDidMount() {
-    // console.log(this.components)
     setTimeout(() => {
-      _.map(this.components,(comp) => {
-        if (comp) {
-          comp.measure( (fx, fy, width, height, px, py) => {
-            // console.log('Component width is: ' + width)
-            // console.log('Component height is: ' + height)
-            // console.log('X offset to frame: ' + fx)
-            // console.log('Y offset to frame: ' + fy)
-            // console.log('X offset to page: ' + px)
-            // console.log('Y offset to page: ' + py)
-          }) 
-        } else {
-          
-        } 
-      })  
-    }, 300)    
+     // this.measureComponents();
+    }, 1000); 
+  }
+
+  async measureComponents(comp) {
+    return new BPromise((resolve) => {
+      comp.measure( (fx, fy, width, height, px, py) => {
+        resolve({
+          bottom: py + height,
+          height: height,
+          left: px,
+          right: px + width,
+          top: py,
+          width: width
+        });
+      });
+    })
+        
+   // this.components = _.map(this.components,(component) => {
+   //    const {comp, id, day} = component;
+   //    if (comp) {
+   //      comp.measure( (fx, fy, width, height, px, py) => {
+   //        day.boundingRect = {
+   //          bottom: py + height,
+   //          height: height,
+   //          left: px,
+   //          right: px + width,
+   //          top: py,
+   //          width: width
+   //        }
+   //      }) 
+   //    }
+   //    return component
+   //  })  
   }
 
   panMove(e, r) {
-    console.log(r)
+    this.activeDays.push(this.findDay(r))
   }
   panEnd(e) {
-    console.log(e)
+    console.log(this.activeDays)
   }
 
-  register(id, comp) {    
+  findDay(e) {    
+    return _.find(this.components, (comp) => {
+      const rect = comp.boundingRect; 
+      return e.moveX > rect.left &&
+      e.moveX < rect.right  &&
+      e.moveY > rect.top &&
+      e.moveY < rect.bottom;
+    });
+  }
+
+  async register(id, day, comp, originOveride) {    
     if (comp) {
-      var index = _.findIndex(this.components, {id: id});
+      const index = _.findIndex(this.components, {id: id});
+      let originalRect;
       if (index >= 0) {
+        originalRect = this.components[index].boundingRect;
         this.components.splice(index, 1);
+      }
+      let rect;
+      if(originalRect && !originOveride) {
+        rect = originalRect;
+      } else {
+        rect = await this.measureComponents(comp);
       }
       this.components.push({
         comp,
-        id
+        id,
+        day,
+        boundingRect: rect
       })
     }
   }
 
   makeDays(hour) {
     return _.map(this.props.week, (day, i, array) => {
-     return <View ref={this.register.bind(this, `id-${hour}-${i}`)} key={i} style={styles.days}>
+     return <View ref={this.register.bind(this, `id-${hour}-${i}`, day)} key={i} style={styles.days}>
         <View style={[styles.dayInner, i === 0 ? styles.dayStart : {}, i === array.length-1 ? styles.dayEnd : {}]}>
           <Text>{day.day.format('D')}</Text>
         </View>
@@ -77,7 +117,6 @@ class HoursInTheDay extends Component {
   }
 
   render() {
-    console.log(this.components ? this.components.length : null)
     return (
       <View style={{flex: 1}} {...this._panResponder.panHandlers}>
        <ScrollView scrollEventThrottle={20} onScroll={this.onScrollEvent.bind(this)} >
@@ -93,6 +132,7 @@ class HoursInTheDay extends Component {
       </View>
     );
   }
+
   onScrollEvent(e) {
   }
 }
@@ -116,7 +156,7 @@ const styles = StyleSheet.create({
   dayInner: {
     width: (Dimensions.get('window').width / 8) - 0.5,
     height: 30,
-    backgroundColor: 'red',
+    backgroundColor: '#ccc',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
