@@ -13,10 +13,21 @@ import {
 } from 'react-native';
 
 class HoursInTheDay extends Component {
+  constructor(...args) {
+    super(...args);
+    this.state = {
+      pannedDays: []
+    }
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.stopReg = true;
+    }, 200)
+  }
   
   componentWillMount() {
     this.components = [];
-    this.activeDays = [];
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponder: (evt, gestureState) => true,
       onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
@@ -26,12 +37,6 @@ class HoursInTheDay extends Component {
       onPanResponderMove: this.panMove.bind(this),
       onPanResponderRelease: this.panEnd.bind(this)
     })
-  }
-
-  componentDidMount() {
-    setTimeout(() => {
-     // this.measureComponents();
-    }, 1000); 
   }
 
   async measureComponents(comp) {
@@ -46,31 +51,22 @@ class HoursInTheDay extends Component {
           width: width
         });
       });
-    })
-        
-   // this.components = _.map(this.components,(component) => {
-   //    const {comp, id, day} = component;
-   //    if (comp) {
-   //      comp.measure( (fx, fy, width, height, px, py) => {
-   //        day.boundingRect = {
-   //          bottom: py + height,
-   //          height: height,
-   //          left: px,
-   //          right: px + width,
-   //          top: py,
-   //          width: width
-   //        }
-   //      }) 
-   //    }
-   //    return component
-   //  })  
+    }) 
   }
 
   panMove(e, r) {
-    this.activeDays.push(this.findDay(r))
+    this.isPanning = true;
+    const day = this.findDay(r);
+    if (day && day.id !== this.lastPanned) {
+      const pannedDays = _.clone(this.state.pannedDays);
+      this.lastPanned = day.id;
+      pannedDays.push(day);
+      this.setState({pannedDays: pannedDays});
+    }
   }
+
   panEnd(e) {
-    console.log(this.activeDays)
+    // this.forceUpdate();
   }
 
   findDay(e) {    
@@ -84,6 +80,9 @@ class HoursInTheDay extends Component {
   }
 
   async register(id, day, comp, originOveride) {    
+    if (this.stopReg) {
+      return;
+    }
     if (comp) {
       const index = _.findIndex(this.components, {id: id});
       let originalRect;
@@ -109,27 +108,36 @@ class HoursInTheDay extends Component {
   makeDays(hour) {
     return _.map(this.props.week, (day, i, array) => {
      return <View ref={this.register.bind(this, `id-${hour}-${i}`, day)} key={i} style={styles.days}>
-        <View style={[styles.dayInner, i === 0 ? styles.dayStart : {}, i === array.length-1 ? styles.dayEnd : {}]}>
+        <View style={[
+          styles.dayInner, i === 0 ? styles.dayStart : {}, 
+          i === array.length-1 ? styles.dayEnd : {},
+          _.find(this.state.pannedDays, {id: `id-${hour}-${i}`}) ? {backgroundColor: 'red'} : {}
+          ]}>
           <Text>{day.day.format('D')}</Text>
         </View>
       </View>
     });
+
+    return days;
+  }
+
+  makeRow() {
+    const row =  _.map(this.props.hours, (hour, i) => {
+     return <View key={i} style={i%2 !== 0 ? styles.even : styles.row}>
+        <View style={styles.days}><Text>{moment(hour, 'H:mm').format('h:mm')}</Text></View>
+        {this.makeDays(i)}
+     </View>
+    });
+    return row;
   }
 
   render() {
     return (
-      <View style={{flex: 1}} {...this._panResponder.panHandlers}>
-       <ScrollView scrollEventThrottle={20} onScroll={this.onScrollEvent.bind(this)} >
-         {
-           _.map(this.props.hours, (hour, i) => {
-           return <View key={i} style={i%2 !== 0 ? styles.even : styles.row}>
-              <View style={styles.days}><Text>{moment(hour, 'H:mm').format('h:mm')}</Text></View>
-              {this.makeDays(i)}
-           </View>
-          })
-         }
+      
+       <ScrollView {...this._panResponder.panHandlers} scrollEventThrottle={20} onScroll={this.onScrollEvent.bind(this)} >
+         {this.makeRow()}
       </ScrollView>
-      </View>
+      
     );
   }
 
@@ -156,7 +164,7 @@ const styles = StyleSheet.create({
   dayInner: {
     width: (Dimensions.get('window').width / 8) - 0.5,
     height: 30,
-    backgroundColor: '#ccc',
+    
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -168,6 +176,9 @@ const styles = StyleSheet.create({
   dayEnd: {
     borderTopRightRadius: 20,
     borderBottomRightRadius: 20
+  },
+  active: {
+    backgroundColor: 'red',
   }
   
 });
