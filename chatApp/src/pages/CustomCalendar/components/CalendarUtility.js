@@ -2,8 +2,7 @@ import moment from 'moment';
 import _ from 'lodash';
 
 export function buildRow(duration = 60) {
-  const mm = moment;
-  window.moment = moment;
+  
   const hours = [];
   for (var i = 0; i < 24; i++) {
     hours.push(moment().startOf('day').add(6, 'hours').add(duration * i, 'minutes').format('H:mm'));

@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import BPromise from 'bluebird';
+import moment from 'moment';
+import TimeRow from './TimeRow';
 import {
   StyleSheet,
   Text,
@@ -16,7 +18,8 @@ class HoursInTheDay extends Component {
   constructor(...args) {
     super(...args);
     this.state = {
-      pannedDays: []
+      pannedDays: [],
+      scroll: true
     }
   }
 
@@ -32,8 +35,8 @@ class HoursInTheDay extends Component {
       onStartShouldSetPanResponder: (evt, gestureState) => true,
       onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
       onMoveShouldSetPanResponder: (evt, gestureState) => true,
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
-      onPanResponderGrant: () => this.setState({scroll: false}),
+      onMoveShouldSetPanResponderCapture: this.panStart.bind(this),
+      onPanResponderGrant: this.panStart.bind(this),
       onPanResponderMove: this.panMove.bind(this),
       onPanResponderRelease: this.panEnd.bind(this)
     })
@@ -54,14 +57,24 @@ class HoursInTheDay extends Component {
     }) 
   }
 
+  panStart(e, r) {    
+    const day = this.findDay(r);
+    console.log(day)
+    if (day) {
+      console.log(day.row)
+      this.setState({activeRow: day.row, scroll: false});
+    }
+  }
+
   panMove(e, r) {
     this.isPanning = true;
     const day = this.findDay(r);
+
     if (day && day.id !== this.lastPanned) {
       const pannedDays = _.clone(this.state.pannedDays);
       this.lastPanned = day.id;
-      pannedDays.push(day);
-      this.setState({pannedDays: pannedDays});
+      pannedDays.push(day); 
+      this.setState({pannedDays: _.uniqBy(pannedDays, 'id')});
     }
   }
 
@@ -79,7 +92,7 @@ class HoursInTheDay extends Component {
     });
   }
 
-  async register(id, day, comp, originOveride) {    
+  async register(id, day, row, column, comp, originOveride) {    
     if (this.stopReg) {
       return;
     }
@@ -99,45 +112,25 @@ class HoursInTheDay extends Component {
       this.components.push({
         comp,
         id,
+        row,
+        column,
         day,
         boundingRect: rect
       })
     }
   }
 
-  makeDays(hour) {
-    return _.map(this.props.week, (day, i, array) => {
-     return <View ref={this.register.bind(this, `id-${hour}-${i}`, day)} key={i} style={styles.days}>
-        <View style={[
-          styles.dayInner, i === 0 ? styles.dayStart : {}, 
-          i === array.length-1 ? styles.dayEnd : {},
-          _.find(this.state.pannedDays, {id: `id-${hour}-${i}`}) ? {backgroundColor: 'red'} : {}
-          ]}>
-          <Text>{day.day.format('D')}</Text>
-        </View>
-      </View>
-    });
 
-    return days;
-  }
-
-  makeRow() {
-    const row =  _.map(this.props.hours, (hour, i) => {
-     return <View key={i} style={i%2 !== 0 ? styles.even : styles.row}>
-        <View style={styles.days}><Text>{moment(hour, 'H:mm').format('h:mm')}</Text></View>
-        {this.makeDays(i)}
-     </View>
-    });
-    return row;
-  }
 
   render() {
     return (
-      
-       <ScrollView {...this._panResponder.panHandlers} scrollEventThrottle={20} onScroll={this.onScrollEvent.bind(this)} >
-         {this.makeRow()}
+      <ScrollView {...this._panResponder.panHandlers} scrollEventThrottle={20} onScroll={this.onScrollEvent.bind(this)} >
+        {
+          _.map(this.props.hours, (hour, i) => {
+            return <TimeRow scroll={this.state.scroll} activeRow={this.state.activeRow} week={this.props.week} key={i} i={i} register={this.register.bind(this)} hour={hour} pannedDays={this.state.pannedDays} />
+          })
+        }
       </ScrollView>
-      
     );
   }
 
