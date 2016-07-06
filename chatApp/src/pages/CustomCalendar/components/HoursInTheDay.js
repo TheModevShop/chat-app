@@ -34,39 +34,67 @@ class HoursInTheDay extends Component {
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponder: (evt, gestureState) => true,
       onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
-      onMoveShouldSetPanResponder: (evt, gestureState) => true,
+      onMoveShouldSetPanResponder: this.onMoveShouldSetPanResponder.bind(this),
       onMoveShouldSetPanResponderCapture: this.panStart.bind(this),
-      onPanResponderGrant: this.panStart.bind(this),
+      onPanResponderGrant: this.panCapture.bind(this),
       onPanResponderMove: this.panMove.bind(this),
       onPanResponderRelease: this.panEnd.bind(this)
     })
   }
 
+  onMoveShouldSetPanResponder(evt, gesture) {
+    return gesture.numberActiveTouches === 1
+  }
+
   async measureComponents(comp) {
     return new BPromise((resolve) => {
-      comp.measure( (fx, fy, width, height, px, py) => {
-        resolve({
-          bottom: py + height,
-          height: height,
-          left: px,
-          right: px + width,
-          top: py,
-          width: width
+      try {
+        comp.measure( (fx, fy, width, height, px, py) => {
+          resolve({
+            bottom: py + height,
+            height: height,
+            left: px,
+            right: px + width,
+            top: py,
+            width: width
+          });
         });
-      });
+      } catch(err) {
+
+      }
     }) 
   }
 
-  panStart(e, r) {    
-    const day = this.findDay(r);
-    console.log(day)
-    if (day) {
-      console.log(day.row)
-      this.setState({activeRow: day.row, scroll: false});
+  reMeasureComponents() {
+    _.forEach(this.components, (component = {}) => {
+      if (component.id) {
+        const {id, day, row, column, comp} = component;
+        this.register(id, day, row, column, comp, 'overridePosition')
+      }      
+    })
+  }
+
+  panCapture(e, r) {
+    
+  }
+
+  panStart(e, r) {
+    console.log(r.dy)
+    if (r.dy < 1.8 && r.dy > -1.8) {
+      console.log('hit')
+      this.allowPan = true;
+      const day = this.findDay(r);
+      if (day) {
+        this.setState({activeRow: day.row, scroll: false});
+      }
     }
   }
 
   panMove(e, r) {
+    console.log(this.allowPan)
+    if (!this.allowPan) {
+      return;
+    }
     this.isPanning = true;
     const day = this.findDay(r);
 
@@ -79,7 +107,11 @@ class HoursInTheDay extends Component {
   }
 
   panEnd(e) {
-    // this.forceUpdate();
+    if (!this.allowPan) {
+      return;
+    }
+    this.setState({scroll: true});
+    this.allowPan = false;
   }
 
   findDay(e) {    
@@ -93,9 +125,6 @@ class HoursInTheDay extends Component {
   }
 
   async register(id, day, row, column, comp, originOveride) {    
-    if (this.stopReg) {
-      return;
-    }
     if (comp) {
       const index = _.findIndex(this.components, {id: id});
       let originalRect;
@@ -124,7 +153,7 @@ class HoursInTheDay extends Component {
 
   render() {
     return (
-      <ScrollView {...this._panResponder.panHandlers} scrollEventThrottle={20} onScroll={this.onScrollEvent.bind(this)} >
+      <ScrollView scrollEnabled={this.state.scroll} {...this._panResponder.panHandlers} scrollEventThrottle={20} onScroll={this.onScrollEvent.bind(this)} >
         {
           _.map(this.props.hours, (hour, i) => {
             return <TimeRow scroll={this.state.scroll} activeRow={this.state.activeRow} week={this.props.week} key={i} i={i} register={this.register.bind(this)} hour={hour} pannedDays={this.state.pannedDays} />
@@ -135,6 +164,7 @@ class HoursInTheDay extends Component {
   }
 
   onScrollEvent(e) {
+    this.reMeasureComponents();
   }
 }
 
