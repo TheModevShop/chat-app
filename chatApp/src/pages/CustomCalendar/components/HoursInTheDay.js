@@ -31,6 +31,8 @@ class HoursInTheDay extends Component {
   
   componentWillMount() {
     this.components = [];
+    this.childrenComponents = [];
+    this.days = []
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponder: (evt, gestureState) => true,
       onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
@@ -79,19 +81,18 @@ class HoursInTheDay extends Component {
   }
 
   panStart(e, r) {
-    console.log(r.dy)
-    if (r.dy < 1.8 && r.dy > -1.8) {
-      console.log('hit')
+    if (r.dy < 2.8 && r.dy > -2.8) {
+      this.scroll = false
       this.allowPan = true;
       const day = this.findDay(r);
       if (day) {
-        this.setState({activeRow: day.row, scroll: false});
+        this.setState({activeRow: day.row});
       }
     }
   }
 
   panMove(e, r) {
-    console.log(this.allowPan)
+    console.log(this.scroll)
     if (!this.allowPan) {
       return;
     }
@@ -99,10 +100,26 @@ class HoursInTheDay extends Component {
     const day = this.findDay(r);
 
     if (day && day.id !== this.lastPanned) {
-      const pannedDays = _.clone(this.state.pannedDays);
-      this.lastPanned = day.id;
-      pannedDays.push(day); 
-      this.setState({pannedDays: _.uniqBy(pannedDays, 'id')});
+      this.lastPanned = day.id   
+      const alreadyPushed = this.days.indexOf(day.id) > -1;
+      
+      if (!alreadyPushed) {
+        const innerComp = _.get(_.find(this.childrenComponents, {id: day.id}), 'comp')
+        day.comp.setNativeProps({
+          style: {backgroundColor: 'red'}
+        });
+        this.days.push(day.id);
+      };
+
+    }
+  }
+
+  registerInner(id, comp) {
+    const index = _.findIndex(this.childrenComponents, {id: id});
+    if (index > -1) {
+      this.childrenComponents[index].comp = comp;
+    } else {
+      this.childrenComponents.push({id, comp})
     }
   }
 
@@ -110,8 +127,9 @@ class HoursInTheDay extends Component {
     if (!this.allowPan) {
       return;
     }
-    this.setState({scroll: true});
     this.allowPan = false;
+    this.scroll = true;
+    this.setState({pannedDays: this.days, activeRow: null});
   }
 
   findDay(e) {    
@@ -128,7 +146,7 @@ class HoursInTheDay extends Component {
     if (comp) {
       const index = _.findIndex(this.components, {id: id});
       let originalRect;
-      if (index >= 0) {
+      if (index > -1) {
         originalRect = this.components[index].boundingRect;
         this.components.splice(index, 1);
       }
@@ -138,6 +156,7 @@ class HoursInTheDay extends Component {
       } else {
         rect = await this.measureComponents(comp);
       }
+      //const rect = await this.measureComponents(comp);
       this.components.push({
         comp,
         id,
@@ -152,11 +171,12 @@ class HoursInTheDay extends Component {
 
 
   render() {
+    console.log(this.components.length, this.childrenComponents.length, 'asdfkasfkjlasfklajsdf')
     return (
-      <ScrollView scrollEnabled={this.state.scroll} {...this._panResponder.panHandlers} scrollEventThrottle={20} onScroll={this.onScrollEvent.bind(this)} >
+      <ScrollView scrollEnabled={this.scroll} {...this._panResponder.panHandlers} scrollEventThrottle={40} onScroll={this.onScrollEvent.bind(this)} >
         {
           _.map(this.props.hours, (hour, i) => {
-            return <TimeRow scroll={this.state.scroll} activeRow={this.state.activeRow} week={this.props.week} key={i} i={i} register={this.register.bind(this)} hour={hour} pannedDays={this.state.pannedDays} />
+            return <TimeRow registerInner={this.registerInner.bind(this)} scroll={this.scroll} activeRow={this.state.activeRow} week={this.props.week} key={i} i={i} register={this.register.bind(this)} hour={hour} pannedDays={this.state.pannedDays} />
           })
         }
       </ScrollView>

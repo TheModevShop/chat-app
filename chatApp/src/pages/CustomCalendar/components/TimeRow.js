@@ -13,8 +13,12 @@ import {
 } from 'react-native';
 
 class TimeRow extends Component {
+  componentDidMount() {
+    this.mounted = true;  
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
-    return this.props.scroll ? true : this.props.activeRow === this.props.i; 
+    return !this.mounted || this.props.pannedDays.length !== nextProps.pannedDays.length || this.props.activeRow === this.props.i; 
   }
 
   render() {
@@ -28,9 +32,10 @@ class TimeRow extends Component {
 
   makeDays(hour) {
     return _.map(this.props.week, (day, i, array) => {
-      const panned = _.find(this.props.pannedDays, {id: `id-${hour}-${i}`});
+     const panned = this.props.pannedDays.indexOf(`id-${hour}-${i}`) > -1; //_.find(this.props.pannedDays, {id: `id-${hour}-${i}`});
      return <View ref={this.props.register.bind(this, `id-${hour}-${i}`, day, hour, i)} key={i} style={styles.days}>
-        <View style={[
+        <View
+          style={[
           styles.dayInner, i === 0 ? styles.dayStart : {}, 
           i === array.length-1 ? styles.dayEnd : {},
           panned ? {backgroundColor: 'rgb(149, 123, 187)'} : {}
@@ -55,14 +60,14 @@ const styles = StyleSheet.create({
   },
   days: {
     width: (Dimensions.get('window').width / 8) - 0.5,
-    height: 40,
+    height: 80,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center'
   },
   dayInner: {
     width: (Dimensions.get('window').width / 8) - 0.5,
-    height: 30,
+    height: 60,
     
     flexDirection: 'row',
     alignItems: 'center',

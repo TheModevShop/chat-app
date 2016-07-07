@@ -4,7 +4,7 @@ import _ from 'lodash';
 export function buildRow(duration = 60) {
   
   const hours = [];
-  for (var i = 0; i < 24; i++) {
+  for (var i = 0; i < 14; i++) {
     hours.push(moment().startOf('day').add(6, 'hours').add(duration * i, 'minutes').format('H:mm'));
   }
   return hours;
