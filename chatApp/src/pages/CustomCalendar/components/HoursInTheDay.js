@@ -99,7 +99,7 @@ class HoursInTheDay extends Component {
     this.isPanning = true;
     const day = this.findDay(r);
 
-    if (day && day.id !== this.lastPanned) {
+    if (day && day.id !== this.lastPanned && day.row === this.state.activeRow) {
       this.lastPanned = day.id   
       const alreadyPushed = this.days.indexOf(day.id) > -1;
       
