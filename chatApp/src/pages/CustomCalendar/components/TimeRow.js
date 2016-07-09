@@ -18,7 +18,7 @@ class TimeRow extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return !this.mounted || this.props.pannedDays.length !== nextProps.pannedDays.length || this.props.activeRow === this.props.i; 
+    return true //!this.mounted || this.props.pannedDays.length !== nextProps.pannedDays.length || this.props.activeRow === this.props.i; 
   }
 
   render() {
