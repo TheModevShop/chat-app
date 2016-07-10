@@ -32,9 +32,11 @@ class TimeRow extends Component {
 
   makeDays(hour) {
     return _.map(this.props.week, (day, i, array) => {
-     const panned = this.props.pannedDays.indexOf(`id-${hour}-${i}`) > -1; //_.find(this.props.pannedDays, {id: `id-${hour}-${i}`});
-     return <View ref={this.props.register.bind(this, `id-${hour}-${i}`, day, hour, i)} key={i} style={styles.days}>
+     const id = `id-${hour}-${i}-${this.props.activeWeek}`;
+     const panned = this.props.pannedDays.indexOf(id) > -1;
+     return <View key={i} style={styles.days}>
         <View
+          ref={this.props.register.bind(this, id, day, hour, i, this.props.hour)}
           style={[
           styles.dayInner, i === 0 ? styles.dayStart : {}, 
           i === array.length-1 ? styles.dayEnd : {},

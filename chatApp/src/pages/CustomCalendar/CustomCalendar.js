@@ -39,7 +39,7 @@ class CustomCalendar extends Component {
         <WeekSelector activeWeek={this.state.activeWeek} onChangeWeek={this.onChangeWeek.bind(this)} weeks={this.state.month} />
         <DaysOfTheWeek />
         <View style={{marginTop: 0, flex: 1, flexDirection: 'column', position: 'relative'}}>
-          <HoursInTheDay hours={this.state.hours} week={this.state.month[this.state.activeWeek]} />
+          <HoursInTheDay hours={this.state.hours} activeWeek={this.state.activeWeek} week={this.state.month[this.state.activeWeek]} />
         </View>
       </View>
     );
