@@ -40,10 +40,26 @@ class TimeRow extends Component {
   }
 
 
-componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.activeWeek !== this.props.activeWeek) {
       this.components = [];
-    } 
+    }
+    if (nextProps.pannedDays.length !== this.props.pannedDays.length) {
+      _.forEach(this.components, (component) => {
+        const panned = _.find(this.props.pannedDays, {id: component.id});
+        if (panned) {
+          console.log('yes')
+          component.comp.setNativeProps({
+            style: {backgroundColor: 'rgb(149, 123, 187)', color: '#fff'}
+          });
+        } else {
+          console.log('not')
+          component.comp.setNativeProps({
+            style: {backgroundColor: 'transparent', color: '#000'}
+          });
+        }
+      });
+    }
   }
 
   onMoveShouldSetPanResponder(evt, gesture) {
