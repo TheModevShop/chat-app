@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Actions } from 'react-native-router-flux';
 import {branch} from 'baobab-react/higher-order';
 import SessionList from './SessionList';
 import Search from '../Search/Search';

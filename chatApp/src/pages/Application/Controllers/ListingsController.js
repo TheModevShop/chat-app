@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Listings from '../../Listings/Listings';
 import ListingDetails from '../../ListingDetails/ListingDetails';
 import AddSession from '../../AddSession/AddSession';
+import CustomCalendar from '../../CustomCalendar/CustomCalendar';
 import {
   AppRegistry,
   StyleSheet,
@@ -15,7 +16,9 @@ import {
 const {
   CardStack: NavigationCardStack,
   StateUtils: NavigationStateUtils
-} = NavigationExperimental
+} = NavigationExperimental;
+
+let verticle;
 
 function createReducer(initialState) {
   return (currentState = initialState, action) => {
@@ -47,14 +50,21 @@ class ListingsController extends Component {
     }
   }
 
+
   _handleAction (action) {
     const newState = NavReducer(this.state.navState, action);
     if (newState === this.state.navState) {
       return false;
     }
-    this.setState({
-      navState: newState
-    })
+    const state = {
+      navState: newState,
+    }
+
+    if (action.type === 'push') {
+      state.direction = action.key === 'setListingAvailability' ? 'vertical' : 'horizontal'
+    }
+
+    this.setState(state)
     return true;
   }
 
@@ -63,9 +73,13 @@ class ListingsController extends Component {
   }
 
   _renderRoute (key) {
+    verticle = false;
     if (key === 'Listings') return <Listings onNavigation={this._handleAction.bind(this, { type: 'push', key: 'ListingDetails' })} />
     if (key === 'ListingDetails') return <ListingDetails goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
     if (key === 'AddSessionForListing') return <AddSession goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    if (key === 'setListingAvailability') {
+      return <CustomCalendar goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} /> 
+    }
   }
 
   _renderScene(props) {
@@ -80,6 +94,7 @@ class ListingsController extends Component {
   render() {
     return (
       <NavigationCardStack
+        direction={this.state.direction}
         navigationState={this.state.navState}
         onNavigate={this._handleAction.bind(this)}
         renderScene={this._renderScene.bind(this)} />

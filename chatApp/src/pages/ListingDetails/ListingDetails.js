@@ -27,6 +27,7 @@ class ListingDetails extends Component {
               <Text>Instructed by</Text> 
               <TouchableHighlight onPress={this.props.goBack.bind(this)} underlayColor='#999'><Text>Back</Text></TouchableHighlight>
               <TouchableHighlight onPress={this.addSessionForListing.bind(this)} underlayColor='#999'><Text>Add Session For Listing</Text></TouchableHighlight>
+              <TouchableHighlight onPress={this.setAvailability.bind(this)} underlayColor='#999'><Text>Add Session For Listing</Text></TouchableHighlight>
             </View>
           </View> : null
         }
@@ -36,6 +37,10 @@ class ListingDetails extends Component {
 
   componentWillUnmount() {
     //resetActiveListing()
+  }
+
+  setAvailability() {
+    this.props.onNavigation({ type: 'push', key: 'setListingAvailability' })
   }
 
   addSessionForListing(id) {

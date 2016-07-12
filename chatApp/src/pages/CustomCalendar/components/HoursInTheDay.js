@@ -14,19 +14,28 @@ import {
   PanResponder
 } from 'react-native';
 
+// Actions
+import {addListingAvailability} from '../../../actions/ListingActions';
+
 
 class HoursInTheDay extends Component {
   constructor(...args) {
     super(...args);
     this.scroll = true;
     this.state = {
-      pannedDays: [],
       scroll: true
     }
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({mount: true})
+    }, 390)
   }
   
   render() {
     return (
+      this.state.mount ?
       <View style={styles.wrapper}>
         <ScrollView scrollEnabled={this.state.scroll} scrollEventThrottle={40} onScroll={this.onScrollEvent.bind(this)} >
           {
@@ -40,16 +49,17 @@ class HoursInTheDay extends Component {
                 key={i} 
                 i={i} 
                 hour={hour} 
-                pannedDays={this.state.pannedDays} />
+                pannedDays={this.props.pannedDays} />
             })
           }
         </ScrollView>
-      </View>
+      </View> : null
     );
   }
 
   onPanEnd(pannedDays) {
-    this.setState({pannedDays: pannedDays, scroll: true})
+    addListingAvailability(pannedDays)
+    this.setState({scroll: true})
   }
 
   onScrollEnabled(enabled) {

@@ -37,6 +37,9 @@ class TimeRow extends Component {
 
   componentDidMount() {
     this.mounted = true;
+    setTimeout(() => {
+      this.reMeasureComponents();
+    }, 1000)
   }
 
 
@@ -48,12 +51,10 @@ class TimeRow extends Component {
       _.forEach(this.components, (component) => {
         const panned = _.find(this.props.pannedDays, {id: component.id});
         if (panned) {
-          console.log('yes')
           component.comp.setNativeProps({
             style: {backgroundColor: 'rgb(149, 123, 187)', color: '#fff'}
           });
         } else {
-          console.log('not')
           component.comp.setNativeProps({
             style: {backgroundColor: 'transparent', color: '#000'}
           });
@@ -93,6 +94,7 @@ class TimeRow extends Component {
       } else {
         rect = await this.measureComponents(comp);
       }
+      rect = await this.measureComponents(comp);
       //const rect = await this.measureComponents(comp);
       this.components.push({
         comp,
@@ -160,11 +162,6 @@ class TimeRow extends Component {
 
     this.props.onPanEnd(_.uniqBy(newDays.concat(this.days), 'id'))
     
-    // removed panned and add active
-    const daysToSave = _.filter(this.components, (component) => {
-      return _.findIndex(this.days, {id: component.id}) > -1;
-    });
-    
     setTimeout(() => {
       this.panStart = null;
       this.lastPanned = null;
@@ -191,12 +188,14 @@ class TimeRow extends Component {
     return _.map(this.props.week, (day, i, array) => {
      const id = `id-${hour}-${i}-${this.props.activeWeek}`;
      const panned = _.findIndex(this.props.pannedDays, {id}) > -1;
+     const roundedLeft = panned && !_.find(this.props.pannedDays, {id: `id-${hour}-${i-1}-${this.props.activeWeek}`});
+     const roundedRight= panned && !_.find(this.props.pannedDays, {id: `id-${hour}-${i+1}-${this.props.activeWeek}`});
      return <View key={i} style={styles.days}>
         <View
           ref={this.register.bind(this, id, day, hour, i, this.props.hour)}
           style={[
-          styles.dayInner, i === 0 ? styles.dayStart : {}, 
-          i === array.length-1 ? styles.dayEnd : {},
+          styles.dayInner, i === 0 || roundedLeft ? styles.dayStart : {}, 
+          i === array.length-1 || roundedRight ? styles.dayEnd : {},
           panned ? {backgroundColor: 'rgb(149, 123, 187)'} : {}
           ]}>
           <Text style={panned ? {color: '#fff'} : {color: '#000'}}>{day.day.format('D')}</Text>

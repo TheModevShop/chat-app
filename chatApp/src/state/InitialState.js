@@ -34,6 +34,9 @@ export default function getInitialState() {
       },
       newPaymentMethod: {
         card: {}
+      },
+      listingAvailability: {
+        pannedDays: null
       }
     },
     facets: {facets: {
