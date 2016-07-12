@@ -32,7 +32,7 @@ function createReducer(initialState) {
 const NavReducer = createReducer({
   index: 0,
   key: 'Chat',
-  children: [{key: 'Conversations'}]
+  routes: [{key: 'Conversations'}]
 })
 
 class ChatController extends Component {
@@ -65,7 +65,7 @@ class ChatController extends Component {
   }
 
   _renderScene(props) {
-    const ComponentToRender = this._renderRoute(props.scene.navigationState.key);
+    const ComponentToRender = this._renderRoute(props.scene.route.key);
     return (
       <ScrollView style={styles.scrollView}>
         {ComponentToRender}

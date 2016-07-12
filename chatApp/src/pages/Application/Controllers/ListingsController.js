@@ -22,6 +22,7 @@ let verticle;
 
 function createReducer(initialState) {
   return (currentState = initialState, action) => {
+    console.log(action)
     switch (action.type) {
       case 'push':
         return NavigationStateUtils.push(currentState, {key: action.key});
@@ -38,7 +39,7 @@ function createReducer(initialState) {
 const NavReducer = createReducer({
   index: 0,
   key: 'App',
-  children: [{key: 'Listings'}]
+  routes: [{key: 'Listings'}]
 })
 
 class ListingsController extends Component {
@@ -83,7 +84,7 @@ class ListingsController extends Component {
   }
 
   _renderScene(props) {
-    const ComponentToRender = this._renderRoute(props.scene.navigationState.key)
+    const ComponentToRender = this._renderRoute(props.scene.route.key)
     return (
       <View style={styles.scrollView}>
         {ComponentToRender}
@@ -96,7 +97,7 @@ class ListingsController extends Component {
       <NavigationCardStack
         direction={this.state.direction}
         navigationState={this.state.navState}
-        onNavigate={this._handleAction.bind(this)}
+        onNavigateBack={this.handleBackAction.bind(this)}
         renderScene={this._renderScene.bind(this)} />
     )
   }

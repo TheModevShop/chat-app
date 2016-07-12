@@ -32,7 +32,7 @@ function createReducer(initialState) {
 const NavReducer = createReducer({
   index: 0,
   key: 'Favorites',
-  children: [{key: 'Favorites'}]
+  routes: [{key: 'Favorites'}]
 })
 
 class FavoritesController extends Component {
@@ -64,7 +64,7 @@ class FavoritesController extends Component {
   }
 
   _renderScene(props) {
-    const ComponentToRender = this._renderRoute(props.scene.navigationState.key)
+    const ComponentToRender = this._renderRoute(props.scene.route.key)
     return (
       <ScrollView style={styles.scrollView}>
         {ComponentToRender}

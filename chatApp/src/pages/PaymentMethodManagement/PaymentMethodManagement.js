@@ -1,6 +1,5 @@
 'use strict';
 import React, { Component } from 'react';
-import { Actions } from 'react-native-router-flux';
 import {branch} from 'baobab-react/higher-order';
 import _ from 'lodash';
 import ResponsiveImage from 'react-native-responsive-image';

@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { View } from 'react-native';
 import Tabs from 'react-native-tabs';
 import TabbedView from './TabbedView';
-import {Actions, Scene, Router, Tab, DefaultRenderer, Util} from 'react-native-router-flux';
 const  deepestExplicitValueForKey = Util.deepestExplicitValueForKey;
 
 class TabBar extends Component {

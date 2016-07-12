@@ -2,7 +2,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
-import { Actions } from 'react-native-router-flux';
 import {getAuthentication} from '../../actions/AuthenticationActions';
 import {addSession} from '../../actions/SessionActions';
 import moment from 'moment';

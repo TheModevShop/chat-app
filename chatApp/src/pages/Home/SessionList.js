@@ -1,7 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
-import { Actions } from 'react-native-router-flux';
 import {openChat} from '../../actions/ChatActions';
 import {setActiveSession} from '../../actions/SessionActions';
 import ellipsize from 'ellipsize';

@@ -3,7 +3,6 @@ import _ from 'lodash';
 import {FBLogin, FBLoginManager} from 'react-native-facebook-login';
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
-import { Actions } from 'react-native-router-flux';
 import {addFacebookCredentials} from '../../actions/UserActions';
 import {getAuthentication, teardownSession} from '../../actions/AuthenticationActions';
 import {

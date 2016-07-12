@@ -31,7 +31,7 @@ function createReducer(initialState) {
 const NavReducer = createReducer({
   index: 0,
   key: 'App',
-  children: [{key: 'InstructorSchedule'}]
+  routes: [{key: 'InstructorSchedule'}]
 })
 
 class InstructorScheduleController extends Component {
@@ -63,7 +63,7 @@ class InstructorScheduleController extends Component {
   }
 
   _renderScene(props) {
-    const ComponentToRender = this._renderRoute(props.scene.navigationState.key)
+    const ComponentToRender = this._renderRoute(props.scene.route.key)
     return (
       <View style={styles.scrollView}>
         {ComponentToRender}

@@ -34,7 +34,7 @@ function createReducer(initialState) {
 const NavReducer = createReducer({
   index: 0,
   key: 'App',
-  children: [{key: 'Sessions'}]
+  routes: [{key: 'Sessions'}]
 })
 
 class HomeController extends Component {
@@ -67,7 +67,7 @@ class HomeController extends Component {
   }
 
   _renderScene(props) {
-    const ComponentToRender = this._renderRoute(props.scene.navigationState.key)
+    const ComponentToRender = this._renderRoute(props.scene.route.key)
     return (
       <View style={styles.scrollView}>
         {ComponentToRender}
@@ -79,7 +79,6 @@ class HomeController extends Component {
     return (
       <NavigationCardStack
         navigationState={this.state.navState}
-        onNavigate={this._handleAction.bind(this)}
         renderScene={this._renderScene.bind(this)} />
     )
   }
