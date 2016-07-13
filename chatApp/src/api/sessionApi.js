@@ -12,4 +12,14 @@ export async function addSession(session) {
   });
 }
 
+export async function addBulkSessions(sessions, listingId) {
+  return new bluebird((resolve, reject) => {
+    xhr('POST', `${BASE}/me/listings/${listingId}/sessions/batch`, {sessions}).then((data) => {
+      resolve(data);
+    }).catch((err) => {
+      reject(err);
+    });
+  });
+}
+
 

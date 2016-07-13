@@ -76,6 +76,7 @@ class InstructorScheduleController extends Component {
       <NavigationCardStack
         navigationState={this.state.navState}
         onNavigate={this._handleAction.bind(this)}
+        onNavigateBack={this.handleBackAction.bind(this)}
         renderScene={this._renderScene.bind(this)} />
     )
   }

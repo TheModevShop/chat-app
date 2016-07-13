@@ -12,6 +12,9 @@ import moment from 'moment';
 import * as Animatable from 'react-native-animatable';
 import {makeDays, buildRow} from './components/CalendarUtility';
 
+//Actions
+import {buildSessionRequest} from '../../actions/SessionActions';
+
 import {
   StyleSheet,
   Text,
@@ -68,12 +71,28 @@ class CustomCalendar extends Component {
   }
 
   save() {
-    
+    buildSessionRequest(this.props.listingAvailability, this.props.listingSessions, this.props.listingDetails)
   }
 
   onAnimationEnd() {
     this.setState({bottomMargin: !this.state.bottomMargin})
   }
+
+
+  // createSession(form) {
+  //   const time = moment();
+  //   return {
+  //     notes: '',
+  //     dateAndTime: time,
+  //     date:  moment(time).format('YYYYMMDD'),
+  //     time: {
+  //       start: '13:00',
+  //       end: '18:00'
+  //     },      
+  //     enrolled: [],
+  //     listing: this.props.listingId
+  //   }
+  // }
 
 }
 
@@ -109,6 +128,8 @@ const styles = StyleSheet.create({
 
 export default branch(CustomCalendar, {
   cursors: {
+    listingDetails: ['facets','ListingDetails'],
+    listingSessions: ['facets','ListingSessions'],
     listingAvailability: ['listingAvailability']
   }
 });

@@ -8,6 +8,7 @@ const SearchFacet = require('./facets/SearchFacet').default();
 const SkillsFacet = require('./facets/SkillsFacet').default();
 const MyListingsFacet = require('./facets/MyListingsFacet').default();
 const ListingDetailsFacet = require('./facets/ListingDetailsFacet').default();
+const ListingSessionsFacet = require('./facets/ListingSessionsFacet').default();
 
 export default function getInitialState() {
   return {
@@ -49,7 +50,8 @@ export default function getInitialState() {
       Search: SearchFacet,
       Skills: SkillsFacet,
       MyListings: MyListingsFacet,
-      ListingDetails: ListingDetailsFacet
+      ListingDetails: ListingDetailsFacet,
+      ListingSessions: ListingSessionsFacet
     }}
   };
 }

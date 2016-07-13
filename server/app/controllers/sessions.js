@@ -39,21 +39,27 @@ sessions.updateById = function(id, params) {
   var updatedObj = {};
   var find = {_id: id};
 
-  
   return Sessions.update(find, updatedObj)
-    .exec(function(err, updatedObj) {
-      if(err) {
-        throw err; 
-      }else{
-        return updatedObj;
-      }
-    });
+  .exec(function(err, updatedObj) {
+    if(err) {
+      throw err; 
+    }else{
+      return updatedObj;
+    }
+  });
 };
 
 sessions.add = function(session) {
   var newSession = new Sessions(session);
   console.log(newSession)
   return newSession.save()
+};
+
+
+sessions.getSessionsForListing = function(id) {
+ return Sessions.find({
+    listing: id
+  }).populate('listing')
 };
 
 

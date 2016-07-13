@@ -9,6 +9,9 @@ var hasRole = require('../../utils/roleMiddleware');
 // Models
 var Listings = require('../../models/listings');
 
+// Controllers
+var SessionsController = require('../../controllers/sessions');
+
 router.route('/')
   .post(function(req, res) {
     
@@ -33,5 +36,14 @@ router.route('/:id')
   .put(function(req, res) {
     
   });
+
+
+router.route('/:id/sessions')
+  .get(function(req, res) {
+    SessionsController.getSessionsForListing(req.params.id)
+    .then(function(sessions) {
+      res.json(sessions);
+    })
+  })
 
 module.exports = router;

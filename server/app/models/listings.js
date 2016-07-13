@@ -19,6 +19,10 @@ var listings = new Schema({
     type: Number,
     default: 1
   },
+  duration: {
+    type: Number,
+    default: 60
+  },
   price: Number,
   description: {
     type: String,

@@ -2,6 +2,7 @@ import tree from '../state/StateTree';
 import _ from 'lodash';
 import {addChatToUi} from './ChatActions';
 import * as api from '../api/sessionApi';
+import moment from 'moment';
 const sessionDetails = tree.select(['sessionDetails']);
 
 export async function setActiveSession(id) {
@@ -22,4 +23,20 @@ export async function addSession(session) {
   } catch(err) {
     console.log(err)
   }
+}
+
+
+export async function buildSessionRequest(newAvailability, currentAvailability, listing) {
+  const times = _.map(newAvailability.pannedDays, (panned) => {
+    const time = moment(panned.time, 'h:mm').format('H:mm');
+    const date = moment(panned.day.day, 'YYYYMMDD').set('hour', time.split(':')[0]).set('minute', time.split(':')[1]).format();
+    return {
+      time: moment(panned.time, 'h:mm').format('H:mm'),
+      date: panned.day.day.format('YYYYMMDD'),
+      dateAndTime: date
+    }
+  });
+
+  const addedSessions = await api.addBulkSessions(JSON.stringify({times: times}), listing._id);
+  
 }

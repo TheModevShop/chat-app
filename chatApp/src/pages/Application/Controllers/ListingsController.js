@@ -22,7 +22,6 @@ let verticle;
 
 function createReducer(initialState) {
   return (currentState = initialState, action) => {
-    console.log(action)
     switch (action.type) {
       case 'push':
         return NavigationStateUtils.push(currentState, {key: action.key});
@@ -95,6 +94,7 @@ class ListingsController extends Component {
   render() {
     return (
       <NavigationCardStack
+        verticalDistance={50}
         direction={this.state.direction}
         navigationState={this.state.navState}
         onNavigateBack={this.handleBackAction.bind(this)}

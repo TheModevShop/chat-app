@@ -124,4 +124,19 @@ router.route('/')
     }
   });
 
+
+  router.route('/listings/:id/sessions/batch')
+  .post(function(req, res) {
+    var times;
+    try {
+      times = JSON.parse(req.body.sessions).times 
+    } catch(err) {
+      res.status(422).json(err);
+    }
+    Listings.addSessionsForListing(req.params.id, times)
+    .then(function(response) {
+      res.json(response);
+    });
+  });
+
 module.exports = router;

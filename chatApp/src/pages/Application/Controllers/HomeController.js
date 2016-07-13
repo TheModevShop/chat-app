@@ -79,6 +79,7 @@ class HomeController extends Component {
     return (
       <NavigationCardStack
         navigationState={this.state.navState}
+        onNavigateBack={this.handleBackAction.bind(this)}
         renderScene={this._renderScene.bind(this)} />
     )
   }

@@ -76,6 +76,7 @@ class ChatController extends Component {
   render() {
     return (
       <NavigationCardStack
+        onNavigateBack={this.handleBackAction.bind(this)}
         navigationState={this.state.navState}
         onNavigate={this._handleAction.bind(this)}
         renderScene={this._renderScene.bind(this)} />
