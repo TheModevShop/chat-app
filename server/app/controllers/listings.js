@@ -15,6 +15,7 @@ listings.getAll = function(limit, offset) {
   return Listings.find({})
     .limit(limit || 10)
     .skip(offset || 0)
+    .populate('instructor skill')
     .exec(function(err, listings) {
       return listings;
     });
@@ -32,12 +33,10 @@ listings.getListings = function(query) {
       $lte: query.endDate
     }
   }
-  console.log(query, 'sdafasdfaskjfaslkfjs')
-  console.log(_.pickBy(queryObject, _.identity))
   return Listings.find(_.pickBy(queryObject, _.identity))
     .limit(query.limit || 10)
     .skip(query.offset || 0)
-    .populate('instructor')
+    .populate('instructor skill')
     .exec(function(err, listings) {
       return listings;
     });
@@ -47,6 +46,7 @@ listings.getById = function(id) {
   return Listings.findOne({
     _id: id
   })
+  .populate('instructor skill')
   .exec(function(err, user) {
     return user;
   });

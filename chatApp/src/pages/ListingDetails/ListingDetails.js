@@ -4,6 +4,7 @@ import {branch} from 'baobab-react/higher-order';
 import _ from 'lodash';
 import ResponsiveImage from 'react-native-responsive-image';
 import {resetActiveListing} from '../../actions/ListingActions';
+import MapViewPreview from '../../components/MapViewPreview/MapViewPreview.js';
 import {
   StyleSheet,
   Text,
@@ -22,6 +23,7 @@ class ListingDetails extends Component {
           <View><Text>loading</Text></View> : details._id ?
           <View>
             <ResponsiveImage source={{uri: details.image}} initWidth="100%" initHeight="250"/>
+            <MapViewPreview />
             <View>
               <Text>{details.name}</Text> 
               <Text>Instructed by</Text> 

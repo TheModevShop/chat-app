@@ -55,7 +55,7 @@ class Home extends Component {
     return (
        <View style={{flex: 1}}>
         
-        <ListingsList goToSessionDetails={this.props.onNavigation.bind(this, {type: 'push', key: 'SkillAvailability'})} scrollEvent={this.scrollEvent.bind(this)} />
+        <ListingsList goToSkillAvailability={this.props.onNavigation.bind(this, {type: 'push', key: 'SkillAvailability'})} scrollEvent={this.scrollEvent.bind(this)} />
         
         <TouchableHighlight style={{position: 'absolute', left: this.state.left, right: this.state.right, top: this.state.top, flex: 1, borderRadius: this.state.br, backgroundColor: '#fff', height: 50}} onPress={this.onPress.bind(this)} underlayColor='#99d9f4'>
           <View style={{marginTop: 0, alignItems: 'center', flex: 1, flexDirection: 'row',  borderColor: 'gray', borderBottomWidth: this.state.searchOpen ? 1 : 0}}>

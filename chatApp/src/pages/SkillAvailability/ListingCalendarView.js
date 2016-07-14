@@ -29,7 +29,7 @@ class ListingCalendarView extends Component {
     return (
     <View>
       <Calendar
-        scrollEnabled={false}              // False disables swiping. Default: True
+        scrollEnabled={true}              // False disables swiping. Default: True
         showControls={true}               // False hides prev/next buttons. Default: False
         titleFormat={'MMMM YYYY'}         // Format for displaying current month. Default: 'MMMM YYYY'
         prevButtonText={'Prev'}           // Text for previous button. Default: 'Prev'
@@ -50,8 +50,8 @@ class ListingCalendarView extends Component {
     );
   }
   onDateSelect(date) {
-    setSessionDateRange(moment(date).format('YYYYMMDD'), moment(date).format('YYYYMMDD'));
-    invalidateListingCache();
+    // setSessionDateRange(moment(date).format('YYYYMMDD'), moment(date).format('YYYYMMDD'));
+    // invalidateListingCache();
   }
 
   onTouchPrev() {

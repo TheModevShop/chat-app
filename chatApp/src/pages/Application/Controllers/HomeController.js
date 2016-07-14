@@ -75,11 +75,10 @@ class HomeController extends Component {
   }
 
   _renderRoute (key) {
-    console.log(key)
     if (key === 'Listings') return <Home onNavigation={this._handleAction.bind(this)} />
-    if (key === 'ListingDetails') return <ListingDetails goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this, { type: 'push', key: 'Listings' })} />
-    if (key === 'SessionDetails') return <SessionDetails goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this, { type: 'push', key: 'ListingDetails' })} />
-    if (key === 'SkillAvailability') return <SkillAvailability goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this, { type: 'push', key: 'ListingDetails' })} />
+    if (key === 'ListingDetails') return <ListingDetails goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    if (key === 'SessionDetails') return <SessionDetails goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    if (key === 'SkillAvailability') return <SkillAvailability goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
   }
 
   _renderScene(props) {

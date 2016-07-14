@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import {openChat} from '../../actions/ChatActions';
-import {setListingSkillFilter} from '../../actions/ListingActions';
+import {setListingSkillFilter, setActiveListing} from '../../actions/ListingActions';
 import ellipsize from 'ellipsize';
 import _ from 'lodash';
 import {
@@ -67,20 +67,19 @@ class ListingsList extends Component {
           dataSource={this.state.dataSource}
           onScroll={this.props.scrollEvent.bind(this)}
           renderRow={(rowData, i) => {
-            console.log(rowData)
             return (
               <View key={1}>
                 <Swiper height={228}>
-                  <TouchableHighlight onPress={this.onPress.bind(this, rowData.skill)} underlayColor='#999'>
+                  <TouchableHighlight onPress={this.goToSkillAvailability.bind(this, rowData.skill._id)} underlayColor='#999'>
                     <View>
                        <ResponsiveImage source={{uri: rowData.image}} initWidth="100%" initHeight="250"/>
                        <View style={styles.backgroundImage}>
-                          <Text style={styles.text}>{rowData.name}</Text> 
+                          <Text style={styles.text}>{rowData.skill.name}</Text> 
                           <Text style={styles.subtext}>{ellipsize(rowData.description, 60)}</Text> 
                        </View>
                     </View>
                   </TouchableHighlight>
-                  <TouchableHighlight onPress={this.onPress.bind(this, rowData.skill)} underlayColor='#999'>
+                  <TouchableHighlight onPress={this.goToSkillAvailability.bind(this, rowData.skill._id)} underlayColor='#999'>
                     <View>
                        <ResponsiveImage source={{uri: rowData.image}} initWidth="100%" initHeight="250"/>
                        <View style={styles.backgroundImage}>
@@ -100,9 +99,9 @@ class ListingsList extends Component {
     );
   }
 
-  onPress(skillId) {
+  goToSkillAvailability(skillId) {
     setListingSkillFilter(skillId);
-    this.props.goToSessionDetails()
+    this.props.goToSkillAvailability()
   }
 
   componentWillUnmount() {

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import ellipsize from 'ellipsize';
 import _ from 'lodash';
+import sessionItemStyle from '../../styles/sessionItemStyle';
 import {
   StyleSheet,
   Text,
@@ -56,22 +57,23 @@ class ListingsList extends Component {
   }
 
   render() {
-    console.log(this.props.SkillAvailability, 'safdasdfasfasfasdfdsa')
     return (
       this.state.dataSource ?
          <ListView
           dataSource={this.state.dataSource}
           onScroll={this.props.scrollEvent.bind(this)}
-          renderRow={(rowData, i) => {
+          renderRow={(listing, i) => {
             return (
               <View key={1}>
-                <TouchableHighlight underlayColor='#999'>
-                  <View>
-                     <ResponsiveImage source={{uri: rowData.image}} initWidth="100%" initHeight="250"/>
-                     <View style={styles.backgroundImage}>
-                        <Text style={styles.text}>{rowData.name}</Text> 
-                        <Text style={styles.subtext}>{ellipsize(rowData.description, 60)}</Text> 
-                     </View>
+                <TouchableHighlight underlayColor='#999' onPress={this.props.goToListingDetails.bind(this, listing._id)}>
+                  <View key={i} style={sessionItemStyle.sessionWrapper}>
+                   <View style={sessionItemStyle.sessionWrapperImage}>
+                    <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(listing, 'instructor.facebookCredentials.userId')}/picture?width=60&height=60`}}/>
+                   </View>
+                   <View style={sessionItemStyle.sessionWrapperContent}>
+                      <Text style={{fontFamily: 'Avenir-Black'}}>{`${_.get(listing, 'instructor.name.first')} ${_.get(listing, 'instructor.name.last')}`}</Text>
+                      <Text>{`${_.get(listing, 'price')}`}</Text>
+                    </View>
                   </View>
                 </TouchableHighlight>
               </View>

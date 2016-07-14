@@ -1,6 +1,7 @@
 package com.chatapp;
 
 import com.facebook.react.ReactActivity;
+import com.airbnb.android.react.maps.MapsPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.magus.fblogin.FacebookLoginPackage;
 import ca.jaysoo.extradimensions.ExtraDimensionsPackage;
@@ -38,6 +39,7 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new MapsPackage(),
             new VectorIconsPackage(),
             new FacebookLoginPackage(),
             new ExtraDimensionsPackage()
