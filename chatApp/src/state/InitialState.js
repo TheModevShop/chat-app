@@ -46,6 +46,11 @@ export default function getInitialState() {
       instructor: null,
       skill: null,
     },
+    sessionFilters: {
+      listing: null,
+      start: null,
+      end: null,
+    },
     facets: {facets: {
       Chat: ChatFacet,
       Conversation: ConversationFacet,

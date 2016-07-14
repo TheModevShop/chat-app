@@ -17,6 +17,7 @@ import {
 
 class SkillAvailability extends Component {
   render() {
+    console.log(this.props.sessions)
     return (
        <ScrollableTabView>
         <ListingsByInstructorList listings={this.props.listings} tabLabel="React" goToSessionDetails={this.props.onNavigation.bind(this, {type: 'push', key: 'SkillAvailability'})} scrollEvent={this.scrollEvent.bind(this)} />
@@ -32,7 +33,8 @@ class SkillAvailability extends Component {
 export default branch(SkillAvailability, {
   cursors: {
     listings: ['facets','AllListings'],
-    skillAvailability: ['facets', 'SkillAvailability']
+    skillAvailability: ['facets', 'SkillAvailability'],
+    sessions: ['facets', 'AllSessionsFacet']
   }
 });
 

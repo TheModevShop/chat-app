@@ -4,6 +4,7 @@ import {branch} from 'baobab-react/higher-order';
 import _ from 'lodash';
 import Calendar from 'react-native-calendar';
 import moment from 'moment';
+import {setSessionDateRange, invalidateListingCache} from '../../actions/SessionActions';
 import {
   StyleSheet,
   Text,
@@ -24,8 +25,7 @@ class ListingCalendarView extends Component {
   }
 
   
-  render() {
-    console.log(this.props.skillAvailability)
+  render() {    
     return (
     <View>
       <Calendar
@@ -50,7 +50,8 @@ class ListingCalendarView extends Component {
     );
   }
   onDateSelect(date) {
-
+    setSessionDateRange(moment(date).format('YYYYMMDD'), moment(date).format('YYYYMMDD'));
+    invalidateListingCache();
   }
 
   onTouchPrev() {

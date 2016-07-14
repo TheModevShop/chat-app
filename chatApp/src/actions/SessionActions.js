@@ -3,7 +3,19 @@ import _ from 'lodash';
 import {addChatToUi} from './ChatActions';
 import * as api from '../api/sessionApi';
 import moment from 'moment';
+
+const sessions = tree.select(['sessions']);
 const sessionDetails = tree.select(['sessionDetails']);
+const sessionFilters = tree.select(['sessionFilters']);
+
+export function invalidateListingCache() {
+  sessions.set({stale: true})
+}
+
+export function setSessionDateRange(start, end) {
+  sessionFilters.set(['start'], start);
+  sessionFilters.set(['end'], end);
+}
 
 export async function setActiveSession(id) {
   sessionDetails.set(['id'], id)

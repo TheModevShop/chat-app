@@ -17,9 +17,10 @@ router.route('/')
     
   })
   .get(function(req, res) {
-    Sessions.find({}, function(err, response) {
+    var query = req.query || {};
+    SessionsController.getSessions(query).then(function(response) {
       res.json(response);
-    }).populate('listing');
+    })
   });
 
 router.route('/availability')
