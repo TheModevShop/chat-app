@@ -9,9 +9,11 @@ var listings = new Schema({
     type: String,
     es_indexed:true
   },
-  skill: {
-    type: { type: mongoose.Schema.Types.ObjectId, ref: 'Skills' }
+  listed: {
+    type: Boolean,
+    default: true
   },
+  skill: { type: mongoose.Schema.Types.ObjectId, ref: 'Skills' },
   image: {
     type: String,
   },

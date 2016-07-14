@@ -20,15 +20,27 @@ listings.getAll = function(limit, offset) {
     });
 };
 
-listings.getForListingsForInstructor = function(id, limit, offset) {
-  return Listings.find({
-    instructor: id
-  })
-  .limit(limit || 10)
-  .skip(offset || 0)
-  .exec(function(err, listings) {
-    return listings;
-  });
+listings.getListings = function(query) {
+  query = query || {}
+  var  queryObject = {
+    instructor: query.instructor,
+    skill: query.skill,
+  };
+  if (query.endDate && query.startDate) {
+    queryObject.date = {
+      $gte: query.startDate,
+      $lte: query.endDate
+    }
+  }
+  console.log(query, 'sdafasdfaskjfaslkfjs')
+  console.log(_.pickBy(queryObject, _.identity))
+  return Listings.find(_.pickBy(queryObject, _.identity))
+    .limit(query.limit || 10)
+    .skip(query.offset || 0)
+    .populate('instructor')
+    .exec(function(err, listings) {
+      return listings;
+    });
 };
 
 listings.getById = function(id) {

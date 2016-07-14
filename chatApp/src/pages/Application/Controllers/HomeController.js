@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import Home from '../../Home/Home';
+import ListingDetails from '../../ListingDetails/ListingDetails';
 import SessionDetails from '../../SessionDetails/SessionDetails';
+import SkillAvailability from '../../SkillAvailability/SkillAvailability';
+
+// Actions
+import {invalidateListingCache} from '../../../actions/ListingActions';
+
 import {
   AppRegistry,
   StyleSheet,
@@ -34,7 +40,7 @@ function createReducer(initialState) {
 const NavReducer = createReducer({
   index: 0,
   key: 'App',
-  routes: [{key: 'Sessions'}]
+  routes: [{key: 'Listings'}]
 })
 
 class HomeController extends Component {
@@ -51,9 +57,12 @@ class HomeController extends Component {
     if (newState === this.state.navState) {
       return false;
     }
+
+    this.invalidateCache();
+
     this.setState({
       navState: newState
-    })
+    });
     return true;
   }
 
@@ -61,9 +70,16 @@ class HomeController extends Component {
     return this._handleAction({ type: 'pop' });
   }
 
+  invalidateCache() {
+    invalidateListingCache()
+  }
+
   _renderRoute (key) {
-    if (key === 'Sessions') return <Home onNavigation={this._handleAction.bind(this, { type: 'push', key: 'SessionDetails' })} />
-    if (key === 'SessionDetails') return <SessionDetails goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this, { type: 'push', key: 'SessionDetails' })} />
+    console.log(key)
+    if (key === 'Listings') return <Home onNavigation={this._handleAction.bind(this)} />
+    if (key === 'ListingDetails') return <ListingDetails goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this, { type: 'push', key: 'Listings' })} />
+    if (key === 'SessionDetails') return <SessionDetails goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this, { type: 'push', key: 'ListingDetails' })} />
+    if (key === 'SkillAvailability') return <SkillAvailability goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this, { type: 'push', key: 'ListingDetails' })} />
   }
 
   _renderScene(props) {

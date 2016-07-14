@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import {openChat} from '../../actions/ChatActions';
-import {setActiveSession} from '../../actions/SessionActions';
+import {setListingSkillFilter} from '../../actions/ListingActions';
 import ellipsize from 'ellipsize';
 import _ from 'lodash';
 import {
@@ -25,22 +25,16 @@ var IMAGE_HEIGHT = IMAGE_WIDTH / 2;
 var PIXEL_RATIO = PixelRatio.get();
 var PARALLAX_FACTOR = 0.3;
 
-// var images = ['http://images.unsplash.com/photo-1453733190371-0a9bedd82893?format=auto&auto=compress&dpr=2&crop=entropy&fit=crop&w=1266&h=950&q=80',
-// 'http://images.unsplash.com/photo-1431068799455-80bae0caf685?format=auto&auto=compress&dpr=2&crop=entropy&fit=crop&w=1266&h=844&q=80',
-// 'http://images.unsplash.com/photo-1416339442236-8ceb164046f8?format=auto&auto=compress&dpr=2&crop=entropy&fit=crop&w=1266&h=915&q=80',
-// 'http://images.unsplash.com/photo-1452457750107-cd084dce177d?format=auto&auto=compress&dpr=2&crop=entropy&fit=crop&w=1266&h=917&q=80',
-// 'http://images.unsplash.com/photo-1453806839674-d1a9087ca1ed?format=auto&auto=compress&dpr=2&crop=entropy&fit=crop&w=1266&h=844&q=80']
 
 
-
-class Home extends Component {
+class ListingsList extends Component {
   constructor(...args) {
     super(...args);
     this.state = {};
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (_.get(nextProps, 'AllSessionsFacet', []).length === _.get(this.props, 'AllSessionsFacet', []).length) {
+    if (_.get(nextProps, 'AllListingsFacet', []).length === _.get(this.props, 'AllListingsFacet', []).length) {
       return false
     }
     return true;
@@ -55,7 +49,7 @@ class Home extends Component {
   }
 
   registerList(props) {
-    const sessions = _.get(props, 'AllSessionsFacet', []);
+    const sessions = _.get(props, 'AllListingsFacet', []);
     if (sessions.length) {
       var ds = new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 != r2
@@ -67,17 +61,17 @@ class Home extends Component {
   }
 
   render() {
-    const goToPageTwo = () => Actions.conversations({text: 'Hello World!'});
     return (
       this.state.dataSource ?
          <ListView
           dataSource={this.state.dataSource}
           onScroll={this.props.scrollEvent.bind(this)}
           renderRow={(rowData, i) => {
+            console.log(rowData)
             return (
               <View key={1}>
                 <Swiper height={228}>
-                  <TouchableHighlight onPress={this.onPress.bind(this, rowData._id)} underlayColor='#999'>
+                  <TouchableHighlight onPress={this.onPress.bind(this, rowData.skill)} underlayColor='#999'>
                     <View>
                        <ResponsiveImage source={{uri: rowData.image}} initWidth="100%" initHeight="250"/>
                        <View style={styles.backgroundImage}>
@@ -86,7 +80,7 @@ class Home extends Component {
                        </View>
                     </View>
                   </TouchableHighlight>
-                  <TouchableHighlight onPress={this.onPress.bind(this, rowData._id)} underlayColor='#999'>
+                  <TouchableHighlight onPress={this.onPress.bind(this, rowData.skill)} underlayColor='#999'>
                     <View>
                        <ResponsiveImage source={{uri: rowData.image}} initWidth="100%" initHeight="250"/>
                        <View style={styles.backgroundImage}>
@@ -106,14 +100,9 @@ class Home extends Component {
     );
   }
 
-  onPress(id) {
-    setActiveSession(id);
+  onPress(skillId) {
+    setListingSkillFilter(skillId);
     this.props.goToSessionDetails()
-  }
-
-  goToChat(conversation) {
-    openChat(conversation);
-    Actions.conversations()
   }
 
   componentWillUnmount() {
@@ -165,8 +154,8 @@ let styles = StyleSheet.create({
   }
 });
 
-export default branch(Home, {
+export default branch(ListingsList, {
   cursors: {
-    AllSessionsFacet: ['facets','AllSessionsFacet'],
+    AllListingsFacet: ['facets','AllListings'],
   }
 });

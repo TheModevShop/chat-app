@@ -47,7 +47,7 @@ class AddListing extends Component {
   render() {
     const skills =  _.map(this.props.skills, (skill) => {
       return (
-        <Text style={{color: this.state.selectedSkill === skill._id ? 'red' : 'black'}} key={skill._id} onPress={() => {this.setState({selectedSkill: skill})}}>{skill.name}</Text>
+        <Text style={{color: this.state.selectedSkill === skill._id ? 'red' : 'black'}} key={skill._id} onPress={this.setSkillForListing.bind(this, skill._id)}>{skill.name}</Text>
       )
     })
 
@@ -70,6 +70,10 @@ class AddListing extends Component {
     );
   }
 
+  setSkillForListing(skillId) {
+    this.setState({selectedSkill: skillId})
+  }
+
   onPress() {
     const form = this.refs.form.getValue();
     if (form) {
@@ -82,8 +86,7 @@ class AddListing extends Component {
   createListing(form) {
     const time = moment();
     return {
-      name: `${this.state.selectedSkill.name} with ${_.get(this.props.user, 'details.name.first')} ${_.get(this.props.user, 'details.name.last')}`,
-      skill: this.state.selectedSkill._id,
+      skill: this.state.selectedSkill,
       image: 'http://images.unsplash.com/photo-1453733190371-0a9bedd82893?format=auto&auto=compress&dpr=2&crop=entropy&fit=crop&w=1266&h=950&q=80',
       capacity: 1,
       price: 3200,

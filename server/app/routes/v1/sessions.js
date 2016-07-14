@@ -9,6 +9,9 @@ var hasRole = require('../../utils/roleMiddleware');
 // Models
 var Sessions = require('../../models/sessions');
 
+// Controllers
+var SessionsController = require('../../controllers/sessions');
+
 router.route('/')
   .post(function(req, res) {
     
@@ -17,6 +20,14 @@ router.route('/')
     Sessions.find({}, function(err, response) {
       res.json(response);
     }).populate('listing');
+  });
+
+router.route('/availability')
+  .get(function(req, res) {
+    var query = req.query || {};
+    SessionsController.getAvailability(query).then(function(response) {
+      res.json(response);
+    })
   });
 
 

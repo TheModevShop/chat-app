@@ -18,6 +18,18 @@ sessions.getAll = function(limit, offset) {
     });
 };
 
+
+sessions.getAvailability = function(query) {
+  return Sessions.find({
+    "listing.skill": query.skillId
+  })
+  .distinct('date')
+  .exec(function(err, sessions) {
+    return sessions;
+  });
+};
+
+
 sessions.getById = function(id) {
   return Sessions.findOne({
     _id: id
@@ -34,6 +46,7 @@ sessions.getSessionsForUser = function(id) {
     users: {$in: [id]}
   }).populate('lastMessage users')
 };
+
 
 sessions.updateById = function(id, params) {
   var updatedObj = {};

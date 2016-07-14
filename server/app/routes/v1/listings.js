@@ -11,15 +11,17 @@ var Listings = require('../../models/listings');
 
 // Controllers
 var SessionsController = require('../../controllers/sessions');
+var ListingsController = require('../../controllers/listings');
 
 router.route('/')
   .post(function(req, res) {
     
   })
   .get(function(req, res) {
-    Listings.find({}, function(err, response) {
-      res.json(response);
-    }).populate('instructor');
+    ListingsController.getListings(req.query)
+    .then(function(listings) {
+      res.json(listings);
+    })
   });
 
 
@@ -45,5 +47,6 @@ router.route('/:id/sessions')
       res.json(sessions);
     })
   })
+
 
 module.exports = router;

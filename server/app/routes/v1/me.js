@@ -95,9 +95,11 @@ router.route('/')
 
   router.route('/listings')
   .get(function(req, res) {
-    Listings.getForListingsForInstructor(req.decoded._id)
+    var queryObject = {
+      me: req.decoded._id
+    }
+    Listings.getListings(queryObject)
     .then(function(response) {
-      console.log(response)
       res.json(response);
     });
   })
