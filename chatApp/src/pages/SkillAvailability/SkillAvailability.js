@@ -21,7 +21,18 @@ class SkillAvailability extends Component {
     return (
        <ScrollableTabView>
         <ListingsByInstructorList listings={this.props.listings} tabLabel="React" goToSessionDetails={this.props.onNavigation.bind(this, {type: 'push', key: 'SkillAvailability'})} scrollEvent={this.scrollEvent.bind(this)} />
-        <ListingCalendarView skillAvailability={this.props.skillAvailability} tabLabel="calendar"/>
+        <View tabLabel="calendar">
+          <ListingCalendarView skillAvailability={this.props.skillAvailability}/>
+          {
+            _.map(this.props.sessions, (session, i) => {
+              return (
+                <View key={i}>
+                  <Text>{_.get(session, 'listing.instructor.name.first')}</Text>
+                </View>
+              );
+            })
+          }
+        </View>
       </ScrollableTabView>
     );
   }

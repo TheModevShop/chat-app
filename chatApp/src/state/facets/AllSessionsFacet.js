@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import RESTLoader from '../loaders/RESTLoader';
 import {BASE} from '../../constants';
+import parseDate from '../../utility/parseDate';
 import Baobab from 'baobab';
 
 const loader = new RESTLoader({
@@ -8,7 +9,10 @@ const loader = new RESTLoader({
     return `${BASE}/sessions?listing=${queryParams.listing || ''}&startDate=${queryParams.start || ''}&endDate=${queryParams.end || ''}`;
   },
   successTransformer: (data, current) => {
-    return data.body;
+    return _.map(data.body, (session) => {
+      session.date = parseDate(session.date, session.time);
+      return session;
+    })
   }
 });
 

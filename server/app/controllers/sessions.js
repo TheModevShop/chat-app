@@ -22,7 +22,6 @@ sessions.getSessions = function(query) {
   query = query || {}
   var  queryObject = {};
   if (query.endDate && query.startDate) {
-    console.log(query)
     queryObject.date = {
       $gte: query.startDate,
       $lte: query.endDate
@@ -31,7 +30,7 @@ sessions.getSessions = function(query) {
   return Sessions.find(_.pickBy(queryObject, _.identity))
     .limit(query.limit || 10)
     .skip(query.offset || 0)
-    .populate('listing')
+    .deepPopulate('listing.instructor listing.skill')
     .exec(function(err, sessions) {
       return sessions;
     });
