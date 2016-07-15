@@ -19,19 +19,17 @@ class Conversations extends Component {
   }
 
   componentWillMount() {
-    console.log('props', 'propssssss')
     this.registerList(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('props', 'propssssss')
     this.registerList(nextProps);
   }
 
   registerList(props) {
-    console.log(props, 'propssssss')
     const users = _.get(props, 'AllConversations', []);
-    if (users.length) {
+    console.log(users)
+    if (users.length && !users.$isLoading) {
       var ds = new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 != r2
       });

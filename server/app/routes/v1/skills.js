@@ -19,6 +19,12 @@ router.route('/')
     }).populate('instructor');
   });
 
+router.route('/popular')
+  .get(function(req, res) {
+    Skills.find({}, function(err, response) {
+      res.json(response);
+    }).populate('instructor');
+  });
 
 router.route('/:id')
   .get(function(req, res) {
@@ -32,5 +38,8 @@ router.route('/:id')
   .put(function(req, res) {
     
   });
+
+
+
 
 module.exports = router;

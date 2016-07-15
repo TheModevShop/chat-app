@@ -24,9 +24,19 @@ router.route('/')
     })
   });
 
+router.route('/popular')
+  .get(function(req, res) {
+    ListingsController.getListings(req.query)
+    .then(function(listings) {
+      res.json(listings);
+    })
+  });
 
 router.route('/:id')
   .get(function(req, res) {
+    if (req.params.id === 'popular') {
+
+    }
     Listings.findOne({
       _id: req.params.id
     })
@@ -38,6 +48,8 @@ router.route('/:id')
   .put(function(req, res) {
     
   });
+
+
 
 
 router.route('/:id/sessions')

@@ -11,7 +11,8 @@ const ListingDetailsFacet = require('./facets/ListingDetailsFacet').default();
 const ListingSessionsFacet = require('./facets/ListingSessionsFacet').default();
 const AllListingsFacet = require('./facets/AllListingsFacet').default();
 const SkillAvailabilityFacet = require('./facets/SkillAvailabilityFacet').default();
-
+const PopularSkillsFacet = require('./facets/PopularSkillsFacet').default();
+const PopularListingsFacet = require('./facets/PopularListingsFacet').default();
 export default function getInitialState() {
   return {
     cursors: {
@@ -59,12 +60,17 @@ export default function getInitialState() {
       AllSessionsFacet: AllSessionsFacet,
       SessionDetails: SessionDetailsFacet,
       Search: SearchFacet,
-      Skills: SkillsFacet,
+      
       MyListings: MyListingsFacet,
       ListingDetails: ListingDetailsFacet,
       ListingSessions: ListingSessionsFacet,
+      
       AllListings: AllListingsFacet,
-      SkillAvailability: SkillAvailabilityFacet
+      PopularListings: PopularListingsFacet,
+      
+      Skills: SkillsFacet,
+      SkillAvailability: SkillAvailabilityFacet,
+      PopularSkills: PopularSkillsFacet
     }}
   };
 }

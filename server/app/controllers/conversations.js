@@ -13,6 +13,7 @@ rooms.getAll = function(limit, offset) {
   return Conversations.find({})
     .limit(limit || 10)
     .skip(offset || 0)
+    .populate('lastMessage')
     .exec(function(err, chatrooms) {
       return chatrooms;
     });
@@ -22,7 +23,7 @@ rooms.getById = function(id) {
   return Conversations.findOne({
     _id: id
   })
-  .populate()
+  .populate('lastMessage')
   .exec(function(err, user) {
     return user;
   });
@@ -37,7 +38,7 @@ rooms.getByUsersInConversation = function(ids) {
     Conversations.findOne({
       users: ids
     })
-    .populate()
+    .populate('lastMessage')
     .then(function(user) {
       if (!user) {
         return rooms.add({

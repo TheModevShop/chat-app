@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
-import ListingsList from './ListingsList';
+import PopularListings from './PopularListings';
+import PopularSkills from './PopularSkills';
 import Search from '../Search/Search';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {setSearch, toggleSearch} from '../../actions/SearchActions';
@@ -54,48 +55,66 @@ class Home extends Component {
   render() {
     return (
        <View style={{flex: 1}}>
-        
-        <ListingsList goToSkillAvailability={this.props.onNavigation.bind(this, {type: 'push', key: 'SkillAvailability'})} scrollEvent={this.scrollEvent.bind(this)} />
-        
-        <TouchableHighlight style={{position: 'absolute', left: this.state.left, right: this.state.right, top: this.state.top, flex: 1, borderRadius: this.state.br, backgroundColor: '#fff', height: 50}} onPress={this.onPress.bind(this)} underlayColor='#99d9f4'>
-          <View style={{marginTop: 0, alignItems: 'center', flex: 1, flexDirection: 'row',  borderColor: 'gray', borderBottomWidth: this.state.searchOpen ? 1 : 0}}>
-            <Icon name={'ios-search-outline'} style={{backgroundColor: 'transparent', padding: 10, paddingLeft: 14}} size={30} color="#999" />
-            {
-              this.state.searchOpen ?
-              <TextInput
-                ref={(c) => this._searchInput = c}
-                autoFocus={false}
-                placeholder="What would you like to learn"
-                style={{fontSize: 14, paddingLeft: 5, flex: 4, height: 50}}
-                onChangeText={this.onSearch.bind(this)}
-                value={this.props.sessionSearch.query} /> : !this.state.scrolled ? 
-                <Text style={{backgroundColor: 'transparent', color: '#999'}}>What do you want to learn?</Text> : null
-            }
-            {
-              this.state.searchOpen ?
-              <TouchableHighlight style={{flex: 1, padding: 20}} onPress={this.closeSearch.bind(this)} underlayColor='#99d9f4'>
-                <Text>Cancel</Text>
-              </TouchableHighlight> : null
-            }
-          </View> 
-        </TouchableHighlight>
-        <Animated.View                         // Base: Image, Text, View
-          style={{
-            position: 'absolute',
-            height: WINDOW_Height-50-this.props.STATUS_BAR_HEIGHT,
-            backgroundColor: '#fff',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            transform: [                        
-              {translateY: this.state.search}
-            ]
-          }}>
-          <Search />
-        </Animated.View>
+        <PopularSkills skills={this.props.skills} goToSkillAvailability={this.props.onNavigation.bind(this, {type: 'push', key: 'SkillAvailability'})} />
+        <PopularListings goToListing={() => {}} popularListings={this.props.popularListings} scrollEvent={this.scrollEvent.bind(this)} />
+        {this.renderSearchBar()}
+        {this.renderSearchView()}
       </View>
     );
   }
+
+
+
+
+
+
+// START SEARCH
+
+  renderSearchView() {
+    return (
+     <TouchableHighlight style={{position: 'absolute', left: this.state.left, right: this.state.right, top: this.state.top, flex: 1, borderRadius: this.state.br, backgroundColor: '#fff', height: 50}} onPress={this.toggleSearch.bind(this)} underlayColor='#99d9f4'>
+        <View style={{marginTop: 0, alignItems: 'center', flex: 1, flexDirection: 'row',  borderColor: 'gray', borderBottomWidth: this.state.searchOpen ? 1 : 0}}>
+          <Icon name={'ios-search-outline'} style={{backgroundColor: 'transparent', padding: 10, paddingLeft: 14}} size={30} color="#999" />
+          {
+            this.state.searchOpen ?
+            <TextInput
+              ref={(c) => this._searchInput = c}
+              autoFocus={false}
+              placeholder="What would you like to learn"
+              style={{fontSize: 14, paddingLeft: 5, flex: 4, height: 50}}
+              onChangeText={this.onSearch.bind(this)}
+              value={this.props.sessionSearch.query} /> : !this.state.scrolled ? 
+              <Text style={{backgroundColor: 'transparent', color: '#999'}}>What do you want to learn?</Text> : null
+          }
+          {
+            this.state.searchOpen ?
+            <TouchableHighlight style={{flex: 1, padding: 20}} onPress={this.closeSearch.bind(this)} underlayColor='#99d9f4'>
+              <Text>Cancel</Text>
+            </TouchableHighlight> : null
+          }
+        </View> 
+      </TouchableHighlight>
+    )
+  }
+
+  renderSearchBar() {
+    return (
+      <Animated.View
+        style={{
+          position: 'absolute',
+          height: WINDOW_Height-50-this.props.STATUS_BAR_HEIGHT,
+          backgroundColor: '#fff',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          transform: [                        
+            {translateY: this.state.search}
+          ]}}>
+        <Search />
+      </Animated.View>
+    )
+  }
+
   scrollEvent(e) {
     const offset = e.nativeEvent.contentOffset.y;
     if (offset > 100) {
@@ -107,7 +126,7 @@ class Home extends Component {
     }
   }
 
-  onPress() {
+  toggleSearch() {
     toggleSearch(true);
     LayoutAnimation.spring();
     this.setState({br: 0, right: 0, left:0, top: 0, searchOpen: !this.state.searchOpen})
@@ -139,12 +158,22 @@ class Home extends Component {
     setSearch(val);
   }
 
+  // END SEARCH
+
 }
+
+
+
+
+
 
 export default branch(Home, {
   cursors: {
     view: ['home'],
     sessionSearch: ['sessionSearch'],
-    STATUS_BAR_HEIGHT: ['STATUS_BAR_HEIGHT']
+    STATUS_BAR_HEIGHT: ['STATUS_BAR_HEIGHT'],
+
+    skills: ['facets', 'PopularSkills'],
+    popularListings: ['facets','PopularListings'],
   }
 });
