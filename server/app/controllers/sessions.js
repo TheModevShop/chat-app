@@ -38,9 +38,14 @@ sessions.getSessions = function(query) {
 
 
 sessions.getAvailability = function(query) {
-  return Sessions.find({
-    "listing.skill": query.skillId
-  })
+  var queryObj = {};
+  if (query.skillId) {
+    queryObj["listing.skill"] = query.skillId;
+  }
+  if (query.listingId) {
+    queryObj.listing = query.listingId;
+  }
+  return Sessions.find(queryObj)
   .distinct('date')
   .exec(function(err, sessions) {
     return sessions;

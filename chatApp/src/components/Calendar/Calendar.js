@@ -4,14 +4,13 @@ import {branch} from 'baobab-react/higher-order';
 import _ from 'lodash';
 import Calendar from 'react-native-calendar';
 import moment from 'moment';
-import {setSessionDateRange, invalidateListingCache} from '../../actions/SessionActions';
 import {
   StyleSheet,
   View,
 } from 'react-native';
 
 
-class ListingCalendarView extends Component {
+class CalendarView extends Component {
   constructor(...args) {
     super(...args);
     this.state = {};
@@ -20,9 +19,9 @@ class ListingCalendarView extends Component {
   
   render() {    
     return (
-    <View>
+    <View style={{flex: 1, position: 'relative', overflow: 'hidden'}}>
       <Calendar
-        scrollEnabled={true}              // False disables swiping. Default: True
+        scrollEnabled={false}              // False disables swiping. Default: True
         showControls={true}               // False hides prev/next buttons. Default: False
         titleFormat={'MMMM YYYY'}         // Format for displaying current month. Default: 'MMMM YYYY'
         prevButtonText={'Prev'}           // Text for previous button. Default: 'Prev'
@@ -32,7 +31,7 @@ class ListingCalendarView extends Component {
         onTouchNext={this.onTouchNext}    // Callback for next touch event
         onSwipePrev={this.onSwipePrev}    // Callback for back swipe event
         onSwipeNext={this.onSwipeNext}    // Callback for forward swipe event
-        eventDates={this.props.skillAvailability.length ? this.props.skillAvailability : []}       // Optional array of moment() parseable dates that will show an event indicator
+        eventDates={this.props.events && this.props.events.length ? this.props.events : []}       // Optional array of moment() parseable dates that will show an event indicator
         startDate={moment().format()} // The first month that will display. Default: current month
         today={moment().format()}       
         selectedDate={moment().format()}       // Day to be selected
@@ -43,8 +42,7 @@ class ListingCalendarView extends Component {
     );
   }
   onDateSelect(date) {
-    // setSessionDateRange(moment(date).format('YYYYMMDD'), moment(date).format('YYYYMMDD'));
-    // invalidateListingCache();
+    this.props.onSelectedDay(date);
   }
 
   onTouchPrev() {
@@ -67,4 +65,4 @@ let styles = StyleSheet.create({
   
 });
 
-export default ListingCalendarView
+export default CalendarView;

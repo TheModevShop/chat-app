@@ -50,8 +50,6 @@ router.route('/:id')
   });
 
 
-
-
 router.route('/:id/sessions')
   .get(function(req, res) {
     SessionsController.getSessionsForListing(req.params.id)
@@ -59,6 +57,15 @@ router.route('/:id/sessions')
       res.json(sessions);
     })
   })
+
+router.route('/:id/sessions/availability')
+  .get(function(req, res) {
+    var query = req.query || {};
+    query.listingId = req.params.id;
+    SessionsController.getAvailability(query).then(function(response) {
+      res.json(response);
+    })
+  });
 
 
 module.exports = router;

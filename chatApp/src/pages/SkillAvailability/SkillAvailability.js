@@ -29,7 +29,6 @@ class SkillAvailability extends Component {
     };
   }
   render() {
-    console.log(this.props.listings)
     return (
        <View style={{flex: 1}}>
        <TouchableHighlight onPress={() => this.setState({calendar: !this.state.calendar, display: true})}><Text>toggle</Text></TouchableHighlight>

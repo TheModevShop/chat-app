@@ -13,65 +13,81 @@ const AllListingsFacet = require('./facets/AllListingsFacet').default();
 const SkillAvailabilityFacet = require('./facets/SkillAvailabilityFacet').default();
 const PopularSkillsFacet = require('./facets/PopularSkillsFacet').default();
 const PopularListingsFacet = require('./facets/PopularListingsFacet').default();
+const ListingSessionsAvailabilityFacet = require('./facets/ListingSessionsAvailabilityFacet').default();
+
 export default function getInitialState() {
   return {
     cursors: {
+      // Facets Loaders
+      sessions: {},
+      
       sessionDetails: {
         id: null,
         details: null
       },
+
       listingDetails: {
         id: null,
         details: null
       },
+
       sessionSearch: {
         query: '',
         results: ''
       },
+
       classes: {},
+
       modal: {},
+
       chat: {
         activeChat: {
           user: null,
           chats: []
         }
       },
+
       newPaymentMethod: {
         card: {}
       },
+
       listingAvailability: {
         pannedDays: null
+      },
+
+      listingFilters: {
+        instructor: null,
+        skill: null,
+      },
+      sessionFilters: {
+        listing: null,
+        start: null,
+        end: null,
+      },
+    },
+    facets: {
+      facets: {
+        Chat: ChatFacet,
+        Conversation: ConversationFacet,
+        Users: UsersFacet,
+        AllConversations: AllConversationFacet,
+        AllSessionsFacet: AllSessionsFacet,
+        SessionDetails: SessionDetailsFacet,
+        Search: SearchFacet,
+        
+        MyListings: MyListingsFacet,
+        ListingDetails: ListingDetailsFacet,
+        ListingSessions: ListingSessionsFacet,
+        
+        AllListings: AllListingsFacet,
+        PopularListings: PopularListingsFacet,
+        
+        Skills: SkillsFacet,
+        SkillAvailability: SkillAvailabilityFacet,
+        PopularSkills: PopularSkillsFacet,
+        ListingSessionsAvailability: ListingSessionsAvailabilityFacet
       }
-    },
-    listingFilters: {
-      instructor: null,
-      skill: null,
-    },
-    sessionFilters: {
-      listing: null,
-      start: null,
-      end: null,
-    },
-    facets: {facets: {
-      Chat: ChatFacet,
-      Conversation: ConversationFacet,
-      Users: UsersFacet,
-      AllConversations: AllConversationFacet,
-      AllSessionsFacet: AllSessionsFacet,
-      SessionDetails: SessionDetailsFacet,
-      Search: SearchFacet,
-      
-      MyListings: MyListingsFacet,
-      ListingDetails: ListingDetailsFacet,
-      ListingSessions: ListingSessionsFacet,
-      
-      AllListings: AllListingsFacet,
-      PopularListings: PopularListingsFacet,
-      
-      Skills: SkillsFacet,
-      SkillAvailability: SkillAvailabilityFacet,
-      PopularSkills: PopularSkillsFacet
-    }}
+    }
   };
 }
 

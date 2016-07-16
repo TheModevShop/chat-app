@@ -25,6 +25,10 @@ import Initial from '../Initial/Initial';
 import Settings from '../Settings/Settings';
 import AddSession from '../AddSession/AddSession';
 
+// EXTRAS
+import Modal from '../../components/Modal/Modal';
+
+
 let _drawer;
 let ADMIN_OPEN = false;
 let STATUS_BAR_HEIGHT = Navigator.NavigationBar.Styles.General.StatusBarHeight;
@@ -59,37 +63,39 @@ class Application extends React.Component {
   render() {
     return (
       <View style={{flex: 1, backgroundColor: '#000'}}>
-      <Drawer
-        ref={(ref) => _drawer = ref}
-        type="overlay"
-        side="right"
-        content={this.DrawerContent(this)}
-        openDrawerOffset={0.5} // 20% gap on the right side of drawer
-        panCloseMask={0.5}
-        onOpen={this.drawerOpen.bind(this)}
-        onClose={this.drawerClose.bind(this)}
-        captureGestures={true}
-        closedDrawerOffset={-3}
-        tweenDuration={120}
-        styles={{drawer: {shadowColor: '#000000', shadowOpacity: 0.2, shadowRadius: 3}}}
-        tweenHandler={(ratio) => ({
-          main: { opacity:(2-ratio)/2}
-        })}>
-        <StatusBar showHideTransition={'fade'} animated={true} backgroundColor="#fff" barStyle="default" hidden={this.state.hidden}/>
-        <View style={{flex: 1, backgroundColor: 'rgb(251, 251, 251)', marginTop: STATUS_BAR_HEIGHT}}>
-          {
-            this.state.selectedTab === 'settings' ? 
-            <Settings /> :
-            this.state.selectedTab === 'initial' ?
-            <Initial /> :
-            this.state.selectedTab === 'login' ?
-            <Login /> :
-            this.state.instructor ? 
-            this.renderInstructorTabs() :
-            this.renderTabs()
-          }
-        </View>
-      </Drawer>
+        <Drawer
+          ref={(ref) => _drawer = ref}
+          type="overlay"
+          side="right"
+          content={this.DrawerContent(this)}
+          openDrawerOffset={0.5} // 20% gap on the right side of drawer
+          panCloseMask={0.5}
+          onOpen={this.drawerOpen.bind(this)}
+          onClose={this.drawerClose.bind(this)}
+          captureGestures={true}
+          closedDrawerOffset={-3}
+          tweenDuration={120}
+          styles={{drawer: {shadowColor: '#000000', shadowOpacity: 0.2, shadowRadius: 3}}}
+          tweenHandler={(ratio) => ({
+            main: { opacity:(2-ratio)/2}
+          })}>
+          <StatusBar showHideTransition={'fade'} animated={true} backgroundColor="#fff" barStyle="default" hidden={this.state.hidden}/>
+          <View style={{flex: 1, backgroundColor: 'rgb(251, 251, 251)', marginTop: STATUS_BAR_HEIGHT}}>
+            {
+              this.state.selectedTab === 'settings' ? 
+              <Settings /> :
+              this.state.selectedTab === 'initial' ?
+              <Initial /> :
+              this.state.selectedTab === 'login' ?
+              <Login /> :
+              this.state.instructor ? 
+              this.renderInstructorTabs() :
+              this.renderTabs()
+            }
+          </View>
+
+        </Drawer>
+        <Modal />
       </View>
 
     );

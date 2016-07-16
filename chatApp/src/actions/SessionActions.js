@@ -17,6 +17,10 @@ export function setSessionDateRange(start, end) {
   sessionFilters.set(['end'], end);
 }
 
+export function setSessionListingFilter(listing) {
+  sessionFilters.set(['listing'], listing);
+}
+
 export async function setActiveSession(id) {
   sessionDetails.set(['id'], id)
 }

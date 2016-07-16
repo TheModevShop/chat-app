@@ -24,7 +24,7 @@ export default function AllSessionsFacet() {
     },
     get(data) {
       let request;
-      
+      console.log(data.sessions, 'dskfjasdlkfjaslkfjaslkfjaslfkj')
       if (data.sessions && data.sessions.stale) {
         loader.invalidateCache();
       }
