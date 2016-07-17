@@ -16,7 +16,9 @@ import {
 class BookSessionModal extends Component {
   constructor(...args) {
     super(...args);
-    this.state = {}; 
+    this.state = {
+      scroll: false
+    }; 
   }
 
   render() {
@@ -62,7 +64,28 @@ class BookSessionModal extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  scrollWrapper: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 1,
+    paddingTop: 300
+  },
+  sessionWrapper: {
+    flexDirection: 'row',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    backgroundColor: '#fff'
+  },
+  sessionWrapperImage: {
+    height: 60,
+    width: 60,
+    marginRight: 10,
+    borderRadius: 120,
+    overflow: 'hidden'
   }
 });
 

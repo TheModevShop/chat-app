@@ -22,25 +22,27 @@ class Modal extends Component {
     this.innerAnimation = 'slideInUp';
 
     this.outterDelay = 0;
-    this.innerDelay = 500;
+    this.innerDelay = 0;
   }
 
   componentWillReceiveProps(nextProps) {
     console.log(_.get(nextProps, 'modal.type'))
-    if (!this.state.initialRender && _.get(nextProps, 'modal.type')) {
-      this.setState({initialRender: true, in: true})
+    if (!this.state.rendered && !this.state.initialRender && _.get(nextProps, 'modal.type')) {
+      this.setState({initialRender: true, in: true, rendered: true})
     }
   }
 
   render() {
+    console.log(this.outterDelay)
     return (
-      this.state.initialRender ? 
-       <Animatable.View onAnimationEnd={this.onAnimationEnd.bind(this, 1)} animation={this.outterAnimation} duration={200}  delay={this.outterDelay} style={styles.container}>
-         <Animatable.View easing="ease-in-out" onAnimationEnd={this.onAnimationEnd.bind(this, 2)} animation={this.innerAnimation} duration={200} delay={this.innerDelay} style={styles.inner}>
+      this.state.initialRender ?
+      <View style={styles.wrapper}>
+        <Animatable.View animation={this.outterAnimation} duration={200} delay={this.outterDelay} style={styles.container}></Animatable.View> 
+        <Animatable.View onAnimationEnd={this.onAnimationEnd.bind(this, 'ENDNDDNDNED')} animation={this.innerAnimation} duration={500} delay={this.innerDelay} style={styles.inner}>
           <TouchableHighlight onPress={this.closeModal.bind(this)}><Text>Close</Text></TouchableHighlight>
           {this.renderInnerModal()}
         </Animatable.View>
-      </Animatable.View> : null
+      </View>: null
     );
   }
 
@@ -53,21 +55,22 @@ class Modal extends Component {
 
   closeModal() {
     this.outterAnimation = 'fadeOut';
-    this.innerAnimation = 'bounceOut';
-    this.outterDelay = 2000;
+    this.innerAnimation = 'slideOutDown';
+    this.outterDelay = 0;
     this.innerDelay = 0;
     this.setState({
       in: false
+    }, () => {
+      closeModal();
     })
-    closeModal();
   }
 
-  onAnimationEnd() {
+  onAnimationEnd(d) {
     if (!this.state.in) {
       this.outterAnimation = 'fadeIn';
       this.innerAnimation = 'slideInUp';
       this.outterDelay = 0;
-      this.innerDelay = 500;
+      this.innerDelay = 0;
       this.setState({
         initialRender: false
       })
@@ -76,6 +79,13 @@ class Modal extends Component {
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0
+  },
   container: {
     position: 'absolute',
     top: 0,
@@ -83,15 +93,16 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: 'rgba(0,0,0,0.4)',
-    zIndex: 9999
+    zIndex: 10
   },
   inner: {
     position: 'absolute',
     top: 40,
     left: 0,
     right: 0,
-    bottom: 20,    
-    backgroundColor: '#fff'
+    bottom: 0,    
+    backgroundColor: '#fff',
+    zIndex: 11
   }
 });
 
