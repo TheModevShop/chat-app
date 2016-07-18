@@ -177,8 +177,6 @@ users.getSessions = function(obj) {
     query.complete = { $exists: false };
   } 
 
-  console.log(query)
-
   return Sessions.find(query)
     .populate('listing')
     .limit(limit || 100)

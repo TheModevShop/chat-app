@@ -35,8 +35,16 @@ export async function addListing(listing) {
 }
 
 
-
 export async function addListingAvailability(days) {
   listingAvailability.set(['pannedDays'], days);
   tree.commit();
+}
+
+
+export async function favoriteListing(listingId) {
+  try {
+    const favoritedListing = await api.favoriteListing(listingId);
+  } catch(err) {
+    console.log(err)
+  }
 }

@@ -12,4 +12,22 @@ export async function addListing(listing) {
   });
 }
 
+export async function favoriteListing(listingId) {
+  return new bluebird((resolve, reject) => {
+    xhr('PUT', `${BASE}/me/listings/favorites`, {listing: listingId}).then((data) => {
+      resolve(data);
+    }).catch((err) => {
+      reject(err);
+    });
+  });
+}
 
+export async function removeListingfavorite(listingId) {
+  return new bluebird((resolve, reject) => {
+    xhr('DELETE', `${BASE}/me/listings/favorites`, {listing: listingId}).then((data) => {
+      resolve(data);
+    }).catch((err) => {
+      reject(err);
+    });
+  });
+}

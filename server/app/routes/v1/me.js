@@ -16,7 +16,7 @@ var Conversations = require('../../controllers/conversations');
 var Sessions = require('../../controllers/sessions');
 var Listings = require('../../controllers/listings');
 var Transactions = require('../../controllers/transactions');
-
+var Favorites = require('../../controllers/favorites');
 
 router.route('/')
   .get(function(req, res) {
@@ -71,7 +71,7 @@ router.route('/')
   });
 
 
-  router.route('/sessions')
+router.route('/sessions')
   .get(function(req, res) {
     var query = req.query || {};
     query.id = req.decoded._id;
@@ -84,7 +84,6 @@ router.route('/')
         });
 
     } else {
-      console.log(query, 'sdafsakfsadf')
       query.notComplete = true;
       Users
         .getSessions(query)
@@ -118,6 +117,7 @@ router.route('/')
     }
   })
   
+
 router.route('/sessions/enroll')
   .put(function(req, res) {   
     var sessions = req.body.sessions || [];
@@ -150,7 +150,39 @@ router.route('/sessions/enroll')
   });
 
 
-  router.route('/listings')
+
+router.route('/listings/favorites')
+  .get(function(req, res) {
+    var queryObject = {
+      user: req.decoded._id
+    }
+    Favorites.getAll(queryObject)
+    .then(function(favorites) {
+      res.json(favorites);
+    })
+    .catch(function(err) {
+      res.status(422).json(err);
+    });
+  })
+  .put(function(req, res) {
+    var params = {
+      user: req.decoded._id,
+      listing: req.body.listing
+    }
+    Favorites.add(params)
+    .then(function(favorites) {
+      res.json(favorites);
+    })
+    .catch(function(err) {
+      res.status(422).json(err);
+    });
+  })
+
+
+
+
+
+router.route('/listings')
   .get(function(req, res) {
     var queryObject = {
       me: req.decoded._id

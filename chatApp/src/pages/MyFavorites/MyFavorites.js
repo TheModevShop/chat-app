@@ -19,14 +19,14 @@ import {
 } from 'react-native';
 
 
-class MySessions extends Component {
+class MyFavorites extends Component {
   constructor(...args) {
     super(...args);
     this.state = {};
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (_.get(nextProps, 'sessions', []).length === _.get(this.props, 'sessions', []).length) {
+    if (_.get(nextProps, 'listings', []).length === _.get(this.props, 'listings', []).length) {
       return false
     }
     return true;
@@ -41,13 +41,13 @@ class MySessions extends Component {
   }
 
   registerList(props) {
-    const sessions = _.get(props, 'sessions', []);
-    if (sessions.length) {
+    const listings = _.get(props, 'listings', []);
+    if (listings.length) {
       var ds = new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 != r2
       });
       this.setState({
-        dataSource: ds.cloneWithRows(sessions),
+        dataSource: ds.cloneWithRows(listings),
       });
     }
   }
@@ -131,8 +131,8 @@ let styles = StyleSheet.create({
 });
 
 
-export default branch(MySessions, {
+export default branch(MyFavorites, {
   cursors: {
-    sessions: ['facets', 'MyUpcomingSessions'] 
+    listings: ['facets', 'MyFavoritesListings'] 
   }
 });

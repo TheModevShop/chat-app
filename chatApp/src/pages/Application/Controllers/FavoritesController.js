@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Chat from '../../Chat/Chat';
-import Conversations from '../../SessionDetails/SessionDetails';
+import MyFavorites from '../../MyFavorites/MyFavorites';
 import {
   AppRegistry,
   StyleSheet,
@@ -32,7 +32,7 @@ function createReducer(initialState) {
 const NavReducer = createReducer({
   index: 0,
   key: 'Favorites',
-  routes: [{key: 'Favorites'}]
+  routes: [{key: 'MyFavorites'}]
 })
 
 class FavoritesController extends Component {
@@ -60,7 +60,7 @@ class FavoritesController extends Component {
   }
 
   _renderRoute (key) {
-    if (key === 'Favorites') return <Conversations onNavigation={this._handleAction.bind(this, { type: 'push', key: 'Favorites' })} />
+    if (key === 'MyFavorites') return <MyFavorites onNavigation={this._handleAction.bind(this, { type: 'push', key: 'Favorites' })} />
   }
 
   _renderScene(props) {

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import _ from 'lodash';
 import ResponsiveImage from 'react-native-responsive-image';
-import {resetActiveListing} from '../../actions/ListingActions';
+import {resetActiveListing, favoriteListing} from '../../actions/ListingActions';
 import {openModal} from '../../actions/ModalActions';
 import MapViewPreview from '../../components/MapViewPreview/MapViewPreview.js';
 import {
@@ -41,6 +41,7 @@ class ListingDetails extends Component {
                   <TouchableHighlight onPress={this.viewAvailability.bind(this)} underlayColor='#999'><Text>Book Now</Text></TouchableHighlight>
                   <TouchableHighlight onPress={this.addSessionForListing.bind(this)} underlayColor='#999'><Text>Add Session For Listing</Text></TouchableHighlight>
                   <TouchableHighlight onPress={this.setAvailability.bind(this)} underlayColor='#999'><Text>Add Session For Listing</Text></TouchableHighlight>
+                  <TouchableHighlight onPress={this.favoriteListing.bind(this)} underlayColor='#999'><Text>Favorite Listing</Text></TouchableHighlight>
                 </View> : 
                 <View>
                   <TouchableHighlight onPress={this.viewAvailability.bind(this)} underlayColor='#999'><Text>Book Now</Text></TouchableHighlight>
@@ -55,6 +56,10 @@ class ListingDetails extends Component {
 
   componentWillUnmount() {
     //resetActiveListing()
+  }
+
+  favoriteListing() {
+    favoriteListing(this.props.view._id)
   }
 
   viewAvailability() {
