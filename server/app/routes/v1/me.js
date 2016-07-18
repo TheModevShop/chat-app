@@ -15,6 +15,7 @@ var Users = require('../../controllers/users');
 var Conversations = require('../../controllers/conversations');
 var Sessions = require('../../controllers/sessions');
 var Listings = require('../../controllers/listings');
+var Transactions = require('../../controllers/transactions');
 
 
 router.route('/')
@@ -53,6 +54,7 @@ router.route('/')
       });
   });
 
+
   router.route('/conversations')
   .get(function(req, res) {
     Conversations
@@ -67,6 +69,7 @@ router.route('/')
         res.status(422).json(err);
       });
   });
+
 
   router.route('/session')
   .post(function(req, res) {
@@ -91,7 +94,39 @@ router.route('/')
           res.status(422).json(err);
         });
     }
+  })
+  
+router.route('/sessions/enroll')
+  .put(function(req, res) {   
+    var sessions = req.body.sessions || [];
+    sessions = JSON.parse(sessions);
+    Transactions.getTransactions(req.decoded._id, 1, 0, null, null, null, true)
+    .then(function(failedTransactions) {
+      if (failedTransactions.length) {
+        res.status(422).json({error: 'outstanding failed payments, please update payment method and resolve'});
+      } else {
+        return Users.getPaymentMethod(req.decoded._id);
+      }
+    })
+    .then(function(user) {
+      if (true) { //user.paymentMethod TODO
+        if (sessions.length && sessions.length === 1) {
+          return Users.addSession(user, sessions[0], res);
+        } else {
+          return Users.mergeSessions(user, sessions, res);
+        }
+      } else {
+        res.status(422).json({"error": "No payment method"});
+      }
+    })
+    .then(function(session) {
+      res.json(session);
+    })
+    .catch(function(err) {
+      res.status(422).json(err);
+    });
   });
+
 
   router.route('/listings')
   .get(function(req, res) {

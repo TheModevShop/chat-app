@@ -23,3 +23,16 @@ export async function addBulkSessions(sessions, listingId) {
 }
 
 
+export function enrollInSessionApi(sessions) {
+  console.log(sessions)
+  return new bluebird((resolve, reject) => {
+    xhr('PUT', `${BASE}/me/sessions/enroll`, {sessions: sessions}).then((data) => {
+      resolve(data);
+    }).catch((err) => {
+      console.log(err)
+      reject(err);      
+    });
+  });
+}
+
+

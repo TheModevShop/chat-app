@@ -1,7 +1,9 @@
 'use strict';
+var BluebirdPromise = require('bluebird');
 
 var Users = require('../models/users');
 var Roles = require('../models/roles');
+var Sessions = require('../models/sessions');
 
 var users = {};
 
@@ -72,6 +74,41 @@ users.add = function(params) {
       return { name: params.name, email: params.email };
     }
   });
+};
+
+
+users.addSession = function(user, sessionId) {
+  return new BluebirdPromise(function(resolve, reject) {
+    Sessions.findOne({
+      _id: sessionId
+    })
+    .then(function(session) {
+      if (session.enrolled.length >= session.capacity) {
+        reject({error: 'Session Full'});
+      } 
+      Sessions.findByIdAndUpdate({_id: session._id}, { $addToSet: { enrolled: user._id } })
+      .exec(function (err) {
+        if(err) {
+          reject(err); 
+        } else {
+          resolve({ 'userId': user._id, 'sessionId': sessionId });
+        }
+      });
+      
+    })
+    .catch(function(err) {
+      reject(err);
+    });
+  });
+};
+
+users.getPaymentMethod = function(id) {
+  var query = 'paymentMethod name';
+  return Users.findOne({ _id: id }, query)
+    .populate('paymentMethod')
+    .exec(function(err, paymentMethod) {
+      return paymentMethod;
+    });
 };
 
 

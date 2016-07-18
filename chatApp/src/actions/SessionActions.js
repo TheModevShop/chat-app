@@ -52,7 +52,14 @@ export async function buildSessionRequest(newAvailability, currentAvailability, 
       dateAndTime: date
     }
   });
-
   const addedSessions = await api.addBulkSessions(JSON.stringify({times: times}), listing._id);
-  
+}
+
+
+export async function enrollInSession(session) {
+  try {
+    await api.enrollInSessionApi(JSON.stringify([session._id]));
+  } catch (e) {
+    throw new Error('error');
+  }
 }
