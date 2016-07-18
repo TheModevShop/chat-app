@@ -38,7 +38,7 @@ class Modal extends Component {
       this.state.initialRender ?
       <View style={styles.wrapper}>
         <Animatable.View animation={this.outterAnimation} duration={200} delay={this.outterDelay} style={styles.container}></Animatable.View> 
-        <Animatable.View onAnimationEnd={this.onAnimationEnd.bind(this, 'ENDNDDNDNED')} animation={this.innerAnimation} duration={500} delay={this.innerDelay} style={styles.inner}>
+        <Animatable.View onAnimationEnd={this.onAnimationEnd.bind(this)} animation={this.innerAnimation} duration={500} delay={this.innerDelay} style={styles.inner}>
           <TouchableHighlight onPress={this.closeModal.bind(this)}><Text>Close</Text></TouchableHighlight>
           {this.renderInnerModal()}
         </Animatable.View>

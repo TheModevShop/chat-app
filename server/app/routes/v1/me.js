@@ -71,7 +71,29 @@ router.route('/')
   });
 
 
-  router.route('/session')
+  router.route('/sessions')
+  .get(function(req, res) {
+    var query = req.query || {};
+    query.id = req.decoded._id;
+    console.log(query)
+    if (false) { //req.query && req.query.role !== 'user'
+      Users
+        .getBookedInstructorSessions(query)
+        .then(function(sessions) {
+          res.json(sessions);
+        });
+
+    } else {
+      console.log(query, 'sdafsakfsadf')
+      query.notComplete = true;
+      Users
+        .getSessions(query)
+        .then(function(sessions) {
+          res.json(sessions);
+        });
+    }
+
+  })
   .post(function(req, res) {
     var session;
     if (req.body.session) {

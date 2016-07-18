@@ -14,7 +14,7 @@ const SkillAvailabilityFacet = require('./facets/SkillAvailabilityFacet').defaul
 const PopularSkillsFacet = require('./facets/PopularSkillsFacet').default();
 const PopularListingsFacet = require('./facets/PopularListingsFacet').default();
 const ListingSessionsAvailabilityFacet = require('./facets/ListingSessionsAvailabilityFacet').default();
-
+const MyUpcomingSessionsFacet = require('./facets/MyUpcomingSessionsFacet').default();
 export default function getInitialState() {
   return {
     cursors: {
@@ -85,7 +85,9 @@ export default function getInitialState() {
         Skills: SkillsFacet,
         SkillAvailability: SkillAvailabilityFacet,
         PopularSkills: PopularSkillsFacet,
-        ListingSessionsAvailability: ListingSessionsAvailabilityFacet
+        ListingSessionsAvailability: ListingSessionsAvailabilityFacet,
+
+        MyUpcomingSessions: MyUpcomingSessionsFacet
       }
     }
   };

@@ -136,7 +136,7 @@ class Application extends React.Component {
           renderIcon={() => <Icon name={'ios-recording-outline'} size={25} color="#999" />}
           renderSelectedIcon={() => <Icon name={'ios-recording'} size={25} color="#999" />}
           badgeText=""
-          onPress={() => this.setState({ selectedTab: 'home' })}>
+          onPress={() => this.setState({ selectedTab: 'history' })}>
           <HistoryController />
         </TabNavigator.Item>
         <TabNavigator.Item
