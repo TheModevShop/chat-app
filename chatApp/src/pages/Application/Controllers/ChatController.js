@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Chat from '../../Chat/Chat';
 import Conversations from '../../Conversations/Conversations';
+
+// Styles
+import * as styleConstants from '../../../styles/styleConstants';
 import {
   AppRegistry,
   StyleSheet,
@@ -87,27 +90,12 @@ class ChatController extends Component {
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: '#F5FCFF',
+    backgroundColor: styleConstants.SILVER,
     flex: 1
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#F5FCFF'
-  },
-  title: {
-    fontSize: 40,
-    marginTop: 200,
-    textAlign: 'center'
-  },
-  button: {
-    height: 70,
-    marginTop: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 20,
-    marginRight: 20,
-    backgroundColor: '#EDEDED'
+    backgroundColor: styleConstants.SILVER,
   }
 })
 

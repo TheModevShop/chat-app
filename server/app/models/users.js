@@ -33,7 +33,7 @@ var users = new Schema({
   dateAdded: {
     type: Date,
   },
-  paymentMethod: {type: mongoose.Schema.Types.ObjectId, ref: 'PaymentMethods'},
+  paymentMethod: [{type: mongoose.Schema.Types.ObjectId, ref: 'PaymentMethods'}],
   resetPasswordToken: String,
   resetPasswordExpires: Date,
   deleted: {

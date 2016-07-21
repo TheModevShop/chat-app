@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import Listings from '../../Listings/Listings';
-import ListingDetails from '../../ListingDetails/ListingDetails';
-import AddSession from '../../AddSession/AddSession';
-import CustomCalendar from '../../CustomCalendar/CustomCalendar';
+import Account from '../../AccountSettings/Account';
+import AddPaymentMethod from '../../AccountSettings/AddPaymentMethod';
+import PaymentMethodList from '../../AccountSettings/PaymentMethodList';
+import SetPassword from '../../AccountSettings/SetPassword';
+import Profile from '../../AccountSettings/Profile';
 
 // Styles
 import * as styleConstants from '../../../styles/styleConstants';
@@ -42,10 +43,10 @@ function createReducer(initialState) {
 const NavReducer = createReducer({
   index: 0,
   key: 'App',
-  routes: [{key: 'Listings'}]
+  routes: [{key: 'Account'}]
 })
 
-class ListingsController extends Component {
+class AccountSettingsController extends Component {
 
   constructor(props) {
     super(props)
@@ -65,7 +66,7 @@ class ListingsController extends Component {
     }
 
     if (action.type === 'push') {
-      state.direction = action.key === 'setListingAvailability' ? 'vertical' : 'horizontal'
+      state.direction = action.key === 'TODO' ? 'horizontal' : 'vertical'
     }
 
     this.setState(state)
@@ -78,16 +79,14 @@ class ListingsController extends Component {
 
   _renderRoute (key) {
     verticle = false;
-    if (key === 'Listings') return <Listings onNavigation={this._handleAction.bind(this, { type: 'push', key: 'ListingDetails' })} />
-    if (key === 'ListingDetails') return <ListingDetails admin={true} goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
-    if (key === 'AddSessionForListing') return <AddSession goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
-    if (key === 'setListingAvailability') {
-      return <CustomCalendar goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} /> 
-    }
+    if (key === 'Account') return <Account goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    if (key === 'AddPaymentMethod') return <AddPaymentMethod goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    if (key === 'PaymentMethodList') return <PaymentMethodList goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    if (key === 'Profile') return <Profile goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
   }
 
   _renderScene(props) {
-    const ComponentToRender = this._renderRoute(props.scene.route.key)
+    const ComponentToRender = this._renderRoute(props.scene.route.key);
     return (
       <View style={styles.scrollView}>
         {ComponentToRender}
@@ -115,7 +114,10 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: styleConstants.SILVER,
-  }
+    justifyContent: 'center',
+    backgroundColor: styleConstants.SILVER
+  },
+ 
 })
-export default ListingsController;
+
+export default AccountSettingsController;

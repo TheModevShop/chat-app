@@ -10,6 +10,6 @@ var favorites = new Schema({
 });
 
 favorites.plugin(uniqueValidator);
-favorites.index( { 'listing' : 1, 'user': 1 }, { 'unique' : true } );
+favorites.index({ 'listing' : 1, 'user': 1 }, { 'unique' : true } );
 
 module.exports = mongoose.model('Favorites', favorites);

@@ -3,7 +3,7 @@ import tree from '../../state/StateTree';
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import {Text, View, Navigator, StyleSheet, StatusBar, Platform, TouchableHighlight} from 'react-native';
-
+import * as Animatable from 'react-native-animatable';
 
 import {checkSession} from '../../actions/AuthenticationActions';
 import Drawer from 'react-native-drawer'
@@ -16,17 +16,21 @@ import ChatController from './Controllers/ChatController';
 import FavoritesController from './Controllers/FavoritesController';
 import HistoryController from './Controllers/HistoryController';
 import ListingsController from './Controllers/ListingsController';
+import AccountSettingsController from './Controllers/AccountSettingsController';
 import InstructorScheduleController from './Controllers/InstructorScheduleController';
 
 //VIEWS
 import AddListing from '../AddListing/AddListing';
 import Login from '../Login/Login';
 import Initial from '../Initial/Initial';
-import Settings from '../Settings/Settings';
+import Settings from '../AccountSettings/Settings';
 import AddSession from '../AddSession/AddSession';
 
 // EXTRAS
 import Modal from '../../components/Modal/Modal';
+
+// CONSTANTS
+import * as styleConstants from '../../styles/styleConstants';
 
 
 let _drawer;
@@ -79,11 +83,12 @@ class Application extends React.Component {
           tweenHandler={(ratio) => ({
             main: { opacity:(2-ratio)/2}
           })}>
-          <StatusBar showHideTransition={'fade'} animated={true} backgroundColor="#fff" barStyle="default" hidden={this.state.hidden}/>
-          <View style={{flex: 1, backgroundColor: 'rgb(251, 251, 251)', marginTop: STATUS_BAR_HEIGHT}}>
+
+          <StatusBar animated={true} showHideTransition={'fade'} animated={true} backgroundColor="white" barStyle="default" hidden={this.state.hidden}/>
+          <View style={{flex: 1, backgroundColor: styleConstants.SILVER, marginTop: this.state.selectedTab === 'TODO' ? STATUS_BAR_HEIGHT : 0 }}>
             {
-              this.state.selectedTab === 'settings' ? 
-              <Settings /> :
+              this.state.selectedTab === 'account-settings' ? 
+              <AccountSettingsController /> :
               this.state.selectedTab === 'initial' ?
               <Initial /> :
               this.state.selectedTab === 'login' ?
@@ -195,7 +200,8 @@ class Application extends React.Component {
     return (
       <View style={{flex: 1, backgroundColor: '#fff', justifyContent: 'space-between'}}>
         <View style={{backgroundColor: '#ccc'}}>
-          
+          <TouchableHighlight onPress={() => this.onDrawerLinks('account-settings', null)} underlayColor='#99d9f4'><Text>Account Settings</Text></TouchableHighlight>
+          <TouchableHighlight onPress={() => this.onDrawerLinks('account-settings', null)} underlayColor='#99d9f4'><Text>Account Settings</Text></TouchableHighlight>
         </View>
         <View style={{borderTopWidth: 1, borderTopColor: '#ccc'}}>
           <TouchableHighlight onPress={() => this.onDrawerLinks(!ADMIN_OPEN ? 'admin' : 'home', 'admin')} underlayColor='#99d9f4'>

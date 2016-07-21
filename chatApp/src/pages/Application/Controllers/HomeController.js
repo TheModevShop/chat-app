@@ -4,6 +4,9 @@ import ListingDetails from '../../ListingDetails/ListingDetails';
 import SessionDetails from '../../SessionDetails/SessionDetails';
 import SkillAvailability from '../../SkillAvailability/SkillAvailability';
 
+// Styles
+import * as styleConstants from '../../../styles/styleConstants';
+
 // Actions
 import {invalidateListingCache} from '../../../actions/ListingActions';
 
@@ -100,30 +103,14 @@ class HomeController extends Component {
   }
 }
 
-
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: '#F5FCFF',
+    backgroundColor: styleConstants.SILVER,
     flex: 1
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#F5FCFF'
-  },
-  title: {
-    fontSize: 40,
-    marginTop: 200,
-    textAlign: 'center'
-  },
-  button: {
-    height: 70,
-    marginTop: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 20,
-    marginRight: 20,
-    backgroundColor: '#EDEDED'
+    backgroundColor: styleConstants.SILVER,
   }
 })
 
