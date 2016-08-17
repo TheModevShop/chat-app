@@ -7,7 +7,7 @@ const userCursor = tree.select(['user']);
 export async function getMe() {
   try {
     const user = await getUser();
-    if (user.body._id) {
+    if (user.body.id) {
       userCursor.set(['details'], user.body);
       tree.commit();
       return user.body;

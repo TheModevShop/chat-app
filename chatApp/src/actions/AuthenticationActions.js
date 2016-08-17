@@ -10,11 +10,11 @@ import _ from 'lodash';
 const authentication = tree.select(['authentication']);
 
 export async function getAuthentication(data) {
-  const {email, password, facebook, facebookUser} = data;
+  const {email, password, userId, tokenExpirationDate} = data;
   try {
-    const token = facebook ? await fetchToken({facebookUser: facebookUser, facebookToken: facebook}) : await fetchToken({email, password});
-    await buildSession(token.body.token);
-    return token;
+    const request = data.token ? await fetchToken({userId: userId, token: data.token, tokenExpirationDate: tokenExpirationDate}) : await fetchToken({email, password});
+    await buildSession(request.body.token);
+    return request;
   } catch (e) {
     authentication.set('error', e);
     return false;
@@ -35,9 +35,12 @@ function checkFacebookForSession() {
 
 export async function checkSession() {
   try {
+    console.log('fhsdkjfhsdjkfh')
     const user = await getMe();
+    console.log(user)
     const facebook = await checkFacebookForSession();
-    if (user._id && !facebook.error) {
+    console.log(facebook)
+    if (user.id && !facebook.error) {
       const session = await AsyncStorage.getItem('sessionData');
       authentication.set(['sessionData'], session);
       tree.commit();

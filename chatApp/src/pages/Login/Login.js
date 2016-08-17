@@ -71,7 +71,7 @@ class Login extends Component {
           permissions={["email","user_friends", "public_profile", "user_about_me", "user_photos", "user_likes", "user_work_history", "user_website"]}
           loginBehavior={FBLoginManager.LoginBehaviors.Native}
           onLogin={async (data) => {
-            await getAuthentication({facebookUser: _.get(data, 'credentials.userId'), facebook: _.get(data, 'credentials.token')});
+            await getAuthentication({userId: _.get(data, 'credentials.userId'), token: _.get(data, 'credentials.token'), tokenExpirationDate: _.get(data, 'credentials.tokenExpirationDate')});
             await addFacebookCredentials(data.credentials); // MAY NOT NEED
           }}
           onLogout={() => {
@@ -79,7 +79,7 @@ class Login extends Component {
           }}
           onLoginFound={(data) => {
             console.log("Existing login found.");
-            getAuthentication({facebook: _.get(data, 'credentials.token')});
+            getAuthentication({userId: _.get(data, 'credentials.userId'), token: _.get(data, 'credentials.token'), tokenExpirationDate: _.get(data, 'credentials.tokenExpirationDate')});
             console.log(data);
             // this.setState({ user : data.credentials });
           }}

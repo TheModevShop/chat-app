@@ -63,6 +63,10 @@ class Application extends React.Component {
       this.setState({selectedTab: 'login'})
     }
   }
+
+  selectTab(tab) {
+    this.setState({ selectedTab: 'tab' })
+  }
   
   render() {
     return (
