@@ -72,19 +72,23 @@ class Home extends Component {
 
   renderSearchView() {
     return (
-     <TouchableHighlight style={{position: 'absolute', left: this.state.left, right: this.state.right, top: this.state.top, flex: 1, borderRadius: this.state.br, backgroundColor: '#fff', height: 50}} onPress={this.toggleSearch.bind(this)} underlayColor='#99d9f4'>
-        <View style={{marginTop: 0, alignItems: 'center', flex: 1, flexDirection: 'row',  borderColor: 'gray', borderBottomWidth: this.state.searchOpen ? 1 : 0}}>
+     <TouchableHighlight style={{position: 'absolute', left: this.state.left, right: this.state.right, top: this.state.top, flex: 1, borderRadius: this.state.br, backgroundColor: '#fff', height: this.state.searchOpen ? 70 : 50}} onPress={this.toggleSearch.bind(this)} underlayColor='#99d9f4'>
+        <View style={{marginTop: 0, alignItems: 'flex-end', flex: 1, flexDirection: 'row',  borderColor: 'gray', borderBottomWidth: this.state.searchOpen ? 1 : 0, height: 50}}>
           <Icon name={'ios-search-outline'} style={{backgroundColor: 'transparent', padding: 10, paddingLeft: 14}} size={30} color="#999" />
           {
             this.state.searchOpen ?
-            <TextInput
-              ref={(c) => this._searchInput = c}
-              autoFocus={false}
-              placeholder="What would you like to learn"
-              style={{fontSize: 14, paddingLeft: 5, flex: 4, height: 50}}
-              onChangeText={this.onSearch.bind(this)}
-              value={this.props.sessionSearch.query} /> : !this.state.scrolled ? 
-              <Text style={{backgroundColor: 'transparent', color: '#999'}}>What do you want to learn?</Text> : null
+            <View style={{flex: 4, flexDirection: 'row', alignItems: 'flex-end', height: 50}}>
+              <TextInput
+                ref={(c) => this._searchInput = c}
+                autoFocus={false}
+                placeholder="What would you like to learn"
+                style={{fontSize: 14, paddingLeft: 5, flex: 4, height: 50}}
+                onChangeText={this.onSearch.bind(this)}
+                value={this.props.sessionSearch.query} /> 
+              </View>: !this.state.scrolled ? 
+              <View style={{flexDirection: 'row', alignItems: 'center', height: 50}}>
+                <Text style={{backgroundColor: 'transparent', color: '#999'}}>What do you want to learn?</Text>
+              </View> : null
           }
           {
             this.state.searchOpen ?

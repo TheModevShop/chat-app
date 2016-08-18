@@ -45,7 +45,7 @@ class Conversations extends Component {
         {
           this.state.dataSource ?
          <ListView
-          style={{marginTop: 60, backgroundColor: '#fff'}}
+          style={{}}
           dataSource={this.state.dataSource}
           renderRow={(rowData) => {
             const conversation = _.get(rowData, 'conversation');
@@ -92,7 +92,8 @@ let styles = StyleSheet.create({
     borderBottomWidth: 1,
     padding: 20,
     borderTopWidth: 1,
-    borderColor: '#999'
+    borderColor: '#999',
+    backgroundColor: '#fff'
   },
   title: {
     fontSize: 16,

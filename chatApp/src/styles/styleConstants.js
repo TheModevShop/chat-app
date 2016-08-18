@@ -1,6 +1,7 @@
 export const SILVER = '#f6f5f5';
 export const ALUMINUM = '#d8dde0ff';
 export const DARKBLUE = '#273c46';
+export const WHITE = '#f7f7f7';
 
 export const FONT_BOLD = "Avenir-Black"
 export const FONT_LIGHT = "Avenir-Light"

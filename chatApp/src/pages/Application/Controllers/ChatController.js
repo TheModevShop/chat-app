@@ -70,7 +70,7 @@ class ChatController extends Component {
   _renderScene(props) {
     const ComponentToRender = this._renderRoute(props.scene.route.key);
     return (
-      <View style={styles.View}>
+      <View style={styles.view}>
         {ComponentToRender}
       </View>
     );
@@ -89,13 +89,13 @@ class ChatController extends Component {
 
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: styleConstants.SILVER,
+  view: {
+    backgroundColor: styleConstants.WHITE,
     flex: 1
   },
   container: {
     flex: 1,
-    backgroundColor: styleConstants.SILVER,
+    backgroundColor: styleConstants.WHITE,
   }
 })
 

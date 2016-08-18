@@ -32,7 +32,7 @@ class ListingDetails extends Component {
         {
           loading ?
           <View><Text>loading</Text></View> : details.id ?
-          <ScrollView>
+          <ScrollView style={{marginTop: 60}}>
             <ResponsiveImage source={{uri: service.image}} initWidth="100%" initHeight="250"/>
             <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(agent, 'facebookUserId')}/picture?width=60&height=60`}}/>
             <MapViewPreview />

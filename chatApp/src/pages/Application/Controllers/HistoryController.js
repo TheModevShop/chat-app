@@ -88,12 +88,12 @@ class HistoryController extends Component {
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: styleConstants.SILVER,
+    backgroundColor: styleConstants.WHITE,
     flex: 1
   },
   container: {
     flex: 1,
-    backgroundColor: styleConstants.SILVER,
+    backgroundColor: styleConstants.WHITE,
   }
 })
 

@@ -29,10 +29,11 @@ class SkillAvailability extends Component {
       display: false
     };
   }
+
+  // <TouchableHighlight onPress={() => this.setState({calendar: !this.state.calendar, display: true})}><Text>toggle</Text></TouchableHighlight>
   render() {
     return (
        <View style={{flex: 1, paddingTop: 60}}>
-       <TouchableHighlight onPress={() => this.setState({calendar: !this.state.calendar, display: true})}><Text>toggle</Text></TouchableHighlight>
         <ListingsByInstructorList goBack={this.props.goBack} listings={this.props.listings} tabLabel="React" goToListingDetails={this.goToListingDetails.bind(this)} scrollEvent={this.scrollEvent.bind(this)} />
         
         {
@@ -43,7 +44,7 @@ class SkillAvailability extends Component {
             </View>
           </Animatable.View> : null
         }
-        <NavBar title={'Listing Details'} leftAction={this.props.goBack.bind(this)} />
+        <NavBar title={'Skill Instructors'} leftAction={this.props.goBack.bind(this)} />
       </View>
     );
   }
