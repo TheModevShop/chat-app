@@ -5,7 +5,7 @@ import Baobab from 'baobab';
 
 const loader = new RESTLoader({
   getResourceUrl: (queryParams = {}) => {
-    return `${BASE}/listings?instructor=${queryParams.instructor || ''}&skill=${queryParams.skill || ''}`;
+    return `${BASE}/services/calendars?instructor=${queryParams.instructor || ''}&skill=${queryParams.skill || ''}`;
   },
   successTransformer: (data, current) => {
     return data.body;

@@ -65,14 +65,14 @@ class ListingsList extends Component {
           renderRow={(listing, i) => {
             return (
               <View key={1}>
-                <TouchableHighlight underlayColor='#999' onPress={this.props.goToListingDetails.bind(this, listing._id)}>
+                <TouchableHighlight underlayColor='#999' onPress={this.props.goToListingDetails.bind(this, listing.calendarId)}>
                   <View key={i} style={sessionItemStyle.sessionWrapper}>
                    <View style={sessionItemStyle.sessionWrapperImage}>
-                    <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(listing, 'instructor.facebookCredentials.userId')}/picture?width=60&height=60`}}/>
+                    <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(listing, 'facebookUserId')}/picture?width=60&height=60`}}/>
                    </View>
                    <View style={sessionItemStyle.sessionWrapperContent}>
-                      <Text style={{fontFamily: 'Avenir-Black'}}>{`${_.get(listing, 'instructor.name.first')} ${_.get(listing, 'instructor.name.last')}`}</Text>
-                      <Text>{`${_.get(listing, 'price')}`}</Text>
+                      <Text style={{fontFamily: 'Avenir-Black'}}>{`${_.get(listing, 'firstName')} ${_.get(listing, 'lastName')}`}</Text>
+                      <Text>{`${_.get(listing, 'servicePrice')}`}</Text>
                     </View>
                   </View>
                 </TouchableHighlight>

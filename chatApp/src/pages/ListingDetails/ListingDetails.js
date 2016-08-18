@@ -1,6 +1,7 @@
 'use strict';
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
+import NavBar from '../../components/NavBar/NavBar';
 import _ from 'lodash';
 import ResponsiveImage from 'react-native-responsive-image';
 import {resetActiveListing, favoriteListing} from '../../actions/ListingActions';
@@ -19,19 +20,24 @@ class ListingDetails extends Component {
   render() {
     const details = this.props.view;
     const loading = _.get(details, '$isLoading', false);
+
+    const service = _.get(details, 'service', {});
+    const agent = _.get(details, 'agent', {});
+    const resource = _.get(details, 'resource', {});
+
     const isInstructor = _.get(this.props, 'user.details._id', '') === _.get(details, 'instructor._id', null);
 
     return (
        <View style={{marginTop: 0, flex: 1, flexDirection: 'column'}}>
         {
           loading ?
-          <View><Text>loading</Text></View> : details._id ?
+          <View><Text>loading</Text></View> : details.id ?
           <ScrollView>
-            <ResponsiveImage source={{uri: details.image}} initWidth="100%" initHeight="250"/>
-            <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(details, 'instructor.facebookCredentials.userId')}/picture?width=60&height=60`}}/>
+            <ResponsiveImage source={{uri: service.image}} initWidth="100%" initHeight="250"/>
+            <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(agent, 'facebookUserId')}/picture?width=60&height=60`}}/>
             <MapViewPreview />
             <View>
-              <Text>{details.name}</Text> 
+              <Text>{service.name}</Text> 
               <Text>Instructed by</Text> 
               <TouchableHighlight onPress={this.props.goBack.bind(this)} underlayColor='#999'><Text>Back</Text></TouchableHighlight>
               
@@ -50,6 +56,7 @@ class ListingDetails extends Component {
             </View>
           </ScrollView> : null
         }
+        <NavBar title={'Listing Details'} leftAction={this.props.goBack.bind(this)} />
       </View>
     );
   }

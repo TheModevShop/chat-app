@@ -1,5 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
+import NavBar from '../../components/NavBar/NavBar';
 import {branch} from 'baobab-react/higher-order';
 import _ from 'lodash';
 import ResponsiveImage from 'react-native-responsive-image';
@@ -30,9 +31,9 @@ class SkillAvailability extends Component {
   }
   render() {
     return (
-       <View style={{flex: 1}}>
+       <View style={{flex: 1, paddingTop: 60}}>
        <TouchableHighlight onPress={() => this.setState({calendar: !this.state.calendar, display: true})}><Text>toggle</Text></TouchableHighlight>
-        <ListingsByInstructorList listings={this.props.listings} tabLabel="React" goToListingDetails={this.goToListingDetails.bind(this)} scrollEvent={this.scrollEvent.bind(this)} />
+        <ListingsByInstructorList goBack={this.props.goBack} listings={this.props.listings} tabLabel="React" goToListingDetails={this.goToListingDetails.bind(this)} scrollEvent={this.scrollEvent.bind(this)} />
         
         {
           this.state.display ?
@@ -42,6 +43,7 @@ class SkillAvailability extends Component {
             </View>
           </Animatable.View> : null
         }
+        <NavBar title={'Listing Details'} leftAction={this.props.goBack.bind(this)} />
       </View>
     );
   }

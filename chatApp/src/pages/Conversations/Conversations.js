@@ -1,5 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
+import NavBar from '../../components/NavBar/NavBar';
 import {branch} from 'baobab-react/higher-order';
 import {openChat} from '../../actions/ChatActions';
 import _ from 'lodash';
@@ -28,7 +29,6 @@ class Conversations extends Component {
 
   registerList(props) {
     const users = _.get(props, 'AllConversations', []);
-    console.log(users)
     if (users.length && !users.$isLoading) {
       var ds = new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 != r2
@@ -41,28 +41,35 @@ class Conversations extends Component {
 
   render() {
     return (
-      this.state.dataSource ?
-       <ListView
-        style={{marginTop: 60, backgroundColor: '#fff'}}
-        dataSource={this.state.dataSource}
-        renderRow={(rowData) => {
-          return (
-            <TouchableHighlight onPress={this.goToChat.bind(this, rowData)} underlayColor='#999'>
-            <View style={styles.conversation}>
-              <View style={styles.avatar}>
-                <Icon name={'md-person'} style={{marginTop: 7}} size={50} color="#999" />
+      <View style={{flex: 1, paddingTop: 60}}>
+        {
+          this.state.dataSource ?
+         <ListView
+          style={{marginTop: 60, backgroundColor: '#fff'}}
+          dataSource={this.state.dataSource}
+          renderRow={(rowData) => {
+            const conversation = _.get(rowData, 'conversation');
+            return (
+              <TouchableHighlight onPress={this.goToChat.bind(this, rowData)} underlayColor='#999'>
+              <View style={styles.conversation}>
+                <View style={styles.avatar}>
+                  <Icon name={'md-person'} style={{marginTop: 7}} size={50} color="#999" />
+                </View>
+                <View style={{flex: 4}}>
+                  <Text style={styles.title}>{_.get(conversation, 'users[0].user.firstName') + ' and ' +_.get(conversation, 'users[1].user.firstName')}</Text>
+                  <Text>{_.get(conversation.lastMessage, 'log', '')}</Text>
+                </View>
               </View>
-              <View style={{flex: 4}}>
-                <Text style={styles.title}>{rowData.users[0].name.first + ' and ' +rowData.users[1].name.first}</Text>
-                <Text>{_.get(rowData.lastMessage, 'log', '')}</Text>
-              </View>
-            </View>
-            </TouchableHighlight>
-          )
-        }}        
-      /> : <View style={{margin: 128}}>
-      <Text> loading chats</Text>
-    </View>
+              </TouchableHighlight>
+            )
+          }}        
+        /> : 
+          <View style={{margin: 128}}>
+            <Text> loading chats</Text>
+          </View>
+        }
+        <NavBar title={'Conversations'} />
+      </View>
     );
   }
 

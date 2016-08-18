@@ -39,7 +39,7 @@ class PopularSkills extends Component {
           {
             _.map(this.props.skills, (skill, i) => {
               return (
-                <TouchableHighlight key={`skill-${i}`} onPress={this.goToSkillAvailability.bind(this, skill._id)} underlayColor='#999'>
+                <TouchableHighlight key={`skill-${i}`} onPress={this.goToSkillAvailability.bind(this, skill.id)} underlayColor='#999'>
                   <View>
                      <ResponsiveImage source={{uri: skill.image}} initWidth="100%" initHeight="250"/>
                      <View style={styles.backgroundImage}>

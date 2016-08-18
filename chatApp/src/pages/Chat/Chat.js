@@ -1,5 +1,6 @@
 'use strict';
 import {branch} from 'baobab-react/higher-order';
+import NavBar from '../../components/NavBar/NavBar';
 import {joinRoom} from '../../actions/AppActions';
 import _ from 'lodash';
 import {addChat, clearChat, saveLastChatInConversation} from '../../actions/ChatActions';
@@ -52,8 +53,10 @@ class Chat extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    console.log('adihaslifaslfhsdifhsdfhi')
-    joinRoom({name: _.get(this.props.user, 'details.name.first'), user: _.get(this.props.user, 'details._id'), room: newProps.conversation._id})
+    if (_.get(newProps, 'conversation.conversation.id') && !this.state.joined) {
+      joinRoom({name: _.get(this.props.user, 'details.firstName'), user: _.get(this.props.user, 'details.id'), conversation: _.get(newProps, 'conversation.conversation.id')})
+      this.setState({joined: true})
+    }
   }
 
   getInitialMessages() {
@@ -76,8 +79,8 @@ class Chat extends Component {
   handleSend(message = {}) {
     addChat({
       log: message.text,
-      user: _.get(this.props.user, 'details'),
-      roomId: _.get(this.props.conversation, '_id')
+      user: _.get(this.props.user, 'details.id'),
+      conversation: _.get(this.props.conversation, 'conversation.id')
     })
 
   }
@@ -100,39 +103,44 @@ class Chat extends Component {
 
   render() {
     return (
-      <GiftedMessenger
-        ref={(c) => this._GiftedMessenger = c}
+      <View style={{flex: 1}}>
+        <View style={{flex: 1, marginTop: 60}}>
+          <GiftedMessenger
+            ref={(c) => this._GiftedMessenger = c}
 
-        styles={{
-          bubbleRight: {
-            marginLeft: 70,
-            backgroundColor: '#007aff',
-          },
-        }}
+            styles={{
+              bubbleRight: {
+                marginLeft: 70,
+                backgroundColor: '#007aff',
+              },
+            }}
 
-        autoFocus={false}
-        messages={!this._isMounted || !this.props.chats || _.get(this.props.chats, '$isLoading') ? [] : this.props.chats}
-        handleSend={this.handleSend.bind(this)}
-        onErrorButtonPress={this.onErrorButtonPress.bind(this)}
-        maxHeight={Dimensions.get('window').height - 50 - STATUS_BAR_HEIGHT}
+            autoFocus={false}
+            messages={!this._isMounted || !this.props.chats || _.get(this.props.chats, '$isLoading') ? [] : this.props.chats}
+            handleSend={this.handleSend.bind(this)}
+            onErrorButtonPress={this.onErrorButtonPress.bind(this)}
+            maxHeight={Dimensions.get('window').height - 50 - 60}
 
-        loadEarlierMessagesButton={!this.state.allLoaded}
-        onLoadEarlierMessages={this.onLoadEarlierMessages.bind(this)}
+            loadEarlierMessagesButton={!this.state.allLoaded}
+            onLoadEarlierMessages={this.onLoadEarlierMessages.bind(this)}
 
-        senderName='Awesome Developer'
-        senderImage={null}
-        onImagePress={this.onImagePress}
-        displayNames={true}
+            senderName='Awesome Developer'
+            senderImage={null}
+            onImagePress={this.onImagePress}
+            displayNames={true}
 
-        parseText={true} // enable handlePhonePress, handleUrlPress and handleEmailPress
-        handlePhonePress={this.handlePhonePress}
-        handleUrlPress={this.handleUrlPress}
-        handleEmailPress={this.handleEmailPress}
+            parseText={true} // enable handlePhonePress, handleUrlPress and handleEmailPress
+            handlePhonePress={this.handlePhonePress}
+            handleUrlPress={this.handleUrlPress}
+            handleEmailPress={this.handleEmailPress}
 
-        isLoadingEarlierMessages={this.state.isLoadingEarlierMessages}
+            isLoadingEarlierMessages={this.state.isLoadingEarlierMessages}
 
-        typingMessage={this.state.typingMessage}
-      />
+            typingMessage={this.state.typingMessage}
+          />
+        </View>
+        <NavBar title={'Chat'} leftAction={this.props.goBack.bind(this)} />
+      </View>
     );
   }
 
@@ -153,7 +161,7 @@ class Chat extends Component {
   componentWillUnmount() {
     this._isMounted = false;
     if (_.get(this.props.chats, 'length')) {
-      saveLastChatInConversation(_.last(this.props.chats)._id, _.get(this.props.conversation, '_id'));
+      saveLastChatInConversation(_.last(this.props.chats).id, _.get(this.props.conversation, 'conversation.id'));
     }    
     clearChat();
   }

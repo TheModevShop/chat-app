@@ -5,7 +5,7 @@ import Baobab from 'baobab';
 
 const loader = new RESTLoader({
   getResourceUrl: (id) => {
-    return `${BASE}/listings/${id}`;
+    return `${BASE}/calendars/${id}`;
   },
   successTransformer: (data, current) => {
     return data.body;

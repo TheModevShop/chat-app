@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import textStyle from '../../styles/sessionItemStyle';
 import {
   StyleSheet,
   Dimensions,
@@ -34,7 +35,7 @@ export default class NavBar extends Component {
     return (
       <TouchableOpacity onPress={leftAction} style={{position: 'absolute', left: 16, top: 0, bottom: 0}}>
         <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 45}}>
-          <Icon name={this.props.leftActionIcon || 'ios-arrow-back'} size={25} color="#999" />
+          <Icon name={this.props.leftActionIcon || 'ios-arrow-back'} size={25} color={styleConstants.DARKBLUE} />
         </View>
       </TouchableOpacity>
     )
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ccc'
   },
   navBarTitle: {
-    fontFamily: styleConstants.SEMIBOLD,
+    fontFamily: styleConstants.FONT_MEDIUM,
     fontSize: 17,
     color: styleConstants.DARKBLUE
     // flex: 1

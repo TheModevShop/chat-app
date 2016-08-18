@@ -23,7 +23,7 @@ export default function ChatFacet() {
       conversation: ['conversation']
     },
     get(data) {
-      if (data.conversation && data.conversation._id) {
+      if (data.conversation && data.conversation.id) {
         let request;
         
         if (data.messages && data.messages.stale) {
@@ -34,7 +34,7 @@ export default function ChatFacet() {
           loader.setCursor(this.select(['messages']));
         }
 
-        request = _.clone(loader.fetch(data.conversation._id));
+        request = _.clone(loader.fetch(data.conversation.conversation_id));
         return request;
       }
     }

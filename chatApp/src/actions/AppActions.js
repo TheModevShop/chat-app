@@ -11,13 +11,13 @@ let socketConnection = false;
 
 userDetailsCursor.on('update', function(e) {
   var eventData = e.data;
-  if (_.get(eventData, 'currentData.details._id') && !_.get(eventData, 'previousData.details._id')) {
-    intitChat(_.get(eventData, 'currentData.details._id'))
+  if (_.get(eventData, 'currentData.details.id') && !_.get(eventData, 'previousData.details.id')) {
+    intitChat(_.get(eventData, 'currentData.details.id'))
   }
 });
 
 export async function intitChat(id) {
-   socket = io('ws://localhost:5050', {query: `id=${id}`, jsonp: false, transports: ['websocket']});
+   socket = io('ws://localhost:8888', {query: `id=${id}`, jsonp: false, transports: ['websocket']});
    // listeners
 
     socket.on('hi', function(msg){

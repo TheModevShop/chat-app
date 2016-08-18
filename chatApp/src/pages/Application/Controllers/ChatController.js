@@ -70,9 +70,9 @@ class ChatController extends Component {
   _renderScene(props) {
     const ComponentToRender = this._renderRoute(props.scene.route.key);
     return (
-      <ScrollView style={styles.scrollView}>
+      <View style={styles.View}>
         {ComponentToRender}
-      </ScrollView>
+      </View>
     );
   }
 

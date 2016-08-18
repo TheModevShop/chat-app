@@ -5,9 +5,10 @@ import Baobab from 'baobab';
 
 const loader = new RESTLoader({
   getResourceUrl: (queryParams = {}) => {
-    return `${BASE}/listings/popular`;
+    return `${BASE}/services/popular`;
   },
   successTransformer: (data, current) => {
+    console.log(data.body)
     return data.body;
   }
 });
