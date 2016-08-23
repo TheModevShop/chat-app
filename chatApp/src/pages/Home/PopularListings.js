@@ -43,8 +43,8 @@ class PopularListings extends Component {
                   <View>
                      <ResponsiveImage source={{uri: listing.image}} initWidth="100%" initHeight="250"/>
                      <View style={styles.backgroundImage}>
-                        <Text style={styles.text}>{listing.serviceName}</Text> 
-                        <Text style={styles.subtext}>{listing.serviceDescription}</Text> 
+                        <Text style={styles.text}>{listing.service_name}</Text> 
+                        <Text style={styles.subtext}>{listing.service_description}</Text> 
                      </View>
                   </View>
                 </TouchableHighlight>

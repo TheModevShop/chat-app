@@ -54,7 +54,7 @@ class Chat extends Component {
 
   componentWillReceiveProps(newProps) {
     if (_.get(newProps, 'conversation.conversation.id') && !this.state.joined) {
-      joinRoom({name: _.get(this.props.user, 'details.firstName'), user: _.get(this.props.user, 'details.id'), conversation: _.get(newProps, 'conversation.conversation.id')})
+      joinRoom({name: _.get(this.props.user, 'details.first_name'), user: _.get(this.props.user, 'details.id'), conversation: _.get(newProps, 'conversation.conversation.id')})
       this.setState({joined: true})
     }
   }

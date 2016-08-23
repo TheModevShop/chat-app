@@ -56,8 +56,8 @@ class Conversations extends Component {
                   <Icon name={'md-person'} style={{marginTop: 7}} size={50} color="#999" />
                 </View>
                 <View style={{flex: 4}}>
-                  <Text style={styles.title}>{_.get(conversation, 'users[0].user.firstName') + ' and ' +_.get(conversation, 'users[1].user.firstName')}</Text>
-                  <Text>{_.get(conversation.lastMessage, 'log', '')}</Text>
+                  <Text style={styles.title}>{_.get(conversation, 'users[0].user.first_name') + ' and ' +_.get(conversation, 'users[1].user.first_name')}</Text>
+                  <Text>{_.get(conversation.last_message, 'log', '')}</Text>
                 </View>
               </View>
               </TouchableHighlight>

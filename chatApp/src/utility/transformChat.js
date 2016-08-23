@@ -4,7 +4,7 @@ import tree from '../state/StateTree';
 export default function transformChat(chat, position) {
   return {
       text: chat.log,
-      name: _.get(chat, 'user.firstName', 'user'),
+      name: _.get(chat, 'user.first_name', 'user'),
       image: {uri: 'https://facebook.github.io/react/img/logo_og.png'},
       position: 'left',
       date: new Date(),

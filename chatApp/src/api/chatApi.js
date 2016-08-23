@@ -4,7 +4,7 @@ import {BASE} from '../constants';
 
 export async function updateConversation(chat, id) {
   return new bluebird((resolve, reject) => {
-    xhr('PUT', `${BASE}/conversations/${id}`, {lastMessage: chat}).then((data) => {
+    xhr('PUT', `${BASE}/conversations/${id}`, {last_message: chat}).then((data) => {
       resolve(data);
     }).catch((err) => {
       reject(err);

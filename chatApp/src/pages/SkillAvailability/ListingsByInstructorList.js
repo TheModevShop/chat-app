@@ -71,7 +71,7 @@ class ListingsList extends Component {
                     <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(listing, 'facebookUserId')}/picture?width=60&height=60`}}/>
                    </View>
                    <View style={sessionItemStyle.sessionWrapperContent}>
-                      <Text style={{fontFamily: 'Avenir-Black'}}>{`${_.get(listing, 'firstName')} ${_.get(listing, 'lastName')}`}</Text>
+                      <Text style={{fontFamily: 'Avenir-Black'}}>{`${_.get(listing, 'first_name')} ${_.get(listing, 'last_name')}`}</Text>
                       <Text>{`${_.get(listing, 'servicePrice')}`}</Text>
                     </View>
                   </View>
