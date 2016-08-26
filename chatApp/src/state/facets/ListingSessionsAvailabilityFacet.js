@@ -2,13 +2,17 @@ import _ from 'lodash';
 import RESTLoader from '../loaders/RESTLoader';
 import {BASE} from '../../constants';
 import Baobab from 'baobab';
+import moment from 'moment';
 
 const loader = new RESTLoader({
   getResourceUrl: (id) => {
-    return `${BASE}/listings/${id}/sessions/availability`;
+    return `${BASE}/calendars/${id}/availability?group=true&distinct=true&startDate=${moment().format()}&endDate=${moment().add(2, 'months').format()}`;
   },
-  successTransformer: (data, current) => {
-    return data.body;
+  successTransformer: (data, current) => {    
+    return _.map(data.body, (value, key) => {
+      console.log(key)
+      return key;
+    })
   }
 });
 

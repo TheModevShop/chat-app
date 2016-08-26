@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import _ from 'lodash';
-import Calendar from 'react-native-calendar';
+import Calendar from '../RawCalendar/RawCalendar';
 import moment from 'moment';
 import {
   StyleSheet,
@@ -17,7 +17,7 @@ class CalendarView extends Component {
   }
 
   
-  render() {    
+  render() {
     return (
     <View style={{flex: 1, position: 'relative', overflow: 'hidden'}}>
       <Calendar

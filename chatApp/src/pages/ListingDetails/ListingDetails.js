@@ -25,7 +25,7 @@ class ListingDetails extends Component {
     const agent = _.get(details, 'agent', {});
     const resource = _.get(details, 'resource', {});
 
-    const isInstructor = _.get(this.props, 'user.details._id', '') === _.get(details, 'instructor._id', null);
+    const isInstructor = _.get(this.props, 'user.details.id', '') === _.get(details, 'instructor.id', null);
 
     return (
        <View style={{marginTop: 0, flex: 1, flexDirection: 'column'}}>
@@ -34,7 +34,8 @@ class ListingDetails extends Component {
           <View><Text>loading</Text></View> : details.id ?
           <ScrollView style={{marginTop: 60}}>
             <ResponsiveImage source={{uri: service.image}} initWidth="100%" initHeight="250"/>
-            <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(agent, 'facebookUserId')}/picture?width=60&height=60`}}/>
+            <Text>{service.service_name}</Text>
+            <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(agent, 'facebook_userid')}/picture?width=60&height=60`}}/>
             <MapViewPreview />
             <View>
               <Text>{service.name}</Text> 
@@ -66,7 +67,7 @@ class ListingDetails extends Component {
   }
 
   favoriteListing() {
-    favoriteListing(this.props.view._id)
+    favoriteListing(this.props.view.id)
   }
 
   viewAvailability() {

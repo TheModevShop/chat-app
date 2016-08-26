@@ -8,6 +8,12 @@ const sessions = tree.select(['sessions']);
 const sessionDetails = tree.select(['sessionDetails']);
 const sessionFilters = tree.select(['sessionFilters']);
 
+const calendarDayView = tree.select(['calendarDayView']);
+
+export function invalidateCalendarDayView() {
+  calendarDayView.set({stale: true})
+}
+
 export function invalidateListingCache() {
   sessions.set({stale: true})
 }
@@ -15,10 +21,12 @@ export function invalidateListingCache() {
 export function setSessionDateRange(start, end) {
   sessionFilters.set(['start'], start);
   sessionFilters.set(['end'], end);
+  tree.commit()
 }
 
 export function setSessionListingFilter(listing) {
   sessionFilters.set(['listing'], listing);
+  tree.commit()
 }
 
 export async function setActiveSession(id) {

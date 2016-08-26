@@ -4,7 +4,7 @@ import {branch} from 'baobab-react/higher-order';
 import _ from 'lodash';
 import moment from 'moment';
 import CalendarView from '../../Calendar/Calendar';
-import {setSessionListingFilter, setSessionDateRange, invalidateListingCache, enrollInSession} from '../../../actions/SessionActions';
+import {setSessionListingFilter, setSessionDateRange, invalidateCalendarDayView, enrollInSession} from '../../../actions/SessionActions';
 import {
   View,
   Text,
@@ -56,9 +56,9 @@ class BookSessionModal extends Component {
   }
 
   onSelectedDay(date) {
-    setSessionDateRange(moment(date).format('YYYYMMDD'), moment(date).format('YYYYMMDD'));
+    setSessionDateRange(moment(date).format(), moment(date).format());
     setSessionListingFilter(this.props.listingDetails._id);
-    invalidateListingCache();
+    invalidateCalendarDayView();
   }
 
   scrollEvent(e) {
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
 export default branch(BookSessionModal, {
   cursors: {
     availability: ['facets', 'ListingSessionsAvailability'],
-    sessions: ['facets', 'AllSessionsFacet'],
+    sessions: ['facets', 'CalendarAvailabilityForDay'],
     listingDetails: ['listingDetails']
   }
 });
