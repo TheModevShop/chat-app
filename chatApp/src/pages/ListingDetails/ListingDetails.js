@@ -35,7 +35,7 @@ class ListingDetails extends Component {
           <ScrollView style={{marginTop: 60}}>
             <ResponsiveImage source={{uri: service.image}} initWidth="100%" initHeight="250"/>
             <Text>{service.service_name}</Text>
-            <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(agent, 'facebook_userid')}/picture?width=60&height=60`}}/>
+            <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(agent, 'facebook_user_id')}/picture?width=60&height=60`}}/>
             <MapViewPreview />
             <View>
               <Text>{service.name}</Text> 
@@ -43,7 +43,7 @@ class ListingDetails extends Component {
               <TouchableHighlight onPress={this.props.goBack.bind(this)} underlayColor='#999'><Text>Back</Text></TouchableHighlight>
               
               {
-                isInstructor ? // CHANGE
+                !isInstructor ? // CHANGE
                 <View>
                   <TouchableHighlight onPress={this.viewAvailability.bind(this)} underlayColor='#999'><Text>Book Now</Text></TouchableHighlight>
                   <TouchableHighlight onPress={this.addSessionForListing.bind(this)} underlayColor='#999'><Text>Add Session For Listing</Text></TouchableHighlight>

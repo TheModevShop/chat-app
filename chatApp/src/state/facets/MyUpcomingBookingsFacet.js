@@ -7,31 +7,31 @@ import moment from 'moment';
 
 const loader = new RESTLoader({
   getResourceUrl: (queryParams = {}) => {
-    const startDate = moment().subtract(3, 'months').format('YYYYMMDD');
-    const endDate = moment().add(3, 'months').format('YYYYMMDD');
-    return `${BASE}/me/sessions?startDate=${startDate}&endDate=${endDate}&limit=200`; //may be able to get rid of instructor true, save on server
+    const startDate = moment().subtract(3, 'months').format();
+    const endDate = moment().add(3, 'months').format();
+    return `${BASE}/me/bookings?start=${startDate}&end=${endDate}&limit=200`; //may be able to get rid of instructor true, save on server
   },
   successTransformer: (data, current) => {
+    console.log(data.body)
     return _.map(data.body, (session) => {
-      session.date = parseDate(session.date, session.time);
       return session;
     })
   }
 });
 
-export default function MyUpcomingSessionsFacet() {
+export default function MyUpcomingBookingsFacet() {
   return Baobab.monkey({
     cursors: {
-      sessions: ['upcomingSessions']
+      bookings: ['upcomingBookings']
     },
     get(data) {
       let request;
-      if (data.sessions && data.sessions.stale) {
+      if (data.bookings && data.bookings.stale) {
         loader.invalidateCache();
       }
 
       if (!loader.cursor) {
-        loader.setCursor(this.select(['upcomingSessions']));
+        loader.setCursor(this.select(['upcomingBookings']));
       }
       request = _.clone(loader.fetch());
       console.log(request)

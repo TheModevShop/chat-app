@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MySessions from '../../MySessions/MySessions';
+import MyBookings from '../../MyBookings/MyBookings';
 
 // Styles
 import * as styleConstants from '../../../styles/styleConstants';
@@ -35,7 +35,7 @@ function createReducer(initialState) {
 const NavReducer = createReducer({
   index: 0,
   key: 'History',
-  routes: [{key: 'MySessions'}]
+  routes: [{key: 'MyBookings'}]
 })
 
 class HistoryController extends Component {
@@ -63,7 +63,7 @@ class HistoryController extends Component {
   }
 
   _renderRoute (key) {
-    if (key === 'MySessions') return <MySessions onNavigation={this._handleAction.bind(this, { type: 'push', key: 'SessionDetails' })} />
+    if (key === 'MyBookings') return <MyBookings onNavigation={this._handleAction.bind(this, { type: 'push', key: 'SessionDetails' })} />
   }
 
   _renderScene(props) {

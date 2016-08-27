@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import Icon from 'react-native-vector-icons/Ionicons';
+import InstructorBookingList from './InstructorBookingList';
 
 import {
   StatusBar,
@@ -33,16 +34,25 @@ class InstructorSchedule extends Component {
   render() {
     return (
        <View style={{flex: 1}}>
-        <Text>Instructor Schedule</Text>
-        
+        <Text>Bookings</Text>
+        <InstructorBookingList scrollEvent={this.scrollEvent.bind(this)} goToActiveListing={this.goToActiveListing.bind(this)}/>
       </View>
     );
+  }
+
+  goToActiveListing(id) {
+    setActiveListing(id);
+    this.props.onNavigation({ type: 'push', key: 'SessionDetails' })
+  }
+
+  scrollEvent() {
+
   }
 
 }
 
 export default branch(InstructorSchedule, {
   cursors: {
-    view: ['instructorSchedule'] 
+    bookings: ['facets', 'MyUpcomingBookings']
   }
 });

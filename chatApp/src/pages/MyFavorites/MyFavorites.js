@@ -26,7 +26,7 @@ class MyFavorites extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (_.get(nextProps, 'listings', []).length === _.get(this.props, 'listings', []).length) {
+    if (_.get(nextProps, 'calendars', []).length === _.get(this.props, 'calendars', []).length) {
       return false
     }
     return true;
@@ -41,13 +41,13 @@ class MyFavorites extends Component {
   }
 
   registerList(props) {
-    const listings = _.get(props, 'listings', []);
-    if (listings.length) {
+    const calendars = _.get(props, 'calendars', []);
+    if (calendars.length) {
       var ds = new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 != r2
       });
       this.setState({
-        dataSource: ds.cloneWithRows(listings),
+        dataSource: ds.cloneWithRows(calendars),
       });
     }
   }
@@ -133,6 +133,6 @@ let styles = StyleSheet.create({
 
 export default branch(MyFavorites, {
   cursors: {
-    listings: ['facets', 'MyFavoritesListings'] 
+    calendars: ['facets', 'MyFavoritesCalendars'] 
   }
 });

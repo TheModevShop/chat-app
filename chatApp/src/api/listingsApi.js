@@ -14,7 +14,7 @@ export async function addListing(listing) {
 
 export async function favoriteListing(listingId) {
   return new bluebird((resolve, reject) => {
-    xhr('PUT', `${BASE}/me/listings/favorites`, {listing: listingId}).then((data) => {
+    xhr('PUT', `${BASE}/me/calendars/favorites`, {calendar: listingId}).then((data) => {
       resolve(data);
     }).catch((err) => {
       reject(err);
@@ -24,7 +24,7 @@ export async function favoriteListing(listingId) {
 
 export async function removeListingfavorite(listingId) {
   return new bluebird((resolve, reject) => {
-    xhr('DELETE', `${BASE}/me/listings/favorites`, {listing: listingId}).then((data) => {
+    xhr('DELETE', `${BASE}/me/calendars/favorites`, {calendar: listingId}).then((data) => {
       resolve(data);
     }).catch((err) => {
       reject(err);

@@ -3,10 +3,10 @@ const ConversationFacet = require('./facets/ConversationFacet').default();
 const AllConversationFacet = require('./facets/AllConversationFacet').default();
 const UsersFacet = require('./facets/UsersFacet').default();
 const AllSessionsFacet = require('./facets/AllSessionsFacet').default();
-const SessionDetailsFacet = require('./facets/SessionDetailsFacet').default();
+const CalendarDetailsFacet = require('./facets/CalendarDetailsFacet').default();
 const SearchFacet = require('./facets/SearchFacet').default();
 const SkillsFacet = require('./facets/SkillsFacet').default();
-const MyListingsFacet = require('./facets/MyListingsFacet').default();
+const MyCalendarsFacet = require('./facets/MyCalendarsFacet').default();
 const ListingDetailsFacet = require('./facets/ListingDetailsFacet').default();
 const ListingSessionsFacet = require('./facets/ListingSessionsFacet').default();
 const AllListingsFacet = require('./facets/AllListingsFacet').default();
@@ -14,8 +14,9 @@ const SkillAvailabilityFacet = require('./facets/SkillAvailabilityFacet').defaul
 const PopularSkillsFacet = require('./facets/PopularSkillsFacet').default();
 const PopularListingsFacet = require('./facets/PopularListingsFacet').default();
 const ListingSessionsAvailabilityFacet = require('./facets/ListingSessionsAvailabilityFacet').default();
-const MyUpcomingSessionsFacet = require('./facets/MyUpcomingSessionsFacet').default();
-const MyFavoritesListingsFacet = require('./facets/MyFavoritesListingsFacet').default();
+
+const MyUpcomingBookingsFacet = require('./facets/MyUpcomingBookingsFacet').default();
+const MyFavoritesCalendarsFacet = require('./facets/MyFavoritesCalendarsFacet').default();
 const CalendarAvailabilityForDayFacet = require('./facets/CalendarAvailabilityForDayFacet').default();
 export default function getInitialState() {
   return {
@@ -23,7 +24,7 @@ export default function getInitialState() {
       // Facets Loaders
       sessions: {},
       
-      sessionDetails: {
+      calendarDetails: {
         id: null,
         details: null
       },
@@ -74,10 +75,10 @@ export default function getInitialState() {
         Users: UsersFacet,
         AllConversations: AllConversationFacet,
         AllSessionsFacet: AllSessionsFacet,
-        SessionDetails: SessionDetailsFacet,
+        CalendarDetails: CalendarDetailsFacet, //***
         Search: SearchFacet,
         
-        MyListings: MyListingsFacet,
+        MyCalendars: MyCalendarsFacet,
         ListingDetails: ListingDetailsFacet,
         ListingSessions: ListingSessionsFacet,
         CalendarAvailabilityForDay: CalendarAvailabilityForDayFacet,
@@ -91,9 +92,9 @@ export default function getInitialState() {
         ListingSessionsAvailability: ListingSessionsAvailabilityFacet,
 
 
-        MyUpcomingSessions: MyUpcomingSessionsFacet,
+        MyUpcomingBookings: MyUpcomingBookingsFacet,
 
-        MyFavoritesListings: MyFavoritesListingsFacet
+        MyFavoritesCalendars: MyFavoritesCalendarsFacet
       }
     }
   };

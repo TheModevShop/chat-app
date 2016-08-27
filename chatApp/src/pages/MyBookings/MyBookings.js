@@ -1,35 +1,32 @@
-'use strict';
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
+import ResponsiveImage from 'react-native-responsive-image';
+import Icon from 'react-native-vector-icons/Ionicons';
 import ellipsize from 'ellipsize';
-import _ from 'lodash';
 import {
+  StatusBar,
   StyleSheet,
+  Animated,
+  LayoutAnimation,
   Text,
+  TextInput,
   View,
-  ScrollView,
   Dimensions,
   ListView,
-  PixelRatio,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  Easing
 } from 'react-native';
 
-import ResponsiveImage from 'react-native-responsive-image';
 
-var IMAGE_WIDTH = Dimensions.get('window').width;
-var IMAGE_HEIGHT = IMAGE_WIDTH / 2;
-var PIXEL_RATIO = PixelRatio.get();
-var PARALLAX_FACTOR = 0.3;
-
-class ListingsList extends Component {
+class MyBookings extends Component {
   constructor(...args) {
     super(...args);
     this.state = {};
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (_.get(nextProps, 'MyCalendars', []).length === _.get(this.props, 'MyCalendars', []).length) {
+    if (_.get(nextProps, 'bookings', []).length === _.get(this.props, 'bookings', []).length) {
       return false
     }
     return true;
@@ -44,13 +41,13 @@ class ListingsList extends Component {
   }
 
   registerList(props) {
-    const listings = _.get(props, 'MyCalendars', []);
-    if (listings.length) {
+    const bookings = _.get(props, 'bookings', []);
+    if (bookings.length) {
       var ds = new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 != r2
       });
       this.setState({
-        dataSource: ds.cloneWithRows(listings),
+        dataSource: ds.cloneWithRows(bookings),
       });
     }
   }
@@ -60,20 +57,19 @@ class ListingsList extends Component {
       this.state.dataSource ?
          <ListView
           dataSource={this.state.dataSource}
-          onScroll={this.props.scrollEvent.bind(this)}
           renderRow={(rowData, i) => {
-            const service = _.get(rowData, 'service', {})
             return (
-              <View key={1}>
-                <TouchableHighlight onPress={this.props.goToActiveListing.bind(this, rowData.id)} underlayColor='#999'>
+              <View key={1}>                
+                <TouchableHighlight onPress={this.onPress.bind(this, rowData._id)} underlayColor='#999'>
                   <View>
-                     <ResponsiveImage source={{uri: service.image}} initWidth="100%" initHeight="250"/>
+                     <ResponsiveImage source={{uri: rowData.listing.image}} initWidth="100%" initHeight="250"/>
                      <View style={styles.backgroundImage}>
-                        <Text style={styles.text}>{service.service_name}</Text> 
-                        <Text style={styles.subtext}>{ellipsize(service.service_description, 60)}</Text> 
+                        <Text style={styles.text}>{rowData.listing.name}</Text> 
+                        <Text style={styles.subtext}>{ellipsize(rowData.listing.description, 60)}</Text> 
                      </View>
                   </View>
                 </TouchableHighlight>
+                
               </View>
             )
           }}        
@@ -82,6 +78,10 @@ class ListingsList extends Component {
       <Text> loading</Text>
     </View>
     );
+  }
+
+  onPress(id) {
+    
   }
 
 }
@@ -130,8 +130,9 @@ let styles = StyleSheet.create({
   }
 });
 
-export default branch(ListingsList, {
+
+export default branch(MyBookings, {
   cursors: {
-    MyCalendars: ['facets','MyCalendars'],
+    bookings: ['facets', 'MyUpcomingBookings'] 
   }
 });

@@ -39,6 +39,6 @@ class SessionDetails extends Component {
 
 export default branch(SessionDetails, {
   cursors: {
-    view: ['facets','SessionDetails']
+    view: ['facets','CalendarDetails']
   }
 });

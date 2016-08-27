@@ -55,6 +55,5 @@ class Listings extends Component {
 export default branch(Listings, {
   cursors: {
     view: ['listings'],
-    MyListings: ['facets','MyListings'],
   }
 });

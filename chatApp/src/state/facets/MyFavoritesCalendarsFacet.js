@@ -1,31 +1,32 @@
 import _ from 'lodash';
 import RESTLoader from '../loaders/RESTLoader';
 import {BASE} from '../../constants';
+import parseDate from '../../utility/parseDate';
 import Baobab from 'baobab';
+import moment from 'moment';
 
 const loader = new RESTLoader({
-  getResourceUrl: () => {
-    return `${BASE}/me/listings`;
+  getResourceUrl: (queryParams = {}) => {
+    return `${BASE}/me/calendars/favorites`;
   },
   successTransformer: (data, current) => {
     return data.body;
   }
 });
 
-export default function MyListingsFacet() {
+export default function MyFavoritesCalendarsFacet() {
   return Baobab.monkey({
     cursors: {
-      listings: ['listings']
+      favorites: ['favoriteCalendars']
     },
     get(data) {
       let request;
-      
-      if (data.listings && data.listings.stale) {
+      if (data.favorites && data.favorites.stale) {
         loader.invalidateCache();
       }
 
       if (!loader.cursor) {
-        loader.setCursor(this.select(['listings']));
+        loader.setCursor(this.select(['favoriteCalendars']));
       }
       request = _.clone(loader.fetch());
       return request;

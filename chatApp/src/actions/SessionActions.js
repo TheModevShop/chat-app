@@ -5,7 +5,7 @@ import * as api from '../api/sessionApi';
 import moment from 'moment';
 
 const sessions = tree.select(['sessions']);
-const sessionDetails = tree.select(['sessionDetails']);
+const calendarDetails = tree.select(['calendarDetails']);
 const sessionFilters = tree.select(['sessionFilters']);
 
 const calendarDayView = tree.select(['calendarDayView']);
@@ -30,11 +30,11 @@ export function setSessionListingFilter(listing) {
 }
 
 export async function setActiveSession(id) {
-  sessionDetails.set(['id'], id)
+  calendarDetails.set(['id'], id)
 }
 
 export async function resetActiveSession() {
-  sessionDetails.set({
+  calendarDetails.set({
     id: null,
     details: null
   })
