@@ -12,10 +12,7 @@ const loader = new RESTLoader({
     return `${BASE}/me/bookings?start=${startDate}&end=${endDate}&limit=200`; //may be able to get rid of instructor true, save on server
   },
   successTransformer: (data, current) => {
-    console.log(data.body)
-    return _.map(data.body, (session) => {
-      return session;
-    })
+    return data.body
   }
 });
 

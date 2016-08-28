@@ -62,7 +62,8 @@ class InstructorBookingList extends Component {
           dataSource={this.state.dataSource}
           onScroll={this.props.scrollEvent.bind(this)}
           renderRow={(rowData, i) => {
-            const service = _.get(rowData, 'service', {})
+            const service = rowData;
+            console.log(service)
             return (
               <View key={1}>
                 <TouchableHighlight onPress={this.props.goToActiveListing.bind(this, rowData.id)} underlayColor='#999'>
