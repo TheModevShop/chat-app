@@ -3,6 +3,7 @@ import {branch} from 'baobab-react/higher-order';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ListingsList from './ListingsList';
 import {setActiveListing} from '../../actions/ListingActions';
+import NavBar from '../../components/NavBar/NavBar';
 
 import {
   StatusBar,
@@ -34,9 +35,11 @@ class Listings extends Component {
 
   render() {
     return (
-       <View style={{flex: 1}}>
-        <Text>Listings</Text>
-        <ListingsList scrollEvent={this.scrollEvent.bind(this)} goToActiveListing={this.goToActiveListing.bind(this)}/>
+      <View style={{flex: 1}}>
+         <View style={{flex: 1, marginTop: 60}}>
+          <ListingsList scrollEvent={this.scrollEvent.bind(this)} goToActiveListing={this.goToActiveListing.bind(this)}/>
+        </View>
+        <NavBar title={'Manage Listings'} />
       </View>
     );
   }

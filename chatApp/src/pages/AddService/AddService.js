@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {addListing} from '../../actions/ListingActions';
+import {addService} from '../../actions/ListingActions';
 import moment from 'moment';
 import {
   StatusBar,
@@ -47,7 +47,7 @@ class AddListing extends Component {
   render() {
     const skills =  _.map(this.props.skills, (skill) => {
       return (
-        <Text style={{color: this.state.selectedSkill === skill._id ? 'red' : 'black'}} key={skill._id} onPress={this.setSkillForListing.bind(this, skill._id)}>{skill.name}</Text>
+        <Text style={{color: this.state.selectedSkill === skill.id ? 'red' : 'black'}} key={skill.id} onPress={this.setSkillForListing.bind(this, skill.id)}>{skill.name}</Text>
       )
     })
 
@@ -78,20 +78,22 @@ class AddListing extends Component {
     const form = this.refs.form.getValue();
     if (form) {
       // do validation
-     const listing =  this.createListing(form);
-     addListing(listing)
+     const service =  this.createService(form);
+   addService(service)
     }
   }
 
-  createListing(form) {
+  createService(form) {
     const time = moment();
     return {
-      skill: this.state.selectedSkill,
+      service_description: form.description,
+      service_name: "todo",
+      active: true,
       image: 'http://images.unsplash.com/photo-1453733190371-0a9bedd82893?format=auto&auto=compress&dpr=2&crop=entropy&fit=crop&w=1266&h=950&q=80',
-      capacity: 1,
-      price: 3200,
-      description: form.description,
-      location: {}
+      service_capacity: 3,
+      service_duration: 30,
+      service_price: 60,
+      service_skill_id: this.state.selectedSkill
     }
   }
 

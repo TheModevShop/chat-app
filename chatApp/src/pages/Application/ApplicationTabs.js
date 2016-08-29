@@ -20,7 +20,7 @@ import AccountSettingsController from './Controllers/AccountSettingsController';
 import InstructorScheduleController from './Controllers/InstructorScheduleController';
 
 //VIEWS
-import AddListing from '../AddListing/AddListing';
+import AddService from '../AddService/AddService';
 import Login from '../Login/Login';
 import Initial from '../Initial/Initial';
 import Settings from '../AccountSettings/Settings';
@@ -186,7 +186,7 @@ class Application extends React.Component {
           renderSelectedIcon={() => <Icon name={'ios-analytics'} size={25} color="#999" />}
           badgeText=""
           onPress={() => this.setState({ selectedTab: 'add-listings' })}>
-          <AddListing />
+          <AddService />
         </TabNavigator.Item>
         <TabNavigator.Item
           selected={this.state.drawerOpen}

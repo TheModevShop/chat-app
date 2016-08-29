@@ -26,6 +26,10 @@ export default class NavBar extends Component {
             this.props.leftAction ?
             this.leftAction() : null
           }
+          {
+            this.props.rightAction ?
+            this.rightAction() : null
+          }
         </View>
       </View>
     )
@@ -36,6 +40,16 @@ export default class NavBar extends Component {
       <TouchableOpacity onPress={leftAction} style={{position: 'absolute', left: 16, top: 0, bottom: 0}}>
         <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 45}}>
           <Icon name={this.props.leftActionIcon || 'ios-arrow-back'} size={25} color={styleConstants.DARKBLUE} />
+        </View>
+      </TouchableOpacity>
+    )
+  }
+  rightAction() {
+    const {rightAction} = this.props
+    return (
+      <TouchableOpacity onPress={rightAction} style={{position: 'absolute', right: 16, top: 0, bottom: 0}}>
+        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 45}}>
+          <Icon name={this.props.rightActionIcon || 'ios-arrow-back'} size={25} color={styleConstants.DARKBLUE} />
         </View>
       </TouchableOpacity>
     )

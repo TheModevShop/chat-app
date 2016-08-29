@@ -2,9 +2,9 @@ import bluebird from 'bluebird';
 import xhr from '../utility/xhr';
 import {BASE} from '../constants';
 
-export async function addListing(listing) {
+export async function addService(service) {
   return new bluebird((resolve, reject) => {
-    xhr('POST', `${BASE}/me/listings`, {listing}).then((data) => {
+    xhr('POST', `${BASE}/me/services/add`, {service}).then((data) => {
       resolve(data);
     }).catch((err) => {
       reject(err);

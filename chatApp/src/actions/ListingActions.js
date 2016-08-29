@@ -26,9 +26,9 @@ export async function resetActiveListing() {
   })
 }
 
-export async function addListing(listing) {
+export async function addService(service) {
   try {
-    const addedListing = await api.addListing(JSON.stringify(listing));
+    const addedService = await api.addService(JSON.stringify(service));
   } catch(err) {
     console.log(err)
   }

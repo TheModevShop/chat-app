@@ -34,7 +34,7 @@ class InstructorSchedule extends Component {
   render() {
     return (
       <View style={{flex: 1}}>
-         <View style={{marginTop: 60}}>
+         <View style={{flex: 1, marginTop: 60}}>
           <InstructorBookingList bookings={this.props.bookings} scrollEvent={this.scrollEvent.bind(this)} goToActiveListing={this.goToActiveListing.bind(this)}/>
         </View>
         <NavBar title={'My Bookings'} />

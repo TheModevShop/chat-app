@@ -7,6 +7,8 @@ import ResponsiveImage from 'react-native-responsive-image';
 import {resetActiveListing, favoriteListing} from '../../actions/ListingActions';
 import {openModal} from '../../actions/ModalActions';
 import MapViewPreview from '../../components/MapViewPreview/MapViewPreview.js';
+import TimeAvailabilityToggle  from '../../components/TimeToggle/TimeToggle.js';
+
 import {
   StyleSheet,
   Text,
@@ -17,6 +19,11 @@ import {
 } from 'react-native';
 
 class ListingDetails extends Component {
+  constructor(...args) {
+    super(...args);
+    this.state = {}
+  }
+
   render() {
     const details = this.props.view;
     const loading = _.get(details, '$isLoading', false);
@@ -34,6 +41,7 @@ class ListingDetails extends Component {
           <View><Text>loading</Text></View> : details.id ?
           <ScrollView style={{marginTop: 60}}>
             <ResponsiveImage source={{uri: service.image}} initWidth="100%" initHeight="250"/>
+            <TouchableHighlight onPress={this.editAvailability.bind(this)} underlayColor='#999'><Text>Edit Availability</Text></TouchableHighlight>
             <Text>{service.service_name}</Text>
             <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(agent, 'facebook_user_id')}/picture?width=60&height=60`}}/>
             <MapViewPreview />
@@ -49,6 +57,7 @@ class ListingDetails extends Component {
                   <TouchableHighlight onPress={this.addSessionForListing.bind(this)} underlayColor='#999'><Text>Add Session For Listing</Text></TouchableHighlight>
                   <TouchableHighlight onPress={this.setAvailability.bind(this)} underlayColor='#999'><Text>Add Session For Listing</Text></TouchableHighlight>
                   <TouchableHighlight onPress={this.favoriteListing.bind(this)} underlayColor='#999'><Text>Favorite Listing</Text></TouchableHighlight>
+
                 </View> : 
                 <View>
                   <TouchableHighlight onPress={this.viewAvailability.bind(this)} underlayColor='#999'><Text>Book Now</Text></TouchableHighlight>
@@ -57,9 +66,19 @@ class ListingDetails extends Component {
             </View>
           </ScrollView> : null
         }
-        <NavBar title={'Listing Details'} leftAction={this.props.goBack.bind(this)} />
+        <NavBar rightAction={this.editAvailability.bind(this)} rightActionIcon={"ion-ios-calendar-outline"} title={'Listing Details'} leftAction={this.props.goBack.bind(this)} />
+        {
+          this.state.toggle ?
+          <View style={{flex: 1, position: 'absolute', top: 60, bottom: 0, left: 0, right: 0}}>
+            <TimeAvailabilityToggle />
+          </View> : null
+        }
       </View>
     );
+  }
+
+  editAvailability() {
+    this.setState({toggle: !this.state.timeToggle})
   }
 
   componentWillUnmount() {
