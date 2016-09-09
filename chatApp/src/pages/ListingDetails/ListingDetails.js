@@ -43,7 +43,7 @@ class ListingDetails extends Component {
             <ResponsiveImage source={{uri: service.image}} initWidth="100%" initHeight="250"/>
             <TouchableHighlight onPress={this.editAvailability.bind(this)} underlayColor='#999'><Text>Edit Availability</Text></TouchableHighlight>
             <Text>{service.service_name}</Text>
-            <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(agent, 'facebook_user_id')}/picture?width=60&height=60`}}/>
+            <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(agent, 'facebook_user_id')}/picture?width=200&height=200`}}/>
             <MapViewPreview />
             <View>
               <Text>{service.name}</Text> 
@@ -66,7 +66,7 @@ class ListingDetails extends Component {
             </View>
           </ScrollView> : null
         }
-        <NavBar rightAction={this.editAvailability.bind(this)} rightActionIcon={"ion-ios-calendar-outline"} title={'Listing Details'} leftAction={this.props.goBack.bind(this)} />
+        <NavBar rightAction={this.editAvailability.bind(this)} rightActionIcon={"ios-calendar-outline"} title={'Listing Details'} leftAction={this.props.goBack.bind(this)} />
         {
           this.state.toggle ?
           <View style={{flex: 1, position: 'absolute', top: 60, bottom: 0, left: 0, right: 0}}>
@@ -78,7 +78,7 @@ class ListingDetails extends Component {
   }
 
   editAvailability() {
-    this.setState({toggle: !this.state.timeToggle})
+    this.setState({toggle: !this.state.toggle})
   }
 
   componentWillUnmount() {

@@ -68,7 +68,7 @@ class ListingsList extends Component {
                 <TouchableHighlight underlayColor='#999' onPress={this.props.goToListingDetails.bind(this, listing.calendar_id)}>
                   <View key={i} style={sessionItemStyle.sessionWrapper}>
                    <View style={sessionItemStyle.sessionWrapperImage}>
-                    <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(listing, 'facebook_user_id')}/picture?width=60&height=60`}}/>
+                    <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(listing, 'facebook_user_id')}/picture?width=200&height=200`}}/>
                    </View>
                    <View style={sessionItemStyle.sessionWrapperContent}>
                       <Text style={{fontFamily: 'Avenir-Black'}}>{`${_.get(listing, 'first_name')} ${_.get(listing, 'last_name')}`}</Text>

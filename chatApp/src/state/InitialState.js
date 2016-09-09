@@ -23,6 +23,12 @@ export default function getInitialState() {
     cursors: {
       // Facets Loaders
       sessions: {},
+
+      availability: {
+        dow: [],
+        calendars: [],
+        selectedTimes: []
+      },
       
       calendarDetails: {
         id: null,

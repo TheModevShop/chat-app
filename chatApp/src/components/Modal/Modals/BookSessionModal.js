@@ -4,7 +4,7 @@ import {branch} from 'baobab-react/higher-order';
 import _ from 'lodash';
 import moment from 'moment';
 import CalendarView from '../../Calendar/Calendar';
-import {setSessionListingFilter, setSessionDateRange, invalidateCalendarDayView, enrollInSession} from '../../../actions/SessionActions';
+import {setSessionListingFilter, setSessionDateRange, invalidateCalendarDayView, bookListingCalendar} from '../../../actions/SessionActions';
 import {
   View,
   Text,
@@ -30,16 +30,16 @@ class BookSessionModal extends Component {
         </View>
        <ScrollView scrollEventThrottle={1} style={styles.scrollWrapper} onScroll={this.scrollEvent.bind(this)}>
           {
-            _.map(this.props.sessions, (session, i) => {
+            _.map(this.props.sessions, (booking, i) => {
               return (
-                <TouchableHighlight key={i}  onPress={this.bookSession.bind(this, session)} style={{flex: 1}}>
-                  <View style={styles.sessionWrapper}>
-                   <View style={styles.sessionWrapperImage}>
-                    <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(session, 'listing.instructor.facebookCredentials.userId')}/picture?width=60&height=60`}}/>
+                <TouchableHighlight key={i}  onPress={this.bookSession.bind(this, booking)} style={{flex: 1}}>
+                  <View style={styles.bookingWrapper}>
+                   <View style={styles.bookingWrapperImage}>
+                    <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(booking, 'facebook_user_id')}/picture?width=200&height=200`}}/>
                    </View>
-                   <View style={styles.sessionWrapperContent}>
-                      <Text>{`${_.get(session, 'listing.instructor.name.first')} ${_.get(session, 'listing.instructor.name.last')}`}</Text>
-                      <Text>{`${_.get(session, 'time.start')} - ${_.get(session, 'time.end')}`}</Text>
+                   <View style={styles.bookingWrapperContent}>
+                      <Text>{`${_.get(booking, 'name')}`}</Text>
+                      <Text>{`${_.get(booking, 'start')} - ${_.get(booking, 'end')}`}</Text>
                     </View>
                   </View>
                 </TouchableHighlight>
@@ -52,7 +52,7 @@ class BookSessionModal extends Component {
   }
 
   bookSession(session) {
-    enrollInSession(session);
+    bookListingCalendar(session);
   }
 
   onSelectedDay(date) {
@@ -80,16 +80,17 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     zIndex: 2,
-    paddingTop: 350
+    paddingTop: 350,
   },
-  sessionWrapper: {
+  bookingWrapper: {
     flexDirection: 'row',
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
-    backgroundColor: '#fff'
+    backgroundColor: "#fff",
+    flex: 1
   },
-  sessionWrapperImage: {
+  bookingWrapperImage: {
     height: 60,
     width: 60,
     marginRight: 10,

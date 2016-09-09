@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import moment from 'moment';
 import _ from 'lodash';
+import {addTimesToAvailability, addAvailability} from '../../actions/AvailabilityActions'
 import {
   Dimensions,
   ScrollView,
@@ -21,7 +22,7 @@ class TimeAvailabilityToggle extends Component {
   }
 
   render () {
-    const hoursAvailable = _.get(this.props, 'hoursAvailable');
+    const hoursAvailable = _.get(this.props, 'availability.selectedTimes');
     const startDay = moment().startOf('day').add(5.5, 'hours');
     const midDay = moment().startOf('day').add(14.5, 'hours');
     const amHours = [];
@@ -50,7 +51,7 @@ class TimeAvailabilityToggle extends Component {
               <View style={{flex: 1,  borderRightWidth: 1, borderRightColor: '#efefef'}}>
                 {                  
                   _.map(amHours, (hour, i) => {
-                    const active = !!_.find(hoursAvailable, {time: {start: hour}});
+                    const active = _.indexOf(hoursAvailable, hour) > -1;
                     return (
                       <View key={`one-${i}`} style={{flexDirection: "row", flex: 1, alignItems: 'center', justifyContent: 'space-between', height: 60, padding: 10,  borderBottomWidth: 1, borderBottomColor: '#ccc'}}>
                         <Text>{moment(hour, 'H:mm').format('h:mm a')}</Text>
@@ -64,7 +65,7 @@ class TimeAvailabilityToggle extends Component {
               <View style={{flex: 1}}>
                 {
                   _.map(pmHours, (hour, i) => {
-                    const active = !!_.find(hoursAvailable, {time: {start: hour}});
+                    const active = _.indexOf(hoursAvailable, hour) > -1;
                     return (
                       <View key={`two-${i}`} style={{flexDirection: "row", flex: 1, alignItems: 'center', justifyContent: 'space-between', height: 60, padding: 10,  borderBottomWidth: 1, borderBottomColor: '#ccc'}}>
                         <Text>{moment(hour, 'H:mm').format('h:mm a')}</Text>
@@ -76,6 +77,10 @@ class TimeAvailabilityToggle extends Component {
               </View>
 
             </View>
+
+            <TouchableOpacity onPress={this.saveAvailability.bind(this)} style={{backgroundColor: '#ccc', height: 50, width: 300, position: 'absolute', bottom: 0}}>
+              <Text>Save Availability</Text>
+            </TouchableOpacity>
       
         </View>
     );
@@ -83,7 +88,11 @@ class TimeAvailabilityToggle extends Component {
 
   toggleTime(hour) {
     hour = moment(hour, 'h:mm a').format('H:mm');
-    // addTimeToAvailability(hour);
+    addTimesToAvailability(hour);
+  }
+
+  saveAvailability() {
+    addAvailability();
   }
 
 };
@@ -92,6 +101,7 @@ class TimeAvailabilityToggle extends Component {
 
 export default branch(TimeAvailabilityToggle, {
   cursors: {
-    view: ['facets','CalendarDetails']
+    view: ['facets','CalendarDetails'],
+    availability: ['availability']
   }
 });

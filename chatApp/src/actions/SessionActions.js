@@ -64,9 +64,14 @@ export async function buildSessionRequest(newAvailability, currentAvailability, 
 }
 
 
-export async function enrollInSession(session) {
+export async function bookListingCalendar(calendar) {
+  calendar = {
+    calendar_id: calendar.data.calendar_id,
+    start: moment(calendar.start, 'h:mm').format('H:mm'),
+    end: moment(calendar.end, 'h:mm').format('H:mm'),
+  }
   try {
-    await api.enrollInSessionApi(JSON.stringify([session.id]));
+    await api.bookListingCalendar(JSON.stringify([calendar]));
   } catch (e) {
     throw new Error('error');
   }

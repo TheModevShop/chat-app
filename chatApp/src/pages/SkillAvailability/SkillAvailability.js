@@ -123,7 +123,7 @@ export default branch(SkillAvailability, {
 //               return (
 //                 <View key={i} style={styles.sessionWrapper}>
 //                  <View style={styles.sessionWrapperImage}>
-//                   <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(session, 'listing.instructor.facebookCredentials.userId')}/picture?width=60&height=60`}}/>
+//                   <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(session, 'listing.instructor.facebookCredentials.userId')}/picture?width=200&height=200`}}/>
 //                  </View>
 //                  <View style={styles.sessionWrapperContent}>
 //                     <Text>{`${_.get(session, 'listing.instructor.name.first')} ${_.get(session, 'listing.instructor.name.last')}`}</Text>
