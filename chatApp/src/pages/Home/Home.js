@@ -5,7 +5,8 @@ import PopularSkills from './PopularSkills';
 import Search from '../Search/Search';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {setSearch, toggleSearch} from '../../actions/SearchActions';
-
+import stringWidth from 'string-width';
+import _ from 'lodash';
 import {
   StatusBar,
   StyleSheet,
@@ -70,21 +71,33 @@ class Home extends Component {
 
 // START SEARCH
 
-  renderSearchView() {
+  renderSearchBar() {
+    const query = _.get(this.state, 'searchValue', '')
     return (
      <TouchableHighlight style={{position: 'absolute', left: this.state.left, right: this.state.right, top: this.state.top, flex: 1, borderRadius: this.state.br, backgroundColor: '#fff', height: this.state.searchOpen ? 70 : 50}} onPress={this.toggleSearch.bind(this)} underlayColor='#99d9f4'>
         <View style={{marginTop: 0, alignItems: 'flex-end', flex: 1, flexDirection: 'row',  borderColor: 'gray', borderBottomWidth: this.state.searchOpen ? 1 : 0, height: 50}}>
           <Icon name={'ios-search-outline'} style={{backgroundColor: 'transparent', padding: 10, paddingLeft: 14}} size={30} color="#999" />
           {
             this.state.searchOpen ?
-            <View style={{flex: 4, flexDirection: 'row', alignItems: 'flex-end', height: 50}}>
+            <View style={{flex: 4, flexDirection: 'row', alignItems: 'flex-end', height: 50, overflow: 'hidden'}}>
+              <View style={{position: 'absolute', left: -423423}} onLayout={(event) => {
+                var {x, y, width, height} = event.nativeEvent.layout;
+                this.setState({searchWidth: width})
+              }}>
+                <Text>{query}</Text>
+              </View>
+              {
+                !query ?
+                <View style={{position: 'absolute', flexDirection: 'row', alignItems: 'center', height: 50}}>
+                  <Text style={{backgroundColor: 'transparent', color: '#999'}}>What do you want to learn?</Text>
+                </View> : null
+              }
               <TextInput
                 ref={(c) => this._searchInput = c}
                 autoFocus={false}
-                placeholder="What would you like to learn"
-                style={{fontSize: 14, paddingLeft: 5, flex: 4, height: 50}}
+                style={{fontSize: 14, paddingLeft: 5, flex: 4, height: 50, minWidth: this.state.searchWidth+40 || 40,  maxWidth: this.state.searchWidth+40 || 40}}
                 onChangeText={this.onSearch.bind(this)}
-                value={this.props.sessionSearch.query} /> 
+                value={query} /> 
               </View>: !this.state.scrolled ? 
               <View style={{flexDirection: 'row', alignItems: 'center', height: 50}}>
                 <Text style={{backgroundColor: 'transparent', color: '#999'}}>What do you want to learn?</Text>
@@ -101,7 +114,7 @@ class Home extends Component {
     )
   }
 
-  renderSearchBar() {
+  renderSearchView() {
     return (
       <Animated.View
         style={{
@@ -159,6 +172,7 @@ class Home extends Component {
   }
 
   onSearch(val) {
+    this.setState({searchValue: val})
     setSearch(val);
   }
 

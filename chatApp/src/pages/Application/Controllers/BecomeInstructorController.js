@@ -1,16 +1,8 @@
 import React, { Component } from 'react';
-import {branch} from 'baobab-react/higher-order';
-import {checkSession} from '../../actions/AuthenticationActions';
-
-import ApplicationTabs from './ApplicationTabs';
-import AccountSettingsController from './Controllers/AccountSettingsController';
-
-import Login from '../Login/Login';
-import Initial from '../Initial/Initial';
-import Settings from '../AccountSettings/Settings';
+import InstructorSchedule from '../../InstructorSchedule/InstructorSchedule';
 
 // Styles
-import * as styleConstants from '../../styles/styleConstants';
+import * as styleConstants from '../../../styles/styleConstants';
 
 import {
   AppRegistry,
@@ -43,20 +35,10 @@ function createReducer(initialState) {
 const NavReducer = createReducer({
   index: 0,
   key: 'App',
-  routes: [{key: 'Initial'}]
+  routes: [{key: 'BecomeAnInstructor'}]
 })
 
-class ApplicationController extends Component {
-  async componentDidMount() {
-    const session = await checkSession();
-    if (session) {
-      setTimeout(() => {
-        this._handleAction({ type: 'push', key: 'ApplicationTabs' })
-      }, 800)
-    } else {
-      this._handleAction({ type: 'push', key: 'Login' })
-    }
-  }
+class BecomeInstructorController extends Component {
 
   constructor(props) {
     super(props)
@@ -71,8 +53,7 @@ class ApplicationController extends Component {
       return false;
     }
     this.setState({
-      navState: newState,
-      activeView: action.key
+      navState: newState
     })
     return true;
   }
@@ -82,11 +63,7 @@ class ApplicationController extends Component {
   }
 
   _renderRoute (key) {
-    if (key === 'ApplicationTabs') return <ApplicationTabs onNavigation={this._handleAction.bind(this)} />
-    if (key === 'Login') return <Login goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
-    if (key === 'AccountSettings') return <AccountSettingsController goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
-    if (key === 'Settings') return <Settings goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
-    if (key === 'Initial') return <Initial />
+    if (key === 'BecomeAnInstructor') return <BecomeAnInstructor onNavigation={this._handleAction.bind(this, { type: 'push', key: 'BecomeAnInstructor' })} />
   }
 
   _renderScene(props) {
@@ -101,8 +78,6 @@ class ApplicationController extends Component {
   render() {
     return (
       <NavigationCardStack
-        gestureResponseDistance={this.state.activeView !== 'ApplicationTabs' ? 50 : 0}
-        direction={'vertical'}
         navigationState={this.state.navState}
         onNavigate={this._handleAction.bind(this)}
         onNavigateBack={this.handleBackAction.bind(this)}
@@ -123,8 +98,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default branch(ApplicationController, {
-  cursors: {
-    authentication: ['authentication', 'sessionData']
-  }
-});
+export default BecomeInstructorController;
