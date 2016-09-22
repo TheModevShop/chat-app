@@ -3,6 +3,7 @@ import {branch} from 'baobab-react/higher-order';
 import ResponsiveImage from 'react-native-responsive-image';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ellipsize from 'ellipsize';
+import _ from 'lodash';
 import {
   StatusBar,
   StyleSheet,
@@ -60,12 +61,12 @@ class MyBookings extends Component {
           renderRow={(rowData, i) => {
             return (
               <View key={1}>                
-                <TouchableHighlight onPress={this.onPress.bind(this, rowData._id)} underlayColor='#999'>
+                <TouchableHighlight onPress={this.onPress.bind(this, rowData.id)} underlayColor='#999'>
                   <View>
-                     <ResponsiveImage source={{uri: rowData.listing.image}} initWidth="100%" initHeight="250"/>
+                     <ResponsiveImage source={{uri: rowData.image}} initWidth="100%" initHeight="250"/>
                      <View style={styles.backgroundImage}>
-                        <Text style={styles.text}>{rowData.listing.name}</Text> 
-                        <Text style={styles.subtext}>{ellipsize(rowData.listing.description, 60)}</Text> 
+                        <Text style={styles.text}>{rowData.service_description}</Text> 
+                        <Text style={styles.subtext}>{ellipsize(rowData.ervice_description, 60)}</Text> 
                      </View>
                   </View>
                 </TouchableHighlight>

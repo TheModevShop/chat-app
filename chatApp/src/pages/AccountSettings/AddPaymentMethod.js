@@ -28,7 +28,7 @@ class CreditCard extends Component {
           paymentMethods={[]} 
           paymentMethod={this.props.newPaymentMethod.card}/>
         </View>
-        <NavBar title={'Add Payment'} leftAction={this.props.goBack.bind(this)} leftActionIcon={'ios-close'} />
+        <NavBar title={'Add Payment'} leftAction={this.props.goBack.bind(this)}  />
       </View>
     );
   }

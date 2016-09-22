@@ -28,7 +28,7 @@ class Conversations extends Component {
   }
 
   registerList(props) {
-    const users = _.get(props, 'AllConversations', []);
+    const users = _.get(props, 'AllConversations.items', []);
     if (users.length && !users.$isLoading) {
       var ds = new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 != r2
@@ -40,6 +40,7 @@ class Conversations extends Component {
   }
 
   render() {
+    const loading = _.get(this.props, 'AllConversations.$isLoading');
     return (
       <View style={{flex: 1, paddingTop: 60}}>
         {
@@ -63,9 +64,12 @@ class Conversations extends Component {
               </TouchableHighlight>
             )
           }}        
-        /> : 
+        /> : loading ?
           <View style={{margin: 128}}>
             <Text> loading chats</Text>
+          </View> : 
+          <View style={{}}>
+            <Text> No Conversations yet</Text>
           </View>
         }
         <NavBar title={'Conversations'} />

@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import InstructorSchedule from '../../InstructorSchedule/InstructorSchedule';
+import TeachAClass from '../../TeachAClass/TeachAClass';
+import ChooseASkill from '../../TeachAClass/ChooseASkill';
+import SkillLevel from '../../TeachAClass/SkillLevel';
+import CreateService from '../../TeachAClass/CreateService';
+import EquipmentRequired from '../../TeachAClass/EquipmentRequired';
+import ServiceOverview from '../../TeachAClass/ServiceOverview';
+import ServiceCreatedConfirmation from '../../TeachAClass/ServiceCreatedConfirmation';
 
 // Styles
 import * as styleConstants from '../../../styles/styleConstants';
@@ -35,10 +41,10 @@ function createReducer(initialState) {
 const NavReducer = createReducer({
   index: 0,
   key: 'App',
-  routes: [{key: 'BecomeAnInstructor'}]
+  routes: [{key: 'TeachAClass'}]
 })
 
-class BecomeInstructorController extends Component {
+class TeachAClassController extends Component {
 
   constructor(props) {
     super(props)
@@ -63,7 +69,14 @@ class BecomeInstructorController extends Component {
   }
 
   _renderRoute (key) {
-    if (key === 'BecomeAnInstructor') return <BecomeAnInstructor onNavigation={this._handleAction.bind(this, { type: 'push', key: 'BecomeAnInstructor' })} />
+    if (key === 'TeachAClass') return <TeachAClass goBack={this.props.goBack.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    if (key === 'ChooseASkill') return <ChooseASkill goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    if (key === 'SkillLevel') return <SkillLevel goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    if (key === 'SkillLevel') return <SkillLevel goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    if (key === 'CreateService') return <CreateService goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    if (key === 'EquipmentRequired') return <EquipmentRequired goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    if (key === 'ServiceOverview') return <ServiceOverview goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    if (key === 'ServiceCreatedConfirmation') return <ServiceCreatedConfirmation onComplete={this.props.goBack.bind(this)} onNavigation={this._handleAction.bind(this)} />
   }
 
   _renderScene(props) {
@@ -98,4 +111,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default BecomeInstructorController;
+export default TeachAClassController;

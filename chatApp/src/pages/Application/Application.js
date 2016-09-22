@@ -4,6 +4,7 @@ import {checkSession} from '../../actions/AuthenticationActions';
 
 import ApplicationTabs from './ApplicationTabs';
 import AccountSettingsController from './Controllers/AccountSettingsController';
+import TeachAClassController from './Controllers/TeachAClassController';
 
 import Login from '../Login/Login';
 import Initial from '../Initial/Initial';
@@ -87,6 +88,7 @@ class ApplicationController extends Component {
     if (key === 'AccountSettings') return <AccountSettingsController goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
     if (key === 'Settings') return <Settings goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
     if (key === 'Initial') return <Initial />
+    if (key === 'TeachAClass') return <TeachAClassController goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
   }
 
   _renderScene(props) {
@@ -101,7 +103,7 @@ class ApplicationController extends Component {
   render() {
     return (
       <NavigationCardStack
-        gestureResponseDistance={this.state.activeView !== 'ApplicationTabs' ? 50 : 0}
+        gestureResponseDistance={this.state.activeView !== 'ApplicationTabs' ? 90 : 0}
         direction={'vertical'}
         navigationState={this.state.navState}
         onNavigate={this._handleAction.bind(this)}

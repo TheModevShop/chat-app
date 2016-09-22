@@ -41,7 +41,7 @@ class Account extends Component {
           <FullTappableRow title={'email'} />
           <FullTappableRow title={'zipcode'} bottomBorder={false} />
         </View>
-        <NavBar title={'Account'} leftAction={this.props.goBack.bind(this)} />
+        <NavBar title={'Account'} leftAction={this.props.goBack.bind(this)} leftActionIcon={'ios-close'} />
       </View>
     );
   }

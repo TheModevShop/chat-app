@@ -3,6 +3,7 @@ import {branch} from 'baobab-react/higher-order';
 import ResponsiveImage from 'react-native-responsive-image';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ellipsize from 'ellipsize';
+import _ from 'lodash';
 import {
   StatusBar,
   StyleSheet,
@@ -26,9 +27,10 @@ class MyFavorites extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (_.get(nextProps, 'calendars', []).length === _.get(this.props, 'calendars', []).length) {
-      return false
-    }
+    // if (_.get(nextProps, 'calendars.items', []).length === _.get(this.props, 'calendars.items', []).length ||
+    //   _.get(nextProps, 'calendars.$isLoading', []) === _.get(this.props, 'calendars.$isLoading', [])) {
+    //   return false
+    // }
     return true;
   }
 
@@ -41,7 +43,7 @@ class MyFavorites extends Component {
   }
 
   registerList(props) {
-    const calendars = _.get(props, 'calendars', []);
+    const calendars = _.get(props, 'calendars.items', []);
     if (calendars.length) {
       var ds = new ListView.DataSource({
         rowHasChanged: (r1, r2) => r1 != r2
@@ -53,6 +55,7 @@ class MyFavorites extends Component {
   }
 
   render() {
+    const loading = _.get(this.props, 'calendars.$isLoading');
     return (
       this.state.dataSource ?
          <ListView
@@ -73,10 +76,14 @@ class MyFavorites extends Component {
               </View>
             )
           }}        
-        />
-      : <View style={{margin: 128}}>
-      <Text> loading</Text>
-    </View>
+        /> : loading ?
+      <View style={{margin: 128}}>
+        <Text> loading</Text>
+      </View> :
+      <View style={{margin: 128}}>
+        <Text>No Favotites Yet</Text>
+      </View> 
+
     );
   }
 

@@ -17,6 +17,7 @@ export function setListingSkillFilter(skill) {
 
 export async function setActiveListing(id) {
   listingDetails.set(['id'], id)
+  listingDetails.set(['details'], {stale: true})
 }
 
 export async function resetActiveListing() {

@@ -3,6 +3,9 @@ import {branch} from 'baobab-react/higher-order';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {addService} from '../../actions/ListingActions';
 import moment from 'moment';
+import NavBar from '../../components/NavBar/NavBar';
+
+import buttonStyles from '../../styles/buttonStyle';
 import {
   StatusBar,
   StyleSheet,
@@ -19,7 +22,7 @@ import {
 } from 'react-native';
 
 
-class BecomeAnInstructor extends Component {
+class TeachAClass extends Component {
   constructor(...args) {
     super(...args);
     this.state = {}
@@ -29,24 +32,30 @@ class BecomeAnInstructor extends Component {
   render() {
     return (
       <View style={{marginTop: 0, flex: 1, flexDirection: 'column'}}>
-        <View style={{flex: 1}}>
-          <Text>Add Listing</Text>      
-          <TouchableHighlight onPress={this.onPress.bind(this)} underlayColor='#99d9f4'>
-            <Text>Save</Text>
+        <View style={{marginTop: 70, flex: 1}}>
+          <Text>Service Overview</Text>      
+          
+          <TouchableHighlight style={buttonStyles.bottomButton} onPress={this.goToCategory.bind(this)} underlayColor='#99d9f4'>
+            <Text style={buttonStyles.buttonText}>
+              Complete
+            </Text>
           </TouchableHighlight>
         </View>
 
-        <NavBar rightAction={this.editAvailability.bind(this)} rightActionIcon={"ios-calendar-outline"} title={'Listing Details'} leftAction={this.props.goBack.bind(this)} />
+        <NavBar title={'Service Overview'} leftAction={this.props.goBack.bind(this)} />
       </View>
     );
+  }
+
+  goToCategory() {
+    this.props.onNavigation({ type: 'push', key: 'ServiceCreatedConfirmation' })
   }
 
 
 }
 
-export default branch(BecomeAnInstructor, {
+export default branch(TeachAClass, {
   cursors: {
-    skills: ['facets', 'Skills'],
     user: ['user']
   }
 });

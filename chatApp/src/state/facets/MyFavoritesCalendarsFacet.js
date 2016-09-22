@@ -10,7 +10,9 @@ const loader = new RESTLoader({
     return `${BASE}/me/calendars/favorites`;
   },
   successTransformer: (data, current) => {
-    return data.body;
+    return {
+      items: data.body
+    }
   }
 });
 
@@ -29,6 +31,7 @@ export default function MyFavoritesCalendarsFacet() {
         loader.setCursor(this.select(['favoriteCalendars']));
       }
       request = _.clone(loader.fetch());
+      console.log(request, 'sfsadsadads')
       return request;
     }
   });

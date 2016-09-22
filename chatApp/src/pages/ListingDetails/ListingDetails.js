@@ -29,10 +29,12 @@ class ListingDetails extends Component {
     const loading = _.get(details, '$isLoading', false);
 
     const service = _.get(details, 'service', {});
+    const skill = _.get(service, 'skill', {});
     const agent = _.get(details, 'agent', {});
     const resource = _.get(details, 'resource', {});
 
     const isInstructor = _.get(this.props, 'user.details.id', '') === _.get(details, 'instructor.id', null);
+    const image = service.image && service.image !== 'test' ? service.image : skill.image;
 
     return (
        <View style={{marginTop: 0, flex: 1, flexDirection: 'column'}}>
@@ -40,11 +42,11 @@ class ListingDetails extends Component {
           loading ?
           <View><Text>loading</Text></View> : details.id ?
           <ScrollView style={{marginTop: 60}}>
-            <ResponsiveImage source={{uri: service.image}} initWidth="100%" initHeight="250"/>
+            <ResponsiveImage source={{uri: image}} initWidth="100%" initHeight="250"/>
             <TouchableHighlight onPress={this.editAvailability.bind(this)} underlayColor='#999'><Text>Edit Availability</Text></TouchableHighlight>
             <Text>{service.service_name}</Text>
             <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(agent, 'facebook_user_id')}/picture?width=200&height=200`}}/>
-            <MapViewPreview />
+            <MapViewPreview disabled={true} />
             <View>
               <Text>{service.name}</Text> 
               <Text>Instructed by</Text> 

@@ -2,7 +2,7 @@
 import tree from '../../state/StateTree';
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
-import {Text, View, Navigator, StyleSheet, StatusBar, Platform, TouchableHighlight} from 'react-native';
+import {Text, Image, View, Navigator, StyleSheet, StatusBar, Platform, TouchableHighlight} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
 import Drawer from 'react-native-drawer'
@@ -89,7 +89,9 @@ class Application extends React.Component {
   }
 
   drawerOpen() {}
-  drawerClose() {}
+  drawerClose() {
+    StatusBar.setHidden(false, 'fade');
+  }
 
   renderTabs() {
     return (
@@ -181,9 +183,10 @@ class Application extends React.Component {
   DrawerContent(self) {
     return (
       <View style={{flex: 1, backgroundColor: '#fff', justifyContent: 'space-between'}}>
-        <View style={{backgroundColor: '#ccc'}}>
-          <TouchableHighlight onPress={() => this.onDrawerLinks('account-settings', null)} underlayColor='#99d9f4'><Text>Account Settings</Text></TouchableHighlight>
-          <TouchableHighlight onPress={() => this.onDrawerLinks('account-settings', null)} underlayColor='#99d9f4'><Text>Account Settings</Text></TouchableHighlight>
+        <View style={drawerStyles.content}>
+          <Image style={drawerStyles.image} source={{uri: `https://graph.facebook.com/${_.get(this.props, 'user.details.facebook_user_id')}/picture?width=200&height=200`}}/>
+          <TouchableHighlight style={drawerStyles.drawerLink} onPress={() => this.onDrawerLinks('account-settings', null)} underlayColor='#99d9f4'><Text style={drawerStyles.drawerLinkText}>Account Settings</Text></TouchableHighlight>
+          <TouchableHighlight style={drawerStyles.drawerLink} onPress={() => this.onDrawerLinks('teach-a-class', null)} underlayColor='#99d9f4'><Text style={drawerStyles.drawerLinkText}>Teach a Class</Text></TouchableHighlight>
         </View>
         <View style={{borderTopWidth: 1, borderTopColor: '#ccc'}}>
           <TouchableHighlight onPress={() => this.onDrawerLinks(!ADMIN_OPEN ? 'admin' : 'home', 'admin')} underlayColor='#99d9f4'>
@@ -200,6 +203,10 @@ class Application extends React.Component {
       if (admin === 'admin') {
         ADMIN_OPEN = !ADMIN_OPEN;
         this.setState({instructor: !this.state.instructor, selectedTab: ADMIN_OPEN ? 'instructor-home' : 'home' });
+      } else if (link === 'account-settings') {
+        this.props.onNavigation({ type: 'push', key: 'AccountSettings' })
+      } else if (link === 'teach-a-class') {
+        this.props.onNavigation({ type: 'push', key: 'TeachAClass' })
       } else {
         this.setState({selectedTab: link});
       }
@@ -207,6 +214,7 @@ class Application extends React.Component {
   }
 
    openDrawer() {
+    StatusBar.setHidden(true, 'slide');
     _drawer.open();
   }
 
@@ -215,10 +223,40 @@ class Application extends React.Component {
 const drawerStyles = StyleSheet.create({
   drawer: { shadowColor: '#000000', shadowOpacity: 0.8, shadowRadius: 3},
   main: {paddingLeft: 3},
+  drawerLink: {
+    borderBottomWidth: 1,
+    borderBottomColor: styleConstants.SILVER,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: styleConstants.PADDING_STANDARD,
+    paddingBottom: styleConstants.PADDING_STANDARD,
+    maxHeight: 60,
+    flexDirection: "row",
+  },
+  drawerLinkText: {
+    flex: 1,
+    flexDirection: "row",
+    paddingLeft: styleConstants.PADDING_STANDARD
+  },
+  content: {
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    flex: 1,
+    paddingTop: 50
+  },
+  image: {
+    height: 60, 
+    width: 60,
+    marginBottom: 20,
+
+  },
+
 })
 
 export default branch(Application, {
   cursors: {
-    authentication: ['authentication', 'sessionData']
+    authentication: ['authentication', 'sessionData'],
+    user: ['user'],
   }
 });
