@@ -6,6 +6,8 @@ import moment from 'moment';
 import NavBar from '../../components/NavBar/NavBar';
 
 import buttonStyles from '../../styles/buttonStyle';
+import textStyles from '../../styles/textStyle';
+
 import {
   StatusBar,
   StyleSheet,
@@ -32,10 +34,11 @@ class TeachAClass extends Component {
   render() {
     return (
       <View style={{marginTop: 0, flex: 1, flexDirection: 'column'}}>
-        <View style={{marginTop: 70, flex: 1}}>
-          <Text>We want all the teachers on Tyro to be awesome. To help find the best, we have every new teacher apply.</Text>
-          <Text>Answer the next few questions to to request approval to teach a class.</Text>      
-          
+        <View style={{marginTop: 70, flex: 1, padding: 20}}>
+          <View style={{padding: 40, alignSelf: 'center'}}>
+            <Text>We want all the teachers on Tyro to be awesome. To help find the best, we have every new teacher apply.</Text>
+            <Text>Answer the next few questions to to request approval to teach a class.</Text>      
+          </View>
           <TouchableHighlight style={buttonStyles.bottomButton} onPress={this.goToCategory.bind(this)} underlayColor='#99d9f4'>
             <Text style={buttonStyles.buttonText}>
               Answer Questions

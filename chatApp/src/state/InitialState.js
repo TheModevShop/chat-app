@@ -6,6 +6,7 @@ const AllSessionsFacet = require('./facets/AllSessionsFacet').default();
 const CalendarDetailsFacet = require('./facets/CalendarDetailsFacet').default();
 const SearchFacet = require('./facets/SearchFacet').default();
 const SkillsFacet = require('./facets/SkillsFacet').default();
+const SkillCategoriesFacet = require('./facets/SkillCategoriesFacet').default();
 const MyCalendarsFacet = require('./facets/MyCalendarsFacet').default();
 const ListingDetailsFacet = require('./facets/ListingDetailsFacet').default();
 const ListingSessionsFacet = require('./facets/ListingSessionsFacet').default();
@@ -22,6 +23,11 @@ export default function getInitialState() {
   return {
     cursors: {
       // Facets Loaders
+
+      teachAClassFlow: {
+
+      },
+
       sessions: {},
 
       availability: {
@@ -50,7 +56,7 @@ export default function getInitialState() {
       modal: {},
 
       chat: {
-        activeChat: {
+        listingDetailsChat: {
           user: null,
           chats: []
         }
@@ -93,6 +99,7 @@ export default function getInitialState() {
         PopularListings: PopularListingsFacet,
         
         Skills: SkillsFacet,
+        SkillCategories: SkillCategoriesFacet,
         SkillAvailability: SkillAvailabilityFacet,
         PopularSkills: PopularSkillsFacet,
         ListingSessionsAvailability: ListingSessionsAvailabilityFacet,

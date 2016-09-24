@@ -5,18 +5,20 @@ import Baobab from 'baobab';
 
 const loader = new RESTLoader({
   getResourceUrl: (id) => {
-    return `${BASE}/skills`;
+    return `${BASE}/skills/categories`;
   },
   successTransformer: (data, current) => {
-    console.log(data.body)
-    return data.body;
+    console.log(data)
+    return {
+     items: data.body
+    }
   }
 });
 
-export default function SkillsFacet() {
+export default function SkillCategoriesFacet() {
   return Baobab.monkey({
     cursors: {
-      skills: ['skills'],
+      skillCategories: ['skillCategories'],
     },
     get(data) {
       let request;
@@ -26,7 +28,7 @@ export default function SkillsFacet() {
       }
 
       if (!loader.cursor) {
-        loader.setCursor(this.select(['skills']));
+        loader.setCursor(this.select(['skillCategories']));
       }
      request = _.clone(loader.fetch());
       return request;

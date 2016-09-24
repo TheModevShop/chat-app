@@ -12,12 +12,16 @@ import {
 
 class FullTappableRow extends Component {
   render() {
-    const {title, onPress, bottomBorder = true} = this.props
+    const {title, onPress, topBorder, bottomBorder = true} = this.props
     const shadowStyle = !bottomBorder ? globalStyles.standardShadow : {}
     
     return (
       <TouchableOpacity onPress={onPress} style={this.props.style}>
         <View style={[{alignItems: 'stretch', backgroundColor: '#fff', minHeight: constants.ROW_HEIGHT}]}>
+          {
+            topBorder ? 
+            <View style={{backgroundColor: '#ccc', height: 1}} /> : null
+          }
           <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', padding: constants.PADDING_STANDARD}}>
             <View style={{flex: 1}}>
               <Text style={{fontSize:16}}>{title}</Text>
@@ -34,11 +38,6 @@ class FullTappableRow extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 12
-  }
-})
 
 
 export default FullTappableRow
