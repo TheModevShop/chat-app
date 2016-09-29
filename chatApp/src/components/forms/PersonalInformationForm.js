@@ -1,10 +1,10 @@
 // import React, { Component } from 'react';
-// import { View, Text, StyleSheet, TextInput, TouchableOpacity, Switch, TouchableWithoutFeedback } from 'react-native';
+// import {ScrollView, View, Text, StyleSheet, TextInput, TouchableOpacity, Switch, TouchableWithoutFeedback } from 'react-native';
 // import BottomButton from './BottomButton';
+// import Wtext from './Wtext';
 // import _ from 'lodash'
 // import * as constants from '../utility/constants';
 // import * as actions from '../actions/addressActions';
-// import {setItem} from '../state'
 // import dismissKeyboard from 'dismissKeyboard';
 
 // const zipCodeEscapedPattern = '^[0-9]{5}(?:-[0-9]{4})?$';
@@ -17,10 +17,10 @@
 //     this.state = {
 //       schema: {
 //         firstname: {
-//           regex: '',
+//           regex: '.{2,}',
 //         },
 //         lastname: {
-//           regex: '',
+//           regex: '.{2,}',
 //         },
 //         street_line_1: {
 //           regex: pobReg,
@@ -46,6 +46,13 @@
 //     };
 //   }
 
+//   componentWillMount() {
+//     const editAddress = _.get(this.props.newAddress, 'id.value');
+//     if(editAddress) {
+//       this.setState({editAddressId: editAddress});
+//     }
+//   }
+
 //   componentDidMount() {
 //     this.debounceGoogleSearch = _.debounce(this.googleAutoComplete, 100)
 //     this.validateForm(this.props.newAddress);
@@ -64,7 +71,7 @@
 //       const inputValue = _.get(address[key], 'value');
 //       let valid;
 //       if (!inputValue && value.required === false) {
-//         // return true
+//         return true
 //       }
 
 //       if (value.regex && inputValue) {
@@ -76,18 +83,27 @@
 //       if (!valid && formValid) {
 //         formValid = false
 //       }
-      
+
 //       this.setInputValidation(key, valid, address)
 //       return valid
 //     })
-    
+
 //     if (this.state.formComplete !== formValid) {
 //       this.setState({
 //         formComplete: formValid
 //       });
 //     }
-//     if (formValid) {
-//       this.dismissKeyboard();
+
+//     const {onValid = _.noop} = this.props
+//     onValid(formValid)
+
+//     if (formValid && this.state.currentFocus === 'phone') {
+//       const {doneCallback} = this.props
+//       if (doneCallback) {
+//         doneCallback()
+//       } else {
+//         this.dismissKeyboard()
+//       }
 //     }
 
 //   }
@@ -104,128 +120,150 @@
 //   }
 
 //   render() {
+//     const {showCompleteButton = true, allowDefaulting = true} = this.props
 //     const values = this.props.newAddress || {};
 //     return (
 //       <View style={{flex: 1, position: 'relative'}}>
-//         <View style={{marginTop: 20, flex: 1, position: 'relative'}}>
-//           <View style={{marginBottom: 20}}>
-            
-//             <View style={[styles.inputGroup]}>
-//               <View style={[styles.inputWrapper, {}]}>
-//                 <TextInput
-//                   placeholder="First name"
-//                   style={[styles.textInput, this.addErrorStyling(values, 'firstname')]}
-//                   returnKeyType = {"next"}
-//                   ref="firstname"
-//                   autoCapitalize='none'
-//                   autoCorrect={false}
-//                   onChangeText={this.updateInput.bind(this, 'firstname')}
-//                   onBlur={this.onInputBlur.bind(this, 'firstname')}
-//                   value={_.get(values, 'firstname.value')} 
-//                   onSubmitEditing={(event) => { 
-//                   this.refs.lastname.focus(); 
-//                   }} />
-//               </View>
-//               <View style={[styles.inputWrapper, {}]}>
-//                 <TextInput
-//                   placeholder="Last name"
-//                   autoCapitalize='none'
-//                   returnKeyType = {"next"}
-//                   ref="lastname"
-//                   autoCorrect={false}
-//                   style={[styles.textInput, this.addErrorStyling(values, 'lastname')]}
-//                   onChangeText={this.updateInput.bind(this, 'lastname')}
-//                   onBlur={this.onInputBlur.bind(this, 'lastname')}
-//                   value={_.get(values, 'lastname.value')} 
-//                   onSubmitEditing={(event) => { 
-//                     this.refs.street_line_1.focus(); 
-//                   }} />
-//               </View>
-//             </View>
+//         <ScrollView ref={(scrollView) => { this.scrollView = scrollView; }} scrollEnabled={true} keyboardShouldPersistTaps={true}>
+//           <View style={{marginTop: 20, flex: 1, position: 'relative'}}>
+//             <View style={{marginBottom: 20}}>
 
-//             <View style={{zIndex: 22}}>
+//               <View style={[styles.inputGroup]}>
+//                 <View style={[styles.inputWrapper, {}]}>
+//                   <TextInput
+//                     placeholder="First name"
+//                     style={[styles.textInput, this.addErrorStyling(values, 'firstname')]}
+//                     returnKeyType = {"next"}
+//                     ref="firstname"
+//                     autoCapitalize='words'
+//                     autoCorrect={false}
+//                     autoFocus={true}
+//                     onChangeText={this.updateInput.bind(this, 'firstname')}
+//                     onBlur={this.onInputBlur.bind(this, 'firstname')}
+//                     onFocus={this.onInputFocus.bind(this, 'firstname')}
+//                     value={_.get(values, 'firstname.value')}
+//                     onSubmitEditing={(event) => {
+//                     this.refs.lastname.focus();
+//                     }} />
+//                 </View>
+
+//                 <View style={[styles.inputWrapper, {}]}>
+//                   <TextInput
+//                     placeholder="Last name"
+//                     autoCapitalize='words'
+//                     returnKeyType = {"next"}
+//                     ref="lastname"
+//                     autoCorrect={false}
+//                     style={[styles.textInput, this.addErrorStyling(values, 'lastname')]}
+//                     onChangeText={this.updateInput.bind(this, 'lastname')}
+//                     onBlur={this.onInputBlur.bind(this, 'lastname')}
+//                     onFocus={this.onInputFocus.bind(this, 'lastname')}
+//                     value={_.get(values, 'lastname.value')}
+//                     onSubmitEditing={(event) => {
+//                       this.refs.street_line_1.focus();
+//                     }} />
+//                 </View>
+//               </View>
+
+//               <View style={{zIndex: 22}}>
+//                 <View style={styles.inputWrapper}>
+//                   <TextInput
+//                     placeholder="Street address"
+//                     clearButtonMode={'while-editing'}
+//                     style={[styles.textInput, this.addErrorStyling(values, 'street_line_1')]}
+//                     autoCorrect={false}
+//                     autoCapitalize='words'
+//                     returnKeyType = {"next"}
+//                     ref="street_line_1"
+//                     onBlur={this.onInputBlur.bind(this, 'street_line_1', 'clearPredictions')}
+//                     onFocus={this.onInputFocus.bind(this, 'street_line_1')}
+//                     onChangeText={this.updateInput.bind(this, 'street_line_1')}
+//                     value={_.get(values, 'street_line_1.value')}
+//                     onSubmitEditing={(event) => {
+//                       this.refs.street_line_2.focus();
+//                     }} />
+//                 </View>
+//                 {
+//                   _.get(this.state.predictions, 'length') ?
+//                   this.renderPredictions() : null
+//                 }
+//               </View>
+
 //               <View style={styles.inputWrapper}>
 //                 <TextInput
-//                   placeholder="Street address"
-//                   clearButtonMode={'while-editing'}
-//                   style={[styles.textInput, this.addErrorStyling(values, 'street_line_1')]}
+//                   placeholder="Apartment, suite, etc (optional)"
+//                   style={[styles.textInput, this.addErrorStyling(values, 'street_line_2')]}
 //                   returnKeyType = {"next"}
-//                   ref="street_line_1"
-//                   onBlur={this.onInputBlur.bind(this, 'street_line_1', 'clearPredictions')}
-//                   onChangeText={this.updateInput.bind(this, 'street_line_1')}
-//                   value={_.get(values, 'street_line_1.value')} 
-//                   onSubmitEditing={(event) => { 
-//                     this.refs.street_line_2.focus(); 
-//                   }} />
+//                   autoCorrect={false}
+//                   autoCapitalize='words'
+//                   ref="street_line_2"
+//                   onSubmitEditing={(event) => {
+//                     this.refs.phone.focus();
+//                   }}
+//                   onChangeText={this.updateInput.bind(this, 'street_line_2')}
+//                   onBlur={this.onInputBlur.bind(this, 'street_line_2')}
+//                   onFocus={this.onInputFocus.bind(this, 'street_line_2')}
+//                   value={_.get(values, 'street_line_2.value')} />
 //               </View>
+
+//               <View style={styles.inputWrapper}>
+//                 <TextInput
+//                   placeholder="Zipcode"
+//                   maxLength={5}
+//                   returnKeyType={"next"}
+//                   ref="zipcode"
+//                   onSubmitEditing={(event) => {
+//                     this.refs.phone.focus();
+//                   }}
+//                   style={[styles.textInput, this.addErrorStyling(values, 'zipcode')]}
+//                   keyboardType="number-pad"
+//                   onChangeText={this.updateInput.bind(this, 'zipcode')}
+//                   onBlur={this.onInputBlur.bind(this, 'zipcode')}
+//                   onFocus={this.onInputFocus.bind(this, 'zipcode')}
+//                   value={_.get(values, 'zipcode.value')} />
+//                   {
+//                     _.get(values, 'city.value') && _.get(values, 'state.value') ?
+//                     <Text style={styles.location}>{_.get(values, 'city.value')}, {_.get(values, 'state.value')} </Text> : null
+//                   }
+//               </View>
+
+//               <View style={[styles.inputWrapper]}>
+//                 <TextInput
+//                   placeholder="Phone"
+//                   keyboardType="number-pad"
+//                   style={[styles.textInput, this.addErrorStyling(values, 'phone')]}
+//                   ref="phone"
+//                   returnKeyType="done"
+//                   onChangeText={this.updateInput.bind(this, 'phone')}
+//                   onBlur={this.onInputBlur.bind(this, 'phone')}
+//                   onFocus={this.onInputFocus.bind(this, 'phone')}
+//                   value={_.get(values, 'phone.value')} />
+//               </View>
+
 //               {
-//                 _.get(this.state.predictions, 'length') ? 
-//                 this.renderPredictions() : null
+//                 _.get(this.props.addresses, 'items.length') && allowDefaulting ?
+//                 <View style={[styles.inputWrapper, {paddingHorizontal: constants.SPACE_STANDARD, marginTop: constants.SPACE_LARGE, flex: 1, flexDirection: 'row', justifyContent: 'space-between', 'alignItems': 'center'}]}>
+//                   <Wtext color={constants.COLOR_GRAY_LIGHT}>Make default address</Wtext>
+//                   <Switch
+//                     onTintColor={constants.COLOR_PALMETTO}
+//                     onValueChange={this.updateInput.bind(this, 'default', !_.get(values, 'default.value'))}
+//                     value={_.get(values, 'default.value')} />
+//                 </View> : null
 //               }
+
+//               {
+//                 this.state.editAddressId ?
+//                 <TouchableOpacity onPress={this.deleteAddress.bind(this)} style={[styles.inputWrapper, {paddingHorizontal: constants.SPACE_STANDARD, marginTop: constants.SPACE_LARGE, flex: 1, flexDirection: 'row', justifyContent: 'center', 'alignItems': 'center'}]}>
+//                   <Text style={{fontFamily: constants.FONT_SEMIBOLD, fontSize: 16, color: '#ff5500'}}>Delete address</Text>
+//                 </TouchableOpacity> : null
+//               }
+
 //             </View>
-
-//             <View style={styles.inputWrapper}>
-//               <TextInput
-//                 placeholder="Apartment, suite, etc (optional)"
-//                 style={[styles.textInput, this.addErrorStyling(values, 'street_line_2')]}
-//                 returnKeyType = {"next"}
-//                 ref="street_line_2"
-//                 onSubmitEditing={(event) => { 
-//                   this.refs.zipcode.focus(); 
-//                 }}
-//                 onChangeText={this.updateInput.bind(this, 'street_line_2')}
-//                 onBlur={this.onInputBlur.bind(this, 'street_line_2')}
-//                 value={_.get(values, 'street_line_2.value')} />
-//             </View>
-
-//             <View style={styles.inputWrapper}>
-//               <TextInput
-//                 placeholder="Zipcode"
-//                 maxLength={5}
-//                 returnKeyType={"next"}
-//                 ref="zipcode"
-//                 onSubmitEditing={(event) => { 
-//                   this.refs.phone.focus();
-//                 }}
-//                 style={[styles.textInput, this.addErrorStyling(values, 'zipcode')]}
-//                 keyboardType="number-pad"
-//                 onChangeText={this.updateInput.bind(this, 'zipcode')}
-//                 onBlur={this.onInputBlur.bind(this, 'zipcode')}
-//                 value={_.get(values, 'zipcode.value')} />
-//                 {
-//                   _.get(values, 'city.value') && _.get(values, 'state.value') ?
-//                   <Text style={styles.location}>{_.get(values, 'city.value')}, {_.get(values, 'state.value')} </Text> : null
-//                 }
-//             </View>
-
-//             <View style={[styles.inputWrapper]}>
-//               <TextInput
-//                 placeholder="Phone"
-//                 keyboardType="phone-pad"
-//                 style={[styles.textInput, this.addErrorStyling(values, 'phone')]}
-//                 ref="phone"
-//                 returnKeyType="done"
-//                 onChangeText={this.updateInput.bind(this, 'phone')}
-//                 onBlur={this.onInputBlur.bind(this, 'phone')}
-//                 value={_.get(values, 'phone.value')} />
-//             </View>
-
-//             {
-//               _.get(this.props.addresses, 'items.length') ?
-//               <View style={[styles.inputWrapper, {paddingHorizontal: constants.SPACE_STANDARD, marginTop: constants.SPACE_LARGE, flex: 1, flexDirection: 'row', justifyContent: 'space-between', 'alignItems': 'center'}]}>
-//                 <Text>Make default address</Text>
-//                 <Switch
-//                   onTintColor={constants.COLOR_PALMETTO}
-//                   onValueChange={this.updateInput.bind(this, 'default', !_.get(values, 'default.value'))}
-//                   value={_.get(values, 'default.value')} />
-//               </View> : null
-//             }
-
 //           </View>
-//         </View>
+//         </ScrollView>
 //         {
-//           this.state.formComplete ?
-//           <BottomButton style={{backgroundColor: constants.COLOR_DARKGRAY}} onScreen={true} title={'Add Address'} onPress={this.submit.bind(this)} /> : null
+//           showCompleteButton && this.state.formComplete && !this.state.currentFocus ?
+//           <BottomButton onScreen={true} title={'Add Address'} onPress={this.submit.bind(this)} /> : null
 //         }
 //       </View>
 //     )
@@ -243,7 +281,7 @@
 //             return (
 //               <View key={'prediction-'+i} style={styles.prediction}>
 //                 <TouchableOpacity style={styles.predictionContent} onPress={this.searchGooglePlaces.bind(this, prediction.place_id)}>
-//                   <Text numberOfLines={1}>{prediction.description}</Text>
+//                   <Wtext numberOfLines={1}>{prediction.description}</Wtext>
 //                 </TouchableOpacity>
 //               </View>
 //             )
@@ -272,9 +310,16 @@
 //     const address = _.cloneDeep(this.props.newAddress);
 //     _.assign(address[key], {dirty: true});
 //     actions.setAddressValue(key, address[key]);
+//     this.setState({currentFocus: null});
 //     if (clearPredictions === 'clearPredictions') {
 //       this.clearPredictions();
 //     }
+
+//     this.scrollView.scrollTo({y: 0});
+//   }
+
+//   onInputFocus(label) {
+//     this.setState({currentFocus: label});
 //   }
 
 //   formatPhoneNumber(val) {
@@ -282,7 +327,7 @@
 //   }
 
 //   // Google Api Address Lookup
-//   async googleAutoComplete(value) { 
+//   async googleAutoComplete(value) {
 //     const predictions = await actions.queryGoogleAutoComplete(value);
 //     this.setState({predictions})
 //   }
@@ -297,6 +342,7 @@
 //       })
 //      actions.setAllAddressValues(address);
 //      this.clearPredictions()
+//      this.refs.street_line_2.focus()
 //     }
 //   }
 
@@ -334,24 +380,48 @@
 
 
 //   submit() {
+//     const formattedAddress = this.getFormattedAddress()
+//     this.props.submitShippingAddress(formattedAddress);
+//   }
+
+//   getFormattedAddress() {
 //     const newAddress = this.props.newAddress;
 //     const formattedAddress = _.reduce(newAddress, (accum, value, key) => {
 //       accum[key] = value.value;
 //       return accum;
 //     }, {})
-//     this.props.submitShippingAddress(formattedAddress);
+//     return formattedAddress
+//   }
+
+//   deleteAddress() {
+//     this.props.deleteAddress(this.state.editAddressId);
+//   }
+
+
+//   componentWillUnmount() {
+//     if (this.state.editAddressId) {
+//       actions.resetNewShippingAddress();
+//     }
 //   }
 // }
+
+
+
+
+
+
 
 // const styles = StyleSheet.create({
 //   formWrapper: {
 
 //   },
 //   textInput: {
-//     fontSize: 16, 
-//     paddingHorizontal: constants.SPACE_STANDARD, 
-//     flex: 1, 
-//     height: constants.ROW_HEIGHT
+//     fontSize: 16,
+//     paddingHorizontal: constants.SPACE_STANDARD,
+//     flex: 1,
+//     height: constants.ROW_HEIGHT,
+//     color: constants.COLOR_DARKBLUE,
+//     fontFamily: constants.FONT_SEMIBOLD
 //   },
 //   inputGroup: {
 //     flex:1,
@@ -359,8 +429,8 @@
 //     height: constants.ROW_HEIGHT
 //   },
 //   inputWrapper: {
-//     flex:1, 
-//     borderBottomWidth: 1, 
+//     flex:1,
+//     borderBottomWidth: 1,
 //     borderBottomColor: constants.COLOR_MERCURY,
 //     height: constants.ROW_HEIGHT,
 //     position: 'relative',
@@ -372,7 +442,11 @@
 //   location: {
 //     position: 'absolute',
 //     right: constants.SPACE_STANDARD,
-//     top: constants.SPACE_STANDARD
+//     top: constants.SPACE_STANDARD + 2,
+//     color: constants.COLOR_SILVER,
+//     fontSize: 16,
+//     fontFamily: constants.FONT_REGULAR
+
 //   },
 
 //   predictionsWrapper: {

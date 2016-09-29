@@ -8,8 +8,9 @@ const loader = new RESTLoader({
     return `${BASE}/skills`;
   },
   successTransformer: (data, current) => {
-    console.log(data.body)
-    return data.body;
+    return {
+      items: data.body
+    }
   }
 });
 

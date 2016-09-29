@@ -6,6 +6,7 @@ import CreateService from '../../TeachAClass/CreateService';
 import EquipmentRequired from '../../TeachAClass/EquipmentRequired';
 import ServiceOverview from '../../TeachAClass/ServiceOverview';
 import ServiceCreatedConfirmation from '../../TeachAClass/ServiceCreatedConfirmation';
+import * as actions from '../../../actions/TeachAClassActions';
 
 // Styles
 import * as styleConstants from '../../../styles/styleConstants';
@@ -45,6 +46,9 @@ const NavReducer = createReducer({
 })
 
 class TeachAClassController extends Component {
+  async componentWillMount() {
+    await actions.getCurrentAddServiceProgress()
+  }
 
   constructor(props) {
     super(props)

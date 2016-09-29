@@ -12,7 +12,7 @@ import {
 
 class FullTappableRow extends Component {
   render() {
-    const {title, onPress, topBorder, bottomBorder = true} = this.props
+    const {title, onPress, topBorder, bottomBorder = true, hideIcon, icon, active, subtitle} = this.props
     const shadowStyle = !bottomBorder ? globalStyles.standardShadow : {}
     
     return (
@@ -25,8 +25,19 @@ class FullTappableRow extends Component {
           <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', padding: constants.PADDING_STANDARD}}>
             <View style={{flex: 1}}>
               <Text style={{fontSize:16}}>{title}</Text>
+              {
+                subtitle ?
+                <Text style={{fontSize:16}}>{subtitle}</Text> : null
+              }
             </View>
-            <Icon name={'ios-arrow-forward'} size={25} color="#ccc" />
+            {
+              !hideIcon ?
+              <Icon name={icon || 'ios-arrow-forward'} size={25} color="#ccc" /> : null
+            }   
+            {
+              active ?
+              <Icon name={'ios-arrow-forward'} size={25} color="#ccc" /> : null
+            }            
           </View>
           {
             bottomBorder ? 

@@ -4,7 +4,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {addService} from '../../actions/ListingActions';
 import moment from 'moment';
 import NavBar from '../../components/NavBar/NavBar';
+import Button from '../../components/Button/Button';
 import buttonStyles from '../../styles/buttonStyle';
+import FullTappableRow from '../../components/FullTappableRow/FullTappableRow';
+import * as actions from '../../actions/TeachAClassActions';
+import _ from 'lodash';
 import {
   StatusBar,
   StyleSheet,
@@ -28,21 +32,18 @@ class SkillLevel extends Component {
   }
 
   render() {
+    const {beginner, intermediate, advanced} = _.get(this.props, 'teachAClassFlow.skillLevel', {})
     return (
       <View style={{marginTop: 0, flex: 1, flexDirection: 'column'}}>
         <View style={{marginTop: 70, flex: 1}}>
           <Text>What skill category will you be teaching?</Text>
+
+          <FullTappableRow active={beginner === true} hideIcon={true} title={'Beginner'} onPress={() => actions.addSkillLevel('beginner', !beginner)} />
+          <FullTappableRow active={intermediate === true} hideIcon={true} title={'Intermediate'} onPress={() => actions.addSkillLevel('intermediate', !intermediate)} />
+          <FullTappableRow active={advanced === true} hideIcon={true} title={'Advanced'} onPress={() => actions.addSkillLevel('advanced', !advanced)} />
+                    
           
-          <Text>Beginner</Text>
-          <Text>Intermediate</Text>
-          <Text>Advanced</Text>
-          
-          
-          <TouchableHighlight style={buttonStyles.bottomButton} onPress={this.goToCategory.bind(this)} underlayColor='#99d9f4'>
-            <Text style={buttonStyles.buttonText}>
-              next
-            </Text>
-          </TouchableHighlight>
+          <Button cta="next" disabled={!beginner && !intermediate && !advanced}  onPress={this.goToCategory.bind(this)} />
         </View>
 
         <NavBar title={'Choose Skill Levels'} leftAction={this.props.goBack.bind(this)}  />
@@ -58,6 +59,7 @@ class SkillLevel extends Component {
 
 export default branch(SkillLevel, {
   cursors: {
-    user: ['user']
+    user: ['user'],
+    teachAClassFlow: ['teachAClassFlow']
   }
 });

@@ -4,7 +4,8 @@ import {BASE} from '../constants';
 
 export async function registerResourceAndService(service, resource) {
   return new bluebird((resolve, reject) => {
-    xhr('POST', `${BASE}/me/services/add`, {service, resource}).then((data) => {
+    console.log({data: {service, resource}})
+    xhr('POST', `${BASE}/me/services/add`, {data: JSON.stringify({service, resource})}).then((data) => {
       resolve(data);
     }).catch((err) => {
       reject(err);

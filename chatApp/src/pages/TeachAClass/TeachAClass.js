@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {addService} from '../../actions/ListingActions';
 import moment from 'moment';
 import NavBar from '../../components/NavBar/NavBar';
+import Button from '../../components/Button/Button';
 
 import buttonStyles from '../../styles/buttonStyle';
 import textStyles from '../../styles/textStyle';
@@ -39,11 +40,9 @@ class TeachAClass extends Component {
             <Text>We want all the teachers on Tyro to be awesome. To help find the best, we have every new teacher apply.</Text>
             <Text>Answer the next few questions to to request approval to teach a class.</Text>      
           </View>
-          <TouchableHighlight style={buttonStyles.bottomButton} onPress={this.goToCategory.bind(this)} underlayColor='#99d9f4'>
-            <Text style={buttonStyles.buttonText}>
-              Answer Questions
-            </Text>
-          </TouchableHighlight>
+          
+          <Button cta="Answer Questions" disabled={false}  onPress={this.goToCategory.bind(this)} />
+
         </View>
 
         <NavBar title={'Teach a Class'} leftAction={this.props.goBack.bind(this)} />

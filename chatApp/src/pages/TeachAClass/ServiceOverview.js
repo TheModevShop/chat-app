@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {addService} from '../../actions/ListingActions';
 import moment from 'moment';
 import NavBar from '../../components/NavBar/NavBar';
-
+import * as actions from '../../actions/TeachAClassActions';
 import buttonStyles from '../../styles/buttonStyle';
 import {
   StatusBar,
@@ -47,7 +47,8 @@ class TeachAClass extends Component {
     );
   }
 
-  goToCategory() {
+  async goToCategory() {
+    const success = await actions.registerResourceAndService();
     this.props.onNavigation({ type: 'push', key: 'ServiceCreatedConfirmation' })
   }
 
