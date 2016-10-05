@@ -4,6 +4,7 @@ import ResponsiveImage from 'react-native-responsive-image';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ellipsize from 'ellipsize';
 import _ from 'lodash';
+import NavBar from '../../components/NavBar/NavBar';
 import {
   StatusBar,
   StyleSheet,
@@ -55,28 +56,35 @@ class MyBookings extends Component {
 
   render() {
     return (
-      this.state.dataSource ?
-         <ListView
-          dataSource={this.state.dataSource}
-          renderRow={(rowData, i) => {
-            return (
-              <View key={1}>                
-                <TouchableHighlight onPress={this.onPress.bind(this, rowData.id)} underlayColor='#999'>
-                  <View>
-                     <ResponsiveImage source={{uri: rowData.image}} initWidth="100%" initHeight="250"/>
-                     <View style={styles.backgroundImage}>
-                        <Text style={styles.text}>{rowData.service_description}</Text> 
-                        <Text style={styles.subtext}>{ellipsize(rowData.ervice_description, 60)}</Text> 
-                     </View>
+    <View style={{flex: 1}}>
+      {
+        this.state.dataSource ?
+          <View style={{flex: 1, marginTop: 60}}>
+             <ListView
+              dataSource={this.state.dataSource}
+              renderRow={(rowData, i) => {
+                return (
+                  <View key={1}>                
+                    <TouchableHighlight onPress={this.onPress.bind(this, rowData.id)} underlayColor='#999'>
+                      <View>
+                         <ResponsiveImage source={{uri: rowData.image}} initWidth="100%" initHeight="250"/>
+                         <View style={styles.backgroundImage}>
+                            <Text style={styles.text}>{rowData.service_description}</Text> 
+                            <Text style={styles.subtext}>{ellipsize(rowData.ervice_description, 60)}</Text> 
+                         </View>
+                      </View>
+                    </TouchableHighlight>
+                    
                   </View>
-                </TouchableHighlight>
-                
-              </View>
-            )
-          }}        
-        />
-      : <View style={{margin: 128}}>
-      <Text> loading</Text>
+                )
+              }}        
+            />
+          </View> : 
+          <View style={{margin: 128}}>
+            <Text> loading</Text>
+          </View>
+      }
+      <NavBar title={'My History'} />
     </View>
     );
   }

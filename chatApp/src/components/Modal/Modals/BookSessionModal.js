@@ -30,7 +30,7 @@ class BookSessionModal extends Component {
         </View>
        <ScrollView scrollEventThrottle={1} style={styles.scrollWrapper} onScroll={this.scrollEvent.bind(this)}>
           {
-            _.map(this.props.sessions, (booking, i) => {
+            _.map(this.props.calendarTimes, (booking, i) => {
               return (
                 <TouchableHighlight key={i}  onPress={this.bookSession.bind(this, booking)} style={{flex: 1}}>
                   <View style={styles.bookingWrapper}>
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
 export default branch(BookSessionModal, {
   cursors: {
     availability: ['facets', 'ListingSessionsAvailability'],
-    sessions: ['facets', 'CalendarAvailabilityForDay'],
+    calendarTimes: ['facets', 'CalendarAvailabilityForDay'],
     listingDetails: ['listingDetails']
   }
 });

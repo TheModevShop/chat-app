@@ -4,13 +4,13 @@ import {BASE} from '../../constants';
 import Baobab from 'baobab';
 
 const loader = new RESTLoader({
-  getResourceUrl: (id, id2) => {
-    const array = JSON.stringify([id, id2])
+  getResourceUrl: ({userOne, userTwo}) => {
+    const array = JSON.stringify([userOne, userTwo]);
     return `${BASE}/conversations?users=${array}`;
   },
   successTransformer: (data, current) => {
     return {
-      items: data.body
+      id: _.get(data.body, 'conversation_id')
     }
   }
 });
@@ -33,9 +33,19 @@ export default function ConversationFacet() {
       if (!loader.cursor) {
         loader.setCursor(this.select(['conversation']));
       }
-      
-     request = _.clone(loader.fetch(data.user.details._id, data.chatWith._id));
-
+      let requestData;
+      if (_.get(data, 'conversation.conversation_id')) {
+        requestData = {
+          conversationId: data.conversation.conversation_id
+        }
+      } else {
+        requestData = {
+          userOne: _.get(data.user, 'details.id'),
+          userTwo: _.get(data, 'chatWith.id')
+        }
+      }
+     request = _.clone(loader.fetch(requestData));
+    
       return request;
     }
   });

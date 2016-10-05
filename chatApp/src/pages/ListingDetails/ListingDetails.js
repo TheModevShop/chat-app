@@ -8,6 +8,7 @@ import {resetActiveListing, favoriteListing} from '../../actions/ListingActions'
 import {openModal} from '../../actions/ModalActions';
 import MapViewPreview from '../../components/MapViewPreview/MapViewPreview.js';
 import TimeAvailabilityToggle  from '../../components/TimeToggle/TimeToggle.js';
+import {openNewChatWithAgent} from '../../actions/ChatActions';
 
 import {
   StyleSheet,
@@ -17,6 +18,9 @@ import {
   Image,
   TouchableHighlight
 } from 'react-native';
+
+import textStyle from '../../styles/textStyle';
+import * as constants from '../../styles/styleConstants';
 
 class ListingDetails extends Component {
   constructor(...args) {
@@ -43,28 +47,47 @@ class ListingDetails extends Component {
           <View><Text>loading</Text></View> : details.id ?
           <ScrollView style={{marginTop: 60}}>
             <ResponsiveImage source={{uri: image}} initWidth="100%" initHeight="250"/>
-            <TouchableHighlight onPress={this.editAvailability.bind(this)} underlayColor='#999'><Text>Edit Availability</Text></TouchableHighlight>
-            <Text>{service.service_name}</Text>
-            <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(agent, 'facebook_user_id')}/picture?width=200&height=200`}}/>
-            <MapViewPreview disabled={true} />
-            <View>
-              <Text>{service.name}</Text> 
-              <Text>Instructed by</Text> 
-              <TouchableHighlight onPress={this.props.goBack.bind(this)} underlayColor='#999'><Text>Back</Text></TouchableHighlight>
-              
-              {
-                !isInstructor ? // CHANGE
-                <View>
-                  <TouchableHighlight onPress={this.viewAvailability.bind(this)} underlayColor='#999'><Text>Book Now</Text></TouchableHighlight>
-                  <TouchableHighlight onPress={this.addSessionForListing.bind(this)} underlayColor='#999'><Text>Add Session For Listing</Text></TouchableHighlight>
-                  <TouchableHighlight onPress={this.setAvailability.bind(this)} underlayColor='#999'><Text>Add Session For Listing</Text></TouchableHighlight>
-                  <TouchableHighlight onPress={this.favoriteListing.bind(this)} underlayColor='#999'><Text>Favorite Listing</Text></TouchableHighlight>
+            <View style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              top: 130,
+              height: 150,
+              alignItems:'center',
+              justifyContent: 'flex-end',
+              zIndex: 2
+            }}>
+              <Image style={{borderRadius: 75, height: 150, width: 150}} source={{uri: `https://graph.facebook.com/${_.get(agent, 'facebook_user_id')}/picture?width=200&height=200`}}/>
+            </View>
 
-                </View> : 
-                <View>
-                  <TouchableHighlight onPress={this.viewAvailability.bind(this)} underlayColor='#999'><Text>Book Now</Text></TouchableHighlight>
-                </View>
-              }
+            <View style={{
+                marginTop: 50
+              }}>
+
+            <View style={{paddingHorizontal: constants.PADDING_LARGE}}>
+                <Text style={[textStyle.h1, textStyle.bold]}>{service.service_name}</Text>
+              </View>
+              <MapViewPreview y={service.y} x={service.x} disabled={true} />
+              <View>
+                <Text>{service.name}</Text> 
+                <Text>Instructed by {agent.first_name} {agent.last_name}</Text> 
+                <TouchableHighlight onPress={this.props.goBack.bind(this)} underlayColor='#999'><Text>Back</Text></TouchableHighlight>
+                
+                {
+                  !isInstructor ? // CHANGE
+                  <View>
+                    <TouchableHighlight onPress={this.messageAgent.bind(this, agent)} underlayColor='#999'><Text>Message</Text></TouchableHighlight>
+                    <TouchableHighlight onPress={this.viewAvailability.bind(this)} underlayColor='#999'><Text>Book Now</Text></TouchableHighlight>
+                    <TouchableHighlight onPress={this.addSessionForListing.bind(this)} underlayColor='#999'><Text>Add Session For Listing</Text></TouchableHighlight>
+                    <TouchableHighlight onPress={this.setAvailability.bind(this)} underlayColor='#999'><Text>Add Session For Listing</Text></TouchableHighlight>
+                    <TouchableHighlight onPress={this.favoriteListing.bind(this)} underlayColor='#999'><Text>Favorite Listing</Text></TouchableHighlight>
+
+                  </View> : 
+                  <View>
+                    <TouchableHighlight onPress={this.viewAvailability.bind(this)} underlayColor='#999'><Text>Book Now</Text></TouchableHighlight>
+                  </View>
+                }
+              </View>
             </View>
           </ScrollView> : null
         }
@@ -83,8 +106,9 @@ class ListingDetails extends Component {
     this.setState({toggle: !this.state.toggle})
   }
 
-  componentWillUnmount() {
-    //resetActiveListing()
+  messageAgent(agent) {
+    openNewChatWithAgent(agent);
+    this.props.onNavigation({ type: 'push', key: 'Chat' })
   }
 
   favoriteListing() {

@@ -53,8 +53,12 @@ class Chat extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (_.get(newProps, 'conversation.conversation.id') && !this.state.joined) {
-      joinRoom({name: _.get(this.props.user, 'details.first_name'), user: _.get(this.props.user, 'details.id'), conversation: _.get(newProps, 'conversation.conversation.id')})
+    if (_.get(newProps, 'conversation.conversation_id') && !this.state.joined) {
+      joinRoom({
+        name: _.get(this.props.user, 'details.first_name'),
+        user: _.get(this.props.user, 'details.id'),
+        conversation: _.get(newProps, 'conversation.conversation_id')
+      });
       this.setState({joined: true})
     }
   }
@@ -80,7 +84,7 @@ class Chat extends Component {
     addChat({
       log: message.text,
       user: _.get(this.props.user, 'details.id'),
-      conversation: _.get(this.props.conversation, 'conversation.id')
+      conversation: _.get(this.props, 'conversation.conversation_id')
     })
 
   }
@@ -161,7 +165,7 @@ class Chat extends Component {
   componentWillUnmount() {
     this._isMounted = false;
     if (_.get(this.props.chats, 'length')) {
-      saveLastChatInConversation(_.last(this.props.chats).id, _.get(this.props.conversation, 'conversation.id'));
+      // saveLastChatInConversation(_.last(this.props.chats).id, _.get(this.props, 'conversation.id'));
     }    
     clearChat();
   }
@@ -173,6 +177,7 @@ class Chat extends Component {
 export default branch(Chat, {
   cursors: {
     conversation: ['conversation'],
+    conversationFacet: ['facets','Conversation'],
     chats: ['facets','Chat'],
     user: ['user']
   }

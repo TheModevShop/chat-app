@@ -62,12 +62,13 @@ class ListingsList extends Component {
           dataSource={this.state.dataSource}
           onScroll={this.props.scrollEvent.bind(this)}
           renderRow={(rowData, i) => {
-            const service = _.get(rowData, 'service', {})
+            const service = _.get(rowData, 'service', {});
+            const skillImage = _.get(rowData, 'service.skill.image');
             return (
               <View key={1}>
                 <TouchableHighlight onPress={this.props.goToActiveListing.bind(this, rowData.id)} underlayColor='#999'>
                   <View>
-                     <ResponsiveImage source={{uri: service.image}} initWidth="100%" initHeight="250"/>
+                     <ResponsiveImage source={{uri: service.image && service.image !== 'test' ? service.image : skillImage}} initWidth="100%" initHeight="250"/>
                      <View style={styles.backgroundImage}>
                         <Text style={styles.text}>{service.service_name}</Text> 
                         <Text style={styles.subtext}>{ellipsize(service.service_description, 60)}</Text> 

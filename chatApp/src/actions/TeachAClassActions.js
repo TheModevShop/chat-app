@@ -107,6 +107,7 @@ function formatService() {
     capacity: _.get(data, 'serviceBasicData.capacity.value'),
     duration: _.get(data, 'serviceBasicData.duration.value', 60),
     price: _.get(data, 'serviceBasicData.price.value', 0),
+    skill_level: _.get(data, 'skillLevel'),
     skill: _.get(data, 'skill.id'),
     long: data.long || -97.7582270, // TODO
     lat: data.lat || 30.2915410, // TODO

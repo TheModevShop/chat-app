@@ -3,6 +3,7 @@ import {branch} from 'baobab-react/higher-order';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {addService} from '../../actions/ListingActions';
 import moment from 'moment';
+import _ from 'lodash';
 import {
   StatusBar,
   StyleSheet,
@@ -37,7 +38,7 @@ var options = {
 }; // optional rendering options (see documentation)
 
 
-class AddListing extends Component {
+class AddService extends Component {
   constructor(...args) {
     super(...args);
     this.state = {}
@@ -99,7 +100,7 @@ class AddListing extends Component {
 
 }
 
-export default branch(AddListing, {
+export default branch(AddService, {
   cursors: {
     view: ['addListing'],
     skills: ['facets', 'Skills'],

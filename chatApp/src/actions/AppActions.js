@@ -38,9 +38,11 @@ export async function intitChat(id) {
 
 
 export async function addChat(chat) {
+  console.log('Add Chat')
   socket.emit('message', chat);
 }
 
 export async function joinRoom(room) {
+  console.log('JOIN ROOOM')
   socket.emit('joinRoom', room);
 }

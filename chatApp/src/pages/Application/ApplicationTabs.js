@@ -16,6 +16,7 @@ import FavoritesController from './Controllers/FavoritesController';
 import HistoryController from './Controllers/HistoryController';
 import ListingsController from './Controllers/ListingsController';
 import InstructorScheduleController from './Controllers/InstructorScheduleController';
+import TeachAClassController from './Controllers/TeachAClassController';
 
 //VIEWS
 import AddService from '../AddService/AddService';
@@ -166,7 +167,7 @@ class Application extends React.Component {
           renderSelectedIcon={() => <Icon name={'ios-analytics'} size={25} color="#999" />}
           badgeText=""
           onPress={() => this.setState({ selectedTab: 'add-listings' })}>
-          <AddService />
+          <TeachAClassController />
         </TabNavigator.Item>
         <TabNavigator.Item
           selected={this.state.drawerOpen}

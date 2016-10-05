@@ -9,26 +9,29 @@ const loader = new RESTLoader({
     return `${BASE}/me/conversations`;
   },
   successTransformer: (data, current) => {
-    return data.body;
+    return {
+      items: data.body
+    }
   }
 });
 
 export default function AllConversationFacet() {
   return Baobab.monkey({
     cursors: {
-      conversations: ['conversations']
+      conversations: ['allConversations']
     },
     get(data) {
       let request;
       
-      if (data.conversation && data.conversation.stale) {
+      if (data.conversations && data.conversations.stale) {
         loader.invalidateCache();
       }
 
       if (!loader.cursor) {
-        loader.setCursor(this.select(['conversations']));
+        loader.setCursor(this.select(['allConversations']));
       }
       request = _.clone(loader.fetch());
+      console.log(request, 'sdfjsadkfjaslfjksalkfjasld')
       return request;
     }
   });

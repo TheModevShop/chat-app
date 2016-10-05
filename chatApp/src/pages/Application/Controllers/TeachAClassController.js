@@ -73,14 +73,14 @@ class TeachAClassController extends Component {
   }
 
   _renderRoute (key) {
-    if (key === 'TeachAClass') return <TeachAClass goBack={this.props.goBack.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    if (key === 'TeachAClass') return <TeachAClass goBack={this.props.goBack ? this.props.goBack.bind(this) : () => {}} onNavigation={this._handleAction.bind(this)} />
     if (key === 'ChooseASkill') return <ChooseASkill goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
     if (key === 'SkillLevel') return <SkillLevel goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
     if (key === 'SkillLevel') return <SkillLevel goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
     if (key === 'CreateService') return <CreateService goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
     if (key === 'EquipmentRequired') return <EquipmentRequired goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
     if (key === 'ServiceOverview') return <ServiceOverview goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
-    if (key === 'ServiceCreatedConfirmation') return <ServiceCreatedConfirmation onComplete={this.props.goBack.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    if (key === 'ServiceCreatedConfirmation') return <ServiceCreatedConfirmation onComplete={this.props.goBack ? this.props.goBack.bind(this) : () => {}} onNavigation={this._handleAction.bind(this)} />
   }
 
   _renderScene(props) {

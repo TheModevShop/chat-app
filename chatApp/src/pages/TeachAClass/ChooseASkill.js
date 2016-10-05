@@ -59,7 +59,7 @@ class ChooseASkill extends Component {
 
         </View>
 
-        <NavBar title={'Choose a Skill'} leftAction={this.props.goBack.bind(this)} leftActionIcon={'ios-close'} />
+        <NavBar title={'Choose a Skill'} leftAction={this.props.goBack.bind(this)} />
       </View>
     );
   }

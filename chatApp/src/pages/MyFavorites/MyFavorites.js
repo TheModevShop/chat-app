@@ -3,6 +3,7 @@ import {branch} from 'baobab-react/higher-order';
 import ResponsiveImage from 'react-native-responsive-image';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ellipsize from 'ellipsize';
+import NavBar from '../../components/NavBar/NavBar';
 import _ from 'lodash';
 import {
   StatusBar,
@@ -57,31 +58,36 @@ class MyFavorites extends Component {
   render() {
     const loading = _.get(this.props, 'calendars.$isLoading');
     return (
-      this.state.dataSource ?
-         <ListView
-          dataSource={this.state.dataSource}
-          renderRow={(rowData, i) => {
-            return (
-              <View key={1}>                
-                <TouchableHighlight onPress={this.onPress.bind(this, rowData._id)} underlayColor='#999'>
-                  <View>
-                     <ResponsiveImage source={{uri: rowData.listing.image}} initWidth="100%" initHeight="250"/>
-                     <View style={styles.backgroundImage}>
-                        <Text style={styles.text}>{rowData.listing.name}</Text> 
-                        <Text style={styles.subtext}>{ellipsize(rowData.listing.description, 60)}</Text> 
-                     </View>
-                  </View>
-                </TouchableHighlight>
-                
-              </View>
-            )
-          }}        
-        /> : loading ?
-      <View style={{margin: 128}}>
-        <Text> loading</Text>
-      </View> :
-      <View style={{margin: 128}}>
-        <Text>No Favotites Yet</Text>
+      <View style={{flex: 1}}>
+        {
+          this.state.dataSource ?
+           <ListView
+            dataSource={this.state.dataSource}
+            renderRow={(rowData, i) => {
+              return (
+                <View key={1}>                
+                  <TouchableHighlight onPress={this.onPress.bind(this, rowData._id)} underlayColor='#999'>
+                    <View>
+                       <ResponsiveImage source={{uri: rowData.listing.image}} initWidth="100%" initHeight="250"/>
+                       <View style={styles.backgroundImage}>
+                          <Text style={styles.text}>{rowData.listing.name}</Text> 
+                          <Text style={styles.subtext}>{ellipsize(rowData.listing.description, 60)}</Text> 
+                       </View>
+                    </View>
+                  </TouchableHighlight>
+                  
+                </View>
+              )
+            }}        
+          /> : loading ?
+          <View style={{margin: 128}}>
+            <Text> loading</Text>
+          </View> :
+          <View style={{margin: 128}}>
+            <Text>No Favotites Yet</Text>
+          </View> 
+        }
+        <NavBar title={'My Favotites'} />
       </View> 
 
     );

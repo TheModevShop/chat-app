@@ -43,7 +43,7 @@ class TeachAClass extends Component {
           </TouchableHighlight>
         </View>
 
-        <NavBar title={'Teach a Class'} leftAction={this.props.goBack.bind(this)} />
+        <NavBar leftActionIcon={'ios-close'} title={'Teach a Class'} leftAction={this.props.goBack.bind(this)} />
       </View>
     );
   }

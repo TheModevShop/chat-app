@@ -6,7 +6,7 @@ import transformChat from '../../utility/transformChat';
 
 const loader = new RESTLoader({
   getResourceUrl: (conversationId) => {
-    return `${BASE}/chats?conversationId=${conversationId}`;
+    return `${BASE}/chats?conversation_id=${conversationId}`;
   },
   successTransformer: (data, current) => {
     return _.map(data.body, (chat) => {

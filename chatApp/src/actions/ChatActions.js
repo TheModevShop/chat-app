@@ -10,9 +10,15 @@ const chatCursor = tree.select(['chat']);
 const conversationCursor = tree.select(['conversation']);
 const savedMessagesCursor = tree.select(['messages']);
 const messagesCursor = tree.select(['chat', 'activeChat', 'chats']);
+const userCursor = tree.select(['chat', 'activeChat', 'user']);
 
-export async function openChat(conversation) { 
+export async function openChat(conversation) {
   conversationCursor.set(conversation);
+}
+
+export async function openNewChatWithAgent(agent) { 
+  conversationCursor.set({stale: true});
+  userCursor.set(agent);
 }
 
 export async function addChat(chat) {

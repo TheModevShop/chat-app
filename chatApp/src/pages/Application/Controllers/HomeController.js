@@ -3,6 +3,7 @@ import Home from '../../Home/Home';
 import ListingDetails from '../../ListingDetails/ListingDetails';
 import SessionDetails from '../../SessionDetails/SessionDetails';
 import SkillAvailability from '../../SkillAvailability/SkillAvailability';
+import Chat from '../../Chat/Chat';
 
 // Styles
 import * as styleConstants from '../../../styles/styleConstants';
@@ -82,6 +83,7 @@ class HomeController extends Component {
     if (key === 'ListingDetails') return <ListingDetails goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
     if (key === 'SessionDetails') return <SessionDetails goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
     if (key === 'SkillAvailability') return <SkillAvailability goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    if (key === 'Chat') return <Chat goBack={this.handleBackAction.bind(this)}  />
   }
 
   _renderScene(props) {
