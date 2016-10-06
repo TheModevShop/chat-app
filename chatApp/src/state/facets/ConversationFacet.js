@@ -9,8 +9,9 @@ const loader = new RESTLoader({
     return `${BASE}/conversations?users=${array}`;
   },
   successTransformer: (data, current) => {
+    console.log(data.body)
     return {
-      id: _.get(data.body, 'conversation_id')
+      conversation_id: _.get(data.body, 'conversation_id')
     }
   }
 });

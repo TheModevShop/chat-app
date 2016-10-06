@@ -52,15 +52,15 @@ class Conversations extends Component {
             const conversation = _.get(rowData, 'conversation');
             return (
               <TouchableHighlight onPress={this.goToChat.bind(this, rowData)} underlayColor='#999'>
-              <View style={styles.conversation}>
-                <View style={styles.avatar}>
-                  <Icon name={'md-person'} style={{marginTop: 7}} size={50} color="#999" />
+                <View style={styles.conversation}>
+                  <View style={styles.avatar}>
+                    <Icon name={'md-person'} style={{marginTop: 7}} size={50} color="#999" />
+                  </View>
+                  <View style={{flex: 4}}>
+                    <Text style={styles.title}>{_.get(conversation, 'users[1].user.first_name')} {_.get(conversation, 'users[1].user.last_name')}</Text>
+                    <Text>{_.get(conversation.last_message, 'log', '')}</Text>
+                  </View>
                 </View>
-                <View style={{flex: 4}}>
-                  <Text style={styles.title}>{_.get(conversation, 'users[0].user.first_name') + ' and ' +_.get(conversation, 'users[1].user.first_name')}</Text>
-                  <Text>{_.get(conversation.last_message, 'log', '')}</Text>
-                </View>
-              </View>
               </TouchableHighlight>
             )
           }}        
@@ -95,8 +95,7 @@ let styles = StyleSheet.create({
     justifyContent: 'flex-start',
     borderBottomWidth: 1,
     padding: 20,
-    borderTopWidth: 1,
-    borderColor: '#999',
+    borderColor: '#ccc',
     backgroundColor: '#fff'
   },
   title: {
@@ -107,6 +106,7 @@ let styles = StyleSheet.create({
   avatar: {
     width: 50,
     height: 50,
+    maxWidth: 50,
     borderRadius: 100,
     backgroundColor: '#fcfcfc',
     alignItems: 'center',

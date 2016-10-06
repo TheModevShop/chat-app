@@ -20,7 +20,7 @@ export async function addTimesToAvailability(time) {
 
 export async function addAvailability() {
   const times = selectedTimesCursor.get();
-  const calendars =  [1] //selectedCalendarsCursor.get();
+  const calendars =  [15] //selectedCalendarsCursor.get();
   const days = [1, 3] //dow.get() || 0;
   try {
     await api.addAvailability(JSON.stringify({times, days, calendars}))
