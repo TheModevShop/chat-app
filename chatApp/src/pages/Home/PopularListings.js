@@ -39,7 +39,7 @@ class PopularListings extends Component {
           {
             _.map(this.props.popularListings, (listing, i) => {
               return (
-                <TouchableHighlight key={`listing-${i}`} onPress={this.goToListing.bind(this, listing._id)} underlayColor='#999'>
+                <TouchableHighlight key={`listing-${i}`} onPress={this.goToListing.bind(this, listing.id)} underlayColor='#999'>
                   <View>
                      <ResponsiveImage source={{uri: listing.image}} initWidth="100%" initHeight="250"/>
                      <View style={styles.backgroundImage}>
@@ -57,8 +57,8 @@ class PopularListings extends Component {
   }
 
   goToListing(listingId) {
-    setListingSkillFilter(listingId);
-    this.props.goToListing()
+    setActiveListing(listingId);
+    this.props.onNavigation({type: 'push', key: 'ListingDetails'})
   }
 
   componentWillUnmount() {

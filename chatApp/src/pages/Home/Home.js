@@ -57,7 +57,7 @@ class Home extends Component {
     return (
        <View style={{flex: 1}}>
         <PopularSkills skills={this.props.skills} goToSkillAvailability={this.props.onNavigation.bind(this, {type: 'push', key: 'SkillAvailability'})} />
-        <PopularListings goToListing={() => {}} popularListings={this.props.popularListings} scrollEvent={this.scrollEvent.bind(this)} />
+        <PopularListings onNavigation={this.props.onNavigation} popularListings={this.props.popularListings} scrollEvent={this.scrollEvent.bind(this)} />
         {this.renderSearchBar()}
         {this.renderSearchView()}
       </View>

@@ -19,10 +19,12 @@ const loader = new RESTLoader({
         var now1 = _.cloneDeep(now)
         return {
           name: `${value.first_name} ${value.last_name}`,
-          start: now1.add(value.service_duration * number, 'minutes').format('h:mm'),
-          end: now1.add(value.service_duration, 'minutes').format('h:mm a'),
+          start: now1.add(value.service_duration * number, 'minutes').format('H:mm'),
+          end: now1.add(value.service_duration, 'minutes').format('H:mm'),
           booked: false,
           facebook_user_id: value.facebook_user_id,
+          date: value.date,
+          raw_date: value.raw_date,
           data: value
         }
       });

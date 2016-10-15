@@ -18,10 +18,12 @@ export async function addTimesToAvailability(time) {
   tree.commit();
 }
 
-export async function addAvailability() {
+export async function addAvailability(c) {
   const times = selectedTimesCursor.get();
-  const calendars =  [15] //selectedCalendarsCursor.get();
+  const calendars = c ? [c] : selectedCalendarsCursor.get();
   const days = [1, 3] //dow.get() || 0;
+
+  console.log({times, days, calendars})
   try {
     await api.addAvailability(JSON.stringify({times, days, calendars}))
   } catch(err) {

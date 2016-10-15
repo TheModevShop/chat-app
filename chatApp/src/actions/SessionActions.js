@@ -50,26 +50,29 @@ export async function addSession(session) {
 }
 
 
-export async function buildSessionRequest(newAvailability, currentAvailability, listing) {
-  const times = _.map(newAvailability.pannedDays, (panned) => {
-    const time = moment(panned.time, 'h:mm').format('H:mm');
-    const date = moment(panned.day.day, 'YYYYMMDD').set('hour', time.split(':')[0]).set('minute', time.split(':')[1]).format();
-    return {
-      time: moment(panned.time, 'h:mm').format('H:mm'),
-      date: panned.day.day.format('YYYYMMDD'),
-      dateAndTime: date
-    }
-  });
-  const addedSessions = await api.addBulkSessions(JSON.stringify({times: times}), listing.id);
-}
+// export async function buildSessionRequest(newAvailability, currentAvailability, listing) {
+//   const times = _.map(newAvailability.pannedDays, (panned) => {
+//     const time = moment(panned.time, 'h:mm').format('H:mm');
+//     const date = moment(panned.day.day, 'YYYYMMDD').set('hour', time.split(':')[0]).set('minute', time.split(':')[1]).format();
+//     return {
+//       time: moment(panned.time, 'h:mm').format('H:mm'),
+//       date: panned.day.day.format('YYYYMMDD'),
+//       dateAndTime: date
+//     }
+//   });
+//   const addedSessions = await api.addBulkSessions(JSON.stringify({times: times}), listing.id);
+// }
 
 
 export async function bookListingCalendar(calendar) {
+  const start = moment(calendar.date).set('hour', calendar.start.split(':')[0]).set('minute', calendar.start.split(':')[1]).format();
+  const end = moment(calendar.date).set('hour', calendar.end.split(':')[0]).set('minute', calendar.end.split(':')[1]).format();
   calendar = {
     calendar_id: calendar.data.calendar_id,
-    start: moment(calendar.start, 'h:mm').format('H:mm'),
-    end: moment(calendar.end, 'h:mm').format('H:mm'),
+    start: start,
+    end: end
   }
+  console.log(calendar)
   try {
     await api.bookListingCalendar(JSON.stringify([calendar]));
   } catch (e) {

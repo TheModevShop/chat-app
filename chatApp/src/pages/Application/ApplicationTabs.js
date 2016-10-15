@@ -103,7 +103,7 @@ class Application extends React.Component {
           renderSelectedIcon={() => <Icon name={'ios-analytics'} size={25} color="#999" />}
           badgeText=""
           onPress={() => this.setState({ selectedTab: 'home' })}>
-          <HomeController />
+          <HomeController onNavigation={this.props.onNavigation.bind(this)}/>
         </TabNavigator.Item>
         <TabNavigator.Item
           selected={this.state.selectedTab === 'chat'}

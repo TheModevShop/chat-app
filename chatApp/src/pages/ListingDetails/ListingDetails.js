@@ -7,7 +7,6 @@ import ResponsiveImage from 'react-native-responsive-image';
 import {resetActiveListing, favoriteListing} from '../../actions/ListingActions';
 import {openModal} from '../../actions/ModalActions';
 import MapViewPreview from '../../components/MapViewPreview/MapViewPreview.js';
-import TimeAvailabilityToggle  from '../../components/TimeToggle/TimeToggle.js';
 import {openNewChatWithAgent} from '../../actions/ChatActions';
 
 import {
@@ -39,6 +38,8 @@ class ListingDetails extends Component {
 
     const isInstructor = _.get(this.props, 'user.details.id', '') === _.get(details, 'instructor.id', null);
     const image = service.image && service.image !== 'test' ? service.image : skill.image;
+
+    console.log(this.props)
 
     return (
        <View style={{marginTop: 0, flex: 1, flexDirection: 'column'}}>
@@ -92,18 +93,12 @@ class ListingDetails extends Component {
           </ScrollView> : null
         }
         <NavBar rightAction={this.editAvailability.bind(this)} rightActionIcon={"ios-calendar-outline"} title={'Listing Details'} leftAction={this.props.goBack.bind(this)} />
-        {
-          this.state.toggle ?
-          <View style={{flex: 1, position: 'absolute', top: 60, bottom: 0, left: 0, right: 0}}>
-            <TimeAvailabilityToggle />
-          </View> : null
-        }
       </View>
     );
   }
 
   editAvailability() {
-    this.setState({toggle: !this.state.toggle})
+    this.props.toggleTimeToggle();
   }
 
   messageAgent(agent) {

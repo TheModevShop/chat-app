@@ -5,6 +5,7 @@ import {checkSession} from '../../actions/AuthenticationActions';
 import ApplicationTabs from './ApplicationTabs';
 import AccountSettingsController from './Controllers/AccountSettingsController';
 import TeachAClassController from './Controllers/TeachAClassController';
+import AvailabilityController from './Controllers/AvailabilityController';
 
 import Login from '../Login/Login';
 import Initial from '../Initial/Initial';
@@ -89,6 +90,7 @@ class ApplicationController extends Component {
     if (key === 'Settings') return <Settings goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
     if (key === 'Initial') return <Initial />
     if (key === 'TeachAClass') return <TeachAClassController goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    if (key === 'AvailabilityToggle') return <AvailabilityController goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
   }
 
   _renderScene(props) {

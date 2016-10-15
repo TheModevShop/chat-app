@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
-import Home from '../../Home/Home';
-import ListingDetails from '../../ListingDetails/ListingDetails';
-import SessionDetails from '../../SessionDetails/SessionDetails';
-import SkillAvailability from '../../SkillAvailability/SkillAvailability';
-import Chat from '../../Chat/Chat';
+import ToggleMyAvailability from '../../ToggleMyAvailability/ToggleMyAvailability';
 
 // Styles
 import * as styleConstants from '../../../styles/styleConstants';
-
-// Actions
-import {invalidateListingCache} from '../../../actions/ListingActions';
 
 import {
   AppRegistry,
@@ -33,8 +26,6 @@ function createReducer(initialState) {
         return NavigationStateUtils.push(currentState, {key: action.key});
       case 'pop':
         return currentState.index > 0 ? NavigationStateUtils.pop(currentState) : currentState;
-      case 'back':
-        return currentState.index > 0 ? NavigationStateUtils.pop(currentState) : currentState;
       default:
         return currentState;
     }
@@ -44,10 +35,10 @@ function createReducer(initialState) {
 const NavReducer = createReducer({
   index: 0,
   key: 'App',
-  routes: [{key: 'Listings'}]
+  routes: [{key: 'ToggleMyAvailability'}]
 })
 
-class HomeController extends Component {
+class AvailabilityController extends Component {
 
   constructor(props) {
     super(props)
@@ -61,12 +52,9 @@ class HomeController extends Component {
     if (newState === this.state.navState) {
       return false;
     }
-
-    this.invalidateCache();
-
     this.setState({
       navState: newState
-    });
+    })
     return true;
   }
 
@@ -74,16 +62,8 @@ class HomeController extends Component {
     return this._handleAction({ type: 'pop' });
   }
 
-  invalidateCache() {
-    invalidateListingCache()
-  }
-
   _renderRoute (key) {
-    if (key === 'Listings') return <Home onNavigation={this._handleAction.bind(this)} />
-    if (key === 'ListingDetails') return <ListingDetails toggleTimeToggle={this.props.onNavigation.bind(this, { type: 'push', key: 'AvailabilityToggle' })} goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
-    if (key === 'SessionDetails') return <SessionDetails goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
-    if (key === 'SkillAvailability') return <SkillAvailability goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
-    if (key === 'Chat') return <Chat goBack={this.handleBackAction.bind(this)}  />
+    if (key === 'ToggleMyAvailability') return <ToggleMyAvailability onNavigation={this._handleAction.bind(this, { type: 'push', key: '' })} />
   }
 
   _renderScene(props) {
@@ -99,6 +79,7 @@ class HomeController extends Component {
     return (
       <NavigationCardStack
         navigationState={this.state.navState}
+        onNavigate={this._handleAction.bind(this)}
         onNavigateBack={this.handleBackAction.bind(this)}
         renderScene={this._renderScene.bind(this)} />
     )
@@ -116,4 +97,5 @@ const styles = StyleSheet.create({
   }
 })
 
-export default HomeController;
+
+export default AvailabilityController;

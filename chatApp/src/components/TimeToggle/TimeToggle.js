@@ -38,47 +38,47 @@ class TimeAvailabilityToggle extends Component {
 
     return (
         <View style={{backgroundColor: "#fff", flex: 1}}>
-          
-            <View>
-              <View style={{backgroundColor: '#ccc', flexDirection: "row", flex: 1, alignItems: 'center', justifyContent: 'center', padding: 5, maxHeight: 40}}>
-               <Text style={{flex: 1, textAlign: 'center'}}>6:00am - 3:00pm</Text>
-               <Text style={{flex: 1, textAlign: 'center'}}>3:00pm - 12:00am</Text>
-              </View>
-            </View>
-
-            <View style={{flexDirection: "row", flex: 1, alignItems: 'center', justifyContent: 'space-between', padding: 5}}>
-             
-              <View style={{flex: 1,  borderRightWidth: 1, borderRightColor: '#efefef'}}>
-                {                  
-                  _.map(amHours, (hour, i) => {
-                    const active = _.indexOf(hoursAvailable, hour) > -1;
-                    return (
-                      <View key={`one-${i}`} style={{flexDirection: "row", flex: 1, alignItems: 'center', justifyContent: 'space-between', height: 60, padding: 10,  borderBottomWidth: 1, borderBottomColor: '#ccc'}}>
-                        <Text>{moment(hour, 'H:mm').format('h:mm a')}</Text>
-                        <Switch onValueChange={this.toggleTime.bind(null, hour)} value={active} />
-                      </View>
-                    );
-                  })
-                 }
+          <ScrollView>
+              <View>
+                <View style={{backgroundColor: '#ccc', flexDirection: "row", flex: 1, alignItems: 'center', justifyContent: 'center', padding: 5, maxHeight: 40}}>
+                 <Text style={{flex: 1, textAlign: 'center'}}>6:00am - 3:00pm</Text>
+                 <Text style={{flex: 1, textAlign: 'center'}}>3:00pm - 12:00am</Text>
+                </View>
               </View>
 
-              <View style={{flex: 1}}>
-                {
-                  _.map(pmHours, (hour, i) => {
-                    const active = _.indexOf(hoursAvailable, hour) > -1;
-                    return (
-                      <View key={`two-${i}`} style={{flexDirection: "row", flex: 1, alignItems: 'center', justifyContent: 'space-between', height: 60, padding: 10,  borderBottomWidth: 1, borderBottomColor: '#ccc'}}>
-                        <Text>{moment(hour, 'H:mm').format('h:mm a')}</Text>
-                        <Switch onValueChange={this.toggleTime.bind(null, hour)} value={active} />
-                      </View>
-                    );
-                  })
-                 }
+              <View style={{flexDirection: "row", flex: 1, alignItems: 'center', justifyContent: 'space-between', padding: 5, paddingBottom: 60}}>
+               
+                <View style={{flex: 1,  borderRightWidth: 1, borderRightColor: '#efefef'}}>
+                  {                  
+                    _.map(amHours, (hour, i) => {
+                      const active = _.indexOf(hoursAvailable, hour) > -1;
+                      return (
+                        <View key={`one-${i}`} style={{flexDirection: "row", flex: 1, alignItems: 'center', justifyContent: 'space-between', height: 60, padding: 10,  borderBottomWidth: 1, borderBottomColor: '#ccc'}}>
+                          <Text>{moment(hour, 'H:mm').format('h:mm a')}</Text>
+                          <Switch onValueChange={this.toggleTime.bind(null, hour)} value={active} />
+                        </View>
+                      );
+                    })
+                   }
+                </View>
+
+                <View style={{flex: 1}}>
+                  {
+                    _.map(pmHours, (hour, i) => {
+                      const active = _.indexOf(hoursAvailable, hour) > -1;
+                      return (
+                        <View key={`two-${i}`} style={{flexDirection: "row", flex: 1, alignItems: 'center', justifyContent: 'space-between', height: 60, padding: 10,  borderBottomWidth: 1, borderBottomColor: '#ccc'}}>
+                          <Text>{moment(hour, 'H:mm').format('h:mm a')}</Text>
+                          <Switch onValueChange={this.toggleTime.bind(null, hour)} value={active} />
+                        </View>
+                      );
+                    })
+                   }
+                </View>
+
               </View>
-
-            </View>
-
-            <TouchableOpacity onPress={this.saveAvailability.bind(this)} style={{backgroundColor: '#ccc', height: 50, width: 300, position: 'absolute', bottom: 0}}>
+            </ScrollView>
+            <TouchableOpacity onPress={this.saveAvailability.bind(this)} style={{alignItems: 'center', justifyContent: 'center', backgroundColor: '#ccc', height: 50, left: 0, right: 0, position: 'absolute', bottom: 0}}>
               <Text>Save Availability</Text>
             </TouchableOpacity>
       
@@ -92,7 +92,7 @@ class TimeAvailabilityToggle extends Component {
   }
 
   saveAvailability() {
-    addAvailability();
+    addAvailability(_.get(this.props, 'calendarDetails.id'));
   }
 
 };
@@ -101,6 +101,7 @@ class TimeAvailabilityToggle extends Component {
 
 export default branch(TimeAvailabilityToggle, {
   cursors: {
+    calendarDetails: ['facets','ListingDetails'],
     view: ['facets','CalendarDetails'],
     availability: ['availability']
   }

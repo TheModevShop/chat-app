@@ -25,7 +25,7 @@ export async function addBulkSessions(sessions, listingId) {
 
 export function bookListingCalendar(calendars) {
   return new bluebird((resolve, reject) => {
-    xhr('PUT', `${BASE}/me/sessions/enroll`, {sessions: calendars}).then((data) => {
+    xhr('PUT', `${BASE}/me/sessions/enroll`, {calendars: calendars}).then((data) => {
       resolve(data);
     }).catch((err) => {
       console.log(err)
