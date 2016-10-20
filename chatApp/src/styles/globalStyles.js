@@ -8,5 +8,14 @@ export default StyleSheet.create({
     },
     shadowRadius: 3,
     shadowOpacity: 0.03
+  },
+  boxShadow: {
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 0
+    },
+    shadowRadius: 5,
+    shadowOpacity: 0.07
   }
 });

@@ -1,7 +1,11 @@
 'use strict';
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
+import moment from 'moment';
 import ellipsize from 'ellipsize';
+import globalStyles from '../../styles/globalStyles';
+import * as constants from '../../styles/styleConstants';
+import textStyle from '../../styles/textStyle';
 import _ from 'lodash';
 import {
   StyleSheet,
@@ -63,16 +67,17 @@ class InstructorBookingList extends Component {
           onScroll={this.props.scrollEvent.bind(this)}
           renderRow={(rowData, i) => {
             const service = rowData;
-            console.log(service)
             return (
-              <View key={1}>
-                <TouchableHighlight onPress={this.props.goToActiveListing.bind(this, rowData.id)} underlayColor='#999'>
+              <View style={[styles.wrapper]} key={1}>
+                <TouchableHighlight style={[{borderRadius: 5, backgroundColor: '#fff'}, globalStyles.boxShadow]} onPress={this.props.goToActiveBooking.bind(this, rowData.id)} underlayColor='#999'>
                   <View>
-                     <ResponsiveImage source={{uri: service.image}} initWidth="100%" initHeight="250"/>
-                     <View style={styles.backgroundImage}>
-                        <Text style={styles.text}>{service.service_name}</Text> 
-                        <Text style={styles.subtext}>{ellipsize(service.service_description, 60)}</Text> 
-                     </View>
+                    <ResponsiveImage source={{uri: service.image}} initWidth="100%" initHeight="90"/>
+                    <View style={styles.contentWrapper}>
+                      <Text style={[textStyle.h3, textStyle.bold]}>{rowData.service_name} with {_.get(rowData, 'enrolled[0].first_name')}</Text>
+                      <Text style={[textStyle.h5]}>
+                        {`${moment(rowData.start).format('MM-DD-YYYY')} @ ${moment(rowData.start).format('h:mm a')} - ${moment(rowData.end).format('h:mm a')}`}
+                      </Text>
+                    </View>
                   </View>
                 </TouchableHighlight>
               </View>
@@ -90,9 +95,15 @@ class InstructorBookingList extends Component {
 let styles = StyleSheet.create({
   wrapper: {
     position: 'relative',
-    borderBottomWidth: 2,
-    borderBottomColor: '#fff',
-    position: 'relative'
+    paddingLeft: constants.PADDING_SMALL,
+    paddingRight: constants.PADDING_SMALL,
+    paddingTop: constants.PADDING_SMALL,
+  },
+  contentWrapper: {
+    paddingLeft: constants.PADDING_SMALL,
+    paddingRight: constants.PADDING_SMALL,
+    paddingTop: constants.PADDING_SMALL,
+    paddingBottom: constants.PADDING_SMALL
   },
   backgroundImage: {
     backgroundColor: 'transparent',
@@ -105,29 +116,11 @@ let styles = StyleSheet.create({
     right: 0,
     left: 0
   },
-  text: {
-    color: '#fff',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 32,
-    paddingBottom: 5,
-    textShadowColor: "rgba(0,0,0,0.3)",
-    textShadowRadius: 2,
-    textShadowOffset: {
-      width: 1,
-      height: 1
-    }
+  contentTitle: {
+    fontFamily: constants.FONT_BOLD,
   },
-  subtext: {
-    color: '#fff',
-    textAlign: 'center',
-    fontSize: 17,
-    textShadowColor: "rgba(0,0,0,0.3)",
-    textShadowRadius: 1,
-    textShadowOffset: {
-      width: 1,
-      height: 1
-    }
+  subTitle: {
+    color: constants.GRAY
   }
 });
 

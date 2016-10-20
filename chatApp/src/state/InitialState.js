@@ -15,6 +15,7 @@ const SkillAvailabilityFacet = require('./facets/SkillAvailabilityFacet').defaul
 const PopularSkillsFacet = require('./facets/PopularSkillsFacet').default();
 const PopularListingsFacet = require('./facets/PopularListingsFacet').default();
 const ListingSessionsAvailabilityFacet = require('./facets/ListingSessionsAvailabilityFacet').default();
+const BookingDetailsFacet = require('./facets/BookingDetailsFacet').default();
 
 const MyUpcomingBookingsFacet = require('./facets/MyUpcomingBookingsFacet').default();
 const MyFavoritesCalendarsFacet = require('./facets/MyFavoritesCalendarsFacet').default();
@@ -42,6 +43,11 @@ export default function getInitialState() {
       },
 
       listingDetails: {
+        id: null,
+        details: null
+      },
+
+      bookingDetails: {
         id: null,
         details: null
       },
@@ -103,6 +109,8 @@ export default function getInitialState() {
         SkillAvailability: SkillAvailabilityFacet,
         PopularSkills: PopularSkillsFacet,
         ListingSessionsAvailability: ListingSessionsAvailabilityFacet,
+
+        BookingDetails: BookingDetailsFacet,
 
 
         MyUpcomingBookings: MyUpcomingBookingsFacet,

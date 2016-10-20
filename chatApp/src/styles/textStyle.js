@@ -24,7 +24,7 @@ export default StyleSheet.create({
   h5: {
     fontFamily: constants.FONT_REGULAR,
     fontSize: 12,
-    color: constants.DARKBLUE
+    color: constants.DARKGRAY
   },
   h6: {
     fontFamily: constants.FONT_REGULAR,

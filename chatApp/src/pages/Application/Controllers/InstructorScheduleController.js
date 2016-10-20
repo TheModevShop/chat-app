@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import InstructorSchedule from '../../InstructorSchedule/InstructorSchedule';
+import BookingDetails from '../../BookingDetails/BookingDetails';
 
 // Styles
 import * as styleConstants from '../../../styles/styleConstants';
@@ -63,7 +64,8 @@ class InstructorScheduleController extends Component {
   }
 
   _renderRoute (key) {
-    if (key === 'InstructorSchedule') return <InstructorSchedule onNavigation={this._handleAction.bind(this, { type: 'push', key: 'SessionDetails' })} />
+    if (key === 'InstructorSchedule') return <InstructorSchedule onNavigation={this._handleAction.bind(this)} />
+    if (key === 'BookingDetails') return <BookingDetails admin={true} goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
   }
 
   _renderScene(props) {

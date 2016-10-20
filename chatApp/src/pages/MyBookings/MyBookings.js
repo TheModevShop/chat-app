@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
+import moment from 'moment';
 import ResponsiveImage from 'react-native-responsive-image';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ellipsize from 'ellipsize';
@@ -67,14 +68,12 @@ class MyBookings extends Component {
                   <View key={1}>                
                     <TouchableHighlight onPress={this.onPress.bind(this, rowData.id)} underlayColor='#999'>
                       <View>
-                         <ResponsiveImage source={{uri: rowData.image}} initWidth="100%" initHeight="250"/>
-                         <View style={styles.backgroundImage}>
-                            <Text style={styles.text}>{rowData.service_description}</Text> 
-                            <Text style={styles.subtext}>{ellipsize(rowData.ervice_description, 60)}</Text> 
-                         </View>
+                         <ResponsiveImage source={{uri: rowData.image}} initWidth="100%" initHeight="90"/>
+                         <Text style={styles.title}>{moment(rowData.start, 'mm-dd-yyyy')}</Text>
+                        <Text style={styles.title}>{moment(rowData.start).format('h:mm a')} - {moment(rowData.end).format('h:mm a')}</Text>
+                        <Text style={styles.title}>{rowData.service_name}</Text>
                       </View>
                     </TouchableHighlight>
-                    
                   </View>
                 )
               }}        
