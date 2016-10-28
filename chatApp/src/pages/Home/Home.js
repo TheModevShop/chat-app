@@ -9,6 +9,7 @@ import stringWidth from 'string-width';
 import _ from 'lodash';
 import {
   StatusBar,
+  ScrollView,
   StyleSheet,
   Animated,
   LayoutAnimation,

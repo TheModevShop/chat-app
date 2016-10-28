@@ -4,6 +4,9 @@ import {branch} from 'baobab-react/higher-order';
 import ellipsize from 'ellipsize';
 import _ from 'lodash';
 import sessionItemStyle from '../../styles/sessionItemStyle';
+import globalStyles from '../../styles/globalStyles';
+import * as constants from '../../styles/styleConstants';
+
 import {
   StyleSheet,
   Text,
@@ -63,14 +66,14 @@ class ListingsList extends Component {
           dataSource={this.state.dataSource}
           onScroll={this.props.scrollEvent.bind(this)}
           renderRow={(listing, i) => {
+            console.log(listing)
             return (
-              <View key={1}>
-                <TouchableHighlight underlayColor='#999' onPress={this.props.goToListingDetails.bind(this, listing.calendar_id)}>
-                  <View key={i} style={sessionItemStyle.sessionWrapper}>
-                   <View style={sessionItemStyle.sessionWrapperImage}>
-                    <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(listing, 'facebook_user_id')}/picture?width=200&height=200`}}/>
-                   </View>
-                   <View style={sessionItemStyle.sessionWrapperContent}>
+              <View style={[styles.wrapper]} key={1}>
+                <TouchableHighlight style={[{borderRadius: 5, backgroundColor: '#fff'}, globalStyles.boxShadow]} onPress={this.props.goToListingDetails.bind(this, listing.calendar_id)} underlayColor='#999'>
+                  <View>
+                    <ResponsiveImage source={{uri: listing.image}} initWidth="100%" initHeight="90"/>
+                    <View style={styles.contentWrapper}>
+                      <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(listing, 'facebook_user_id')}/picture?width=200&height=200`}}/>
                       <Text style={{fontFamily: 'Avenir-Black'}}>{`${_.get(listing, 'first_name')} ${_.get(listing, 'last_name')}`}</Text>
                       <Text>{`${_.get(listing, 'service_price')}`}</Text>
                     </View>
@@ -91,9 +94,15 @@ class ListingsList extends Component {
 let styles = StyleSheet.create({
   wrapper: {
     position: 'relative',
-    borderBottomWidth: 2,
-    borderBottomColor: '#fff',
-    position: 'relative'
+    paddingLeft: constants.PADDING_SMALL,
+    paddingRight: constants.PADDING_SMALL,
+    paddingTop: constants.PADDING_SMALL,
+  },
+  contentWrapper: {
+    paddingLeft: constants.PADDING_SMALL,
+    paddingRight: constants.PADDING_SMALL,
+    paddingTop: constants.PADDING_SMALL,
+    paddingBottom: constants.PADDING_SMALL
   },
   backgroundImage: {
     backgroundColor: 'transparent',
@@ -106,31 +115,14 @@ let styles = StyleSheet.create({
     right: 0,
     left: 0
   },
-  text: {
-    color: '#fff',
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 32,
-    paddingBottom: 5,
-    textShadowColor: "rgba(0,0,0,0.3)",
-    textShadowRadius: 2,
-    textShadowOffset: {
-      width: 1,
-      height: 1
-    }
+  contentTitle: {
+    fontFamily: constants.FONT_BOLD,
   },
-  subtext: {
-    color: '#fff',
-    textAlign: 'center',
-    fontSize: 17,
-    textShadowColor: "rgba(0,0,0,0.3)",
-    textShadowRadius: 1,
-    textShadowOffset: {
-      width: 1,
-      height: 1
-    }
+  subTitle: {
+    color: constants.GRAY
   }
 });
+
 
 export default branch(ListingsList, {
   cursors: {

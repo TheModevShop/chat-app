@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ToggleMyAvailability from '../../ToggleMyAvailability/ToggleMyAvailability';
+import ChooseDaysToSetAvailability from '../../ChooseDaysToSetAvailability/ChooseDaysToSetAvailability';
 
 // Styles
 import * as styleConstants from '../../../styles/styleConstants';
@@ -35,7 +36,7 @@ function createReducer(initialState) {
 const NavReducer = createReducer({
   index: 0,
   key: 'App',
-  routes: [{key: 'ToggleMyAvailability'}]
+  routes: [{key: 'ChooseDaysToSetAvailability'}]
 })
 
 class AvailabilityController extends Component {
@@ -63,7 +64,8 @@ class AvailabilityController extends Component {
   }
 
   _renderRoute (key) {
-    if (key === 'ToggleMyAvailability') return <ToggleMyAvailability onNavigation={this._handleAction.bind(this, { type: 'push', key: '' })} />
+    if (key === 'ChooseDaysToSetAvailability') return <ChooseDaysToSetAvailability onNavigation={this._handleAction.bind(this)} />
+    if (key === 'ToggleMyAvailability') return <ToggleMyAvailability onNavigation={this._handleAction.bind(this)} />
   }
 
   _renderScene(props) {

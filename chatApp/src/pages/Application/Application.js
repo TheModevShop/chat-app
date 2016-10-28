@@ -104,13 +104,15 @@ class ApplicationController extends Component {
 
   render() {
     return (
-      <NavigationCardStack
-        gestureResponseDistance={this.state.activeView !== 'ApplicationTabs' ? 90 : 0}
-        direction={'vertical'}
-        navigationState={this.state.navState}
-        onNavigate={this._handleAction.bind(this)}
-        onNavigateBack={this.handleBackAction.bind(this)}
-        renderScene={this._renderScene.bind(this)} />
+      <View>
+        <NavigationCardStack
+          gestureResponseDistance={this.state.activeView !== 'ApplicationTabs' ? 90 : 0}
+          direction={'vertical'}
+          navigationState={this.state.navState}
+          onNavigate={this._handleAction.bind(this)}
+          onNavigateBack={this.handleBackAction.bind(this)}
+          renderScene={this._renderScene.bind(this)} />
+      </View>
     )
   }
 }

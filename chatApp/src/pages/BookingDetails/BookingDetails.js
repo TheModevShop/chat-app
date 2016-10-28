@@ -1,5 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
+import Button from '../../components/Button/Button';
 import {branch} from 'baobab-react/higher-order';
 import NavBar from '../../components/NavBar/NavBar';
 import _ from 'lodash';
@@ -33,11 +34,11 @@ class BookingDetails extends Component {
 
     const service = _.get(details, 'service', {});
     const skill = _.get(service, 'skill', {});
-    const agent = _.get(details, 'agent', {});
+    const agent = details;
     const resource = _.get(details, 'resource', {});
 
     const isInstructor = _.get(this.props, 'user.details.id', '') === _.get(details, 'instructor.id', null);
-    const image = service.image && service.image !== 'test' ? service.image : skill.image;
+    const image = details.image && details.image !== 'test' ? details.image : skill.image;
 
     console.log(this.props)
 
@@ -86,6 +87,11 @@ class BookingDetails extends Component {
             </View>
           </ScrollView> : null
         }
+        {
+          moment().isAfter(moment(_.get(this.props, 'view.end'))) ?
+          <Button cta="Cancel Booking" onPress={this.cancelBooking.bind(this)} /> :
+          <Button cta="Complete Booking" onPress={this.completeBooking.bind(this)} />
+        }
         <NavBar title={'Booking Details'} leftAction={this.props.goBack.bind(this)} />
       </View>
     );
@@ -95,6 +101,14 @@ class BookingDetails extends Component {
   messageAgent(agent) {
     openNewChatWithAgent(agent);
     this.props.onNavigation({ type: 'push', key: 'Chat' })
+  }
+
+  cancelBooking() {
+    
+  }
+
+  completeBooking() {
+    
   }
 
 }
