@@ -66,15 +66,15 @@ class ListingsList extends Component {
           dataSource={this.state.dataSource}
           onScroll={this.props.scrollEvent.bind(this)}
           renderRow={(listing, i) => {
-            console.log(listing)
             return (
               <View style={[styles.wrapper]} key={1}>
                 <TouchableHighlight style={[{borderRadius: 5, backgroundColor: '#fff'}, globalStyles.boxShadow]} onPress={this.props.goToListingDetails.bind(this, listing.calendar_id)} underlayColor='#999'>
                   <View>
-                    <ResponsiveImage source={{uri: listing.image}} initWidth="100%" initHeight="90"/>
+                    <ResponsiveImage source={{uri: listing.image || listing.skill_image}} initWidth="100%" initHeight="90"/>
                     <View style={styles.contentWrapper}>
                       <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(listing, 'facebook_user_id')}/picture?width=200&height=200`}}/>
                       <Text style={{fontFamily: 'Avenir-Black'}}>{`${_.get(listing, 'first_name')} ${_.get(listing, 'last_name')}`}</Text>
+                      <Text>{`${_.get(listing, 'service_name')}`}</Text>
                       <Text>{`${_.get(listing, 'service_price')}`}</Text>
                     </View>
                   </View>

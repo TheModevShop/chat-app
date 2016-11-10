@@ -5,7 +5,7 @@ import Baobab from 'baobab';
 
 const loader = new RESTLoader({
   getResourceUrl: (query) => {
-    return `${BASE}/search?query=${query}`;
+    return `${BASE}/search?search=${query}`;
   },
   successTransformer: (data, current) => {
     return {
@@ -31,6 +31,7 @@ export default function SearchFacet() {
           loader.setCursor(this.select(['sessionSearch', 'results']));
         }
         request = _.clone(loader.fetch(data.sessionSearch.query));
+        console.log(request)
         return request;
       } else {
         return;

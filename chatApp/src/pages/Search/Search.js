@@ -61,12 +61,22 @@ class Home extends Component {
           <ListView
             dataSource={this.state.dataSource}
             renderRow={(rowData, i) => {
+              const data = _.get(rowData, '_source');
               return (
+                data.skill_name ?
                 <View>
-                  <TouchableHighlight onPress={this.onPressSession.bind(this, rowData._id)} underlayColor='#999'>
+                  <TouchableHighlight onPress={this.onPressSession.bind(this, data.skill_id)} underlayColor='#999'>
                     <View style={styles.result}>
-                      <Text style={styles.h2}>{rowData.name}</Text>
-                      <Text>{rowData.description}</Text>
+                      <Text style={styles.h2}>{data.skill_name}</Text>
+                      <Text>{data.skill_category}</Text>
+                    </View>
+                  </TouchableHighlight>
+                </View> :
+                <View>
+                  <TouchableHighlight onPress={this.onPressSession.bind(this, data.calendar_id)} underlayColor='#999'>
+                    <View style={styles.result}>
+                      <Text style={styles.h2}>{data.service_name}</Text>
+                      <Text>{data.description}</Text>
                     </View>
                   </TouchableHighlight>
                 </View>

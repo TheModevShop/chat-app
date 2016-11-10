@@ -69,7 +69,7 @@ class MyBookings extends Component {
                     <TouchableHighlight onPress={this.onPress.bind(this, rowData.id)} underlayColor='#999'>
                       <View>
                          <ResponsiveImage source={{uri: rowData.image}} initWidth="100%" initHeight="90"/>
-                         <Text style={styles.title}>{moment(rowData.start, 'mm-dd-yyyy')}</Text>
+                         <Text style={styles.title}>{moment(rowData.start, 'mm-dd-yyyy').format()}</Text>
                         <Text style={styles.title}>{moment(rowData.start).format('h:mm a')} - {moment(rowData.end).format('h:mm a')}</Text>
                         <Text style={styles.title}>{rowData.service_name}</Text>
                       </View>

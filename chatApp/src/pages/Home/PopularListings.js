@@ -39,7 +39,7 @@ class PopularListings extends Component {
           {
             _.map(this.props.popularListings, (listing, i) => {
               return (
-                <TouchableHighlight key={`listing-${i}`} onPress={this.goToListing.bind(this, listing.id)} underlayColor='#999'>
+                <TouchableHighlight key={`listing-${i}`} onPress={this.goToListing.bind(this, listing.calendar_id)} underlayColor='#999'>
                   <View>
                      <ResponsiveImage source={{uri: listing.image}} initWidth="100%" initHeight="250"/>
                      <View style={styles.backgroundImage}>
