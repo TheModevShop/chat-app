@@ -13,12 +13,17 @@
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
-
+// #import <OneSignal/OneSignal.h>
+//  [OneSignal initWithLaunchOptions:launchOptions appId:@"cbf15cf2-b14c-4e67-9a9f-2c4dbed70151"];
 @implementation AppDelegate
+@synthesize oneSignal = _oneSignal;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   NSURL *jsCodeLocation;
+
+  self.oneSignal = [[RCTOneSignal alloc] initWithLaunchOptions:launchOptions
+                                                       appId:@"cbf15cf2-b14c-4e67-9a9f-2c4dbed70151"];
 
   /**
    * Loading JavaScript code - uncomment the one you want.
@@ -70,6 +75,10 @@
                                                           openURL:url
                                                 sourceApplication:sourceApplication
                                                        annotation:annotation];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification {
+    [RCTOneSignal didReceiveRemoteNotification:notification];
 }
 
 @end

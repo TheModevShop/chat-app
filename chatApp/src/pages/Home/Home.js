@@ -75,7 +75,7 @@ class Home extends Component {
   renderSearchBar() {
     const query = _.get(this.state, 'searchValue', '')
     return (
-     <TouchableHighlight style={{position: 'absolute', left: this.state.left, right: this.state.right, top: this.state.top, flex: 1, borderRadius: this.state.br, backgroundColor: '#fff', height: this.state.searchOpen ? 70 : 50}} onPress={this.toggleSearch.bind(this)} underlayColor='#99d9f4'>
+     <TouchableHighlight style={{position: 'absolute', left: this.state.left, right: this.state.right, top: this.state.top, flex: 1, borderRadius: this.state.br, backgroundColor: '#fff', height: this.state.searchOpen ? 70 : 50}} onPress={!this.state.searchOpen ? this.toggleSearch.bind(this) : () => {}} underlayColor='#ffffff'>
         <View style={{marginTop: 0, alignItems: 'flex-end', flex: 1, flexDirection: 'row',  borderColor: 'gray', borderBottomWidth: this.state.searchOpen ? 1 : 0, height: 50}}>
           <Icon name={'ios-search-outline'} style={{backgroundColor: 'transparent', padding: 10, paddingLeft: 14}} size={30} color="#999" />
           {
@@ -128,7 +128,7 @@ class Home extends Component {
           transform: [                        
             {translateY: this.state.search}
           ]}}>
-        <Search />
+        <Search onNavigation={this.props.onNavigation} />
       </Animated.View>
     )
   }

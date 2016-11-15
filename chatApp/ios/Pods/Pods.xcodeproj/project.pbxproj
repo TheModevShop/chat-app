@@ -1,0 +1,449 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		07E1D85835D1CCCC47D220A39290625C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
+		3CAEFAAD9E8039FEAE71A3B6ED36FD1B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */; };
+		6F2ECE3AF4C5ECB9C9DEA3F983312D36 /* Pods-chatApp-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5235B754D2CBC8EA09031FB4334EB4 /* Pods-chatApp-dummy.m */; };
+		889C2A41180AF40DA51C57D405D2589D /* Pods-chatAppTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 29F6F31B7615ABB5D24E2C242CB48878 /* Pods-chatAppTests-dummy.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0E5235B754D2CBC8EA09031FB4334EB4 /* Pods-chatApp-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-chatApp-dummy.m"; sourceTree = "<group>"; };
+		10258FB2D6AA37AF7354BC938E9842EC /* libPods-chatAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-chatAppTests.a"; path = "libPods-chatAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1EEFA321BF66EDE6A1D1CCE327187859 /* libPods-chatApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-chatApp.a"; path = "libPods-chatApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		29F6F31B7615ABB5D24E2C242CB48878 /* Pods-chatAppTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-chatAppTests-dummy.m"; sourceTree = "<group>"; };
+		2B1F73249D8D2EFAB74118C4F043CB54 /* Pods-chatApp-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-chatApp-acknowledgements.plist"; sourceTree = "<group>"; };
+		35EEEEEB2E6E999D2DB7CDB89268CCCC /* Pods-chatAppTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-chatAppTests-frameworks.sh"; sourceTree = "<group>"; };
+		37885617C05C1AA01A548A9C0FE8EB14 /* Pods-chatApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-chatApp.debug.xcconfig"; sourceTree = "<group>"; };
+		6A338594F480C3C5A0BAE543C67F44B4 /* Pods-chatAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-chatAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		77946BE1C37AA4CCA0609ED7BEBF2327 /* Pods-chatAppTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-chatAppTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		77EE9E731E5DA74DB48E443EC858AFD2 /* Pods-chatApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-chatApp.release.xcconfig"; sourceTree = "<group>"; };
+		7CC3688CFDD30E6232B93D9651CE574B /* Pods-chatApp-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-chatApp-acknowledgements.markdown"; sourceTree = "<group>"; };
+		8A98DA003BC3D16244E1E32F64E16E21 /* OneSignal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OneSignal.framework; path = iOS_SDK/Framework/OneSignal.framework; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A27EC5A2DFD6FB80F95CB88C8F5E96ED /* Pods-chatAppTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-chatAppTests-resources.sh"; sourceTree = "<group>"; };
+		A605A8BA118A334DCBE8B4D5B11D06E6 /* Pods-chatApp-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-chatApp-resources.sh"; sourceTree = "<group>"; };
+		AA709655CFC395C31FC653A7472F8CD1 /* Pods-chatAppTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-chatAppTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		FB8EABCB5F2AB3514C2BDF944BAD0FC7 /* Pods-chatAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-chatAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		FF6B70802B968811FEB2BE8868486C9F /* Pods-chatApp-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-chatApp-frameworks.sh"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		51DBDC4AB10B1B54AA10CEB4809E5D8B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3CAEFAAD9E8039FEAE71A3B6ED36FD1B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9F1FF72D134FAAA5B2763444F36FF360 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				07E1D85835D1CCCC47D220A39290625C /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1DEE95E0D982C3DACF08B986C284359C /* Pods-chatApp */ = {
+			isa = PBXGroup;
+			children = (
+				7CC3688CFDD30E6232B93D9651CE574B /* Pods-chatApp-acknowledgements.markdown */,
+				2B1F73249D8D2EFAB74118C4F043CB54 /* Pods-chatApp-acknowledgements.plist */,
+				0E5235B754D2CBC8EA09031FB4334EB4 /* Pods-chatApp-dummy.m */,
+				FF6B70802B968811FEB2BE8868486C9F /* Pods-chatApp-frameworks.sh */,
+				A605A8BA118A334DCBE8B4D5B11D06E6 /* Pods-chatApp-resources.sh */,
+				37885617C05C1AA01A548A9C0FE8EB14 /* Pods-chatApp.debug.xcconfig */,
+				77EE9E731E5DA74DB48E443EC858AFD2 /* Pods-chatApp.release.xcconfig */,
+			);
+			name = "Pods-chatApp";
+			path = "Target Support Files/Pods-chatApp";
+			sourceTree = "<group>";
+		};
+		32A8B0FD434B12498B6B80DB88CCB6E4 /* Pods-chatAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				AA709655CFC395C31FC653A7472F8CD1 /* Pods-chatAppTests-acknowledgements.markdown */,
+				77946BE1C37AA4CCA0609ED7BEBF2327 /* Pods-chatAppTests-acknowledgements.plist */,
+				29F6F31B7615ABB5D24E2C242CB48878 /* Pods-chatAppTests-dummy.m */,
+				35EEEEEB2E6E999D2DB7CDB89268CCCC /* Pods-chatAppTests-frameworks.sh */,
+				A27EC5A2DFD6FB80F95CB88C8F5E96ED /* Pods-chatAppTests-resources.sh */,
+				FB8EABCB5F2AB3514C2BDF944BAD0FC7 /* Pods-chatAppTests.debug.xcconfig */,
+				6A338594F480C3C5A0BAE543C67F44B4 /* Pods-chatAppTests.release.xcconfig */,
+			);
+			name = "Pods-chatAppTests";
+			path = "Target Support Files/Pods-chatAppTests";
+			sourceTree = "<group>";
+		};
+		6202124E9D433C3EA7B1CF2F09917CA5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B109A558AEC0464E1C8AD13A3517ECA8 /* OneSignal */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		7531C8F8DE19F1AA3C8A7AC97A91DC29 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				CBB3DE36805AF21409EC968A9691732F /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
+				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
+				6202124E9D433C3EA7B1CF2F09917CA5 /* Pods */,
+				E7092CAFFF3519218F3E6DB9B079A212 /* Products */,
+				A90B1C0BAF7E62E5BCA702DA6225C22D /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		A90B1C0BAF7E62E5BCA702DA6225C22D /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				1DEE95E0D982C3DACF08B986C284359C /* Pods-chatApp */,
+				32A8B0FD434B12498B6B80DB88CCB6E4 /* Pods-chatAppTests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		B109A558AEC0464E1C8AD13A3517ECA8 /* OneSignal */ = {
+			isa = PBXGroup;
+			children = (
+				FF9CEBD734AC19E8ADE2CA12CDF9AD21 /* Frameworks */,
+			);
+			name = OneSignal;
+			path = OneSignal;
+			sourceTree = "<group>";
+		};
+		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7531C8F8DE19F1AA3C8A7AC97A91DC29 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E7092CAFFF3519218F3E6DB9B079A212 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1EEFA321BF66EDE6A1D1CCE327187859 /* libPods-chatApp.a */,
+				10258FB2D6AA37AF7354BC938E9842EC /* libPods-chatAppTests.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FF9CEBD734AC19E8ADE2CA12CDF9AD21 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8A98DA003BC3D16244E1E32F64E16E21 /* OneSignal.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		29A2BC6197FF10E84C19C723F610CB8A /* Pods-chatAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4B24C3A7090D9BBB7917B1CF6A10749F /* Build configuration list for PBXNativeTarget "Pods-chatAppTests" */;
+			buildPhases = (
+				058073B8D670743C36C54AA4DCE36366 /* Sources */,
+				51DBDC4AB10B1B54AA10CEB4809E5D8B /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-chatAppTests";
+			productName = "Pods-chatAppTests";
+			productReference = 10258FB2D6AA37AF7354BC938E9842EC /* libPods-chatAppTests.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		372F3EFC21BE2F6182FD01EC2804A95B /* Pods-chatApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BC1C05D46B7DE336827CACC601E90235 /* Build configuration list for PBXNativeTarget "Pods-chatApp" */;
+			buildPhases = (
+				DBD4115DF0859B54D81C91697B2667C5 /* Sources */,
+				9F1FF72D134FAAA5B2763444F36FF360 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-chatApp";
+			productName = "Pods-chatApp";
+			productReference = 1EEFA321BF66EDE6A1D1CCE327187859 /* libPods-chatApp.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0700;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = E7092CAFFF3519218F3E6DB9B079A212 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				372F3EFC21BE2F6182FD01EC2804A95B /* Pods-chatApp */,
+				29A2BC6197FF10E84C19C723F610CB8A /* Pods-chatAppTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		058073B8D670743C36C54AA4DCE36366 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				889C2A41180AF40DA51C57D405D2589D /* Pods-chatAppTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DBD4115DF0859B54D81C91697B2667C5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6F2ECE3AF4C5ECB9C9DEA3F983312D36 /* Pods-chatApp-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3B611115164B3EFAA2F5F3CCAE5AF72D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 77EE9E731E5DA74DB48E443EC858AFD2 /* Pods-chatApp.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		79B0C2E66EFA9917ED6EDDB8FC6A7684 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7D578E2C1731DE8CEE53DB75CB564DFF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 37885617C05C1AA01A548A9C0FE8EB14 /* Pods-chatApp.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		9B30AAA2EEAC47EFF7596C9165869F21 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6A338594F480C3C5A0BAE543C67F44B4 /* Pods-chatAppTests.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		CF7953F66E785E8876EB4D370D777D50 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		D390EA007C3A415F9F0FF83BFA59BC84 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FB8EABCB5F2AB3514C2BDF944BAD0FC7 /* Pods-chatAppTests.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF7953F66E785E8876EB4D370D777D50 /* Debug */,
+				79B0C2E66EFA9917ED6EDDB8FC6A7684 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4B24C3A7090D9BBB7917B1CF6A10749F /* Build configuration list for PBXNativeTarget "Pods-chatAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D390EA007C3A415F9F0FF83BFA59BC84 /* Debug */,
+				9B30AAA2EEAC47EFF7596C9165869F21 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BC1C05D46B7DE336827CACC601E90235 /* Build configuration list for PBXNativeTarget "Pods-chatApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7D578E2C1731DE8CEE53DB75CB564DFF /* Debug */,
+				3B611115164B3EFAA2F5F3CCAE5AF72D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}

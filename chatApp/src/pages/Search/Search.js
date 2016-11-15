@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import {openChat} from '../../actions/ChatActions';
 import {setActiveSession} from '../../actions/SessionActions';
+import {setActiveListing, setListingSkillFilter} from '../../actions/ListingActions';
 import _ from 'lodash';
 import {
   StyleSheet,
@@ -62,10 +63,11 @@ class Home extends Component {
             dataSource={this.state.dataSource}
             renderRow={(rowData, i) => {
               const data = _.get(rowData, '_source');
+              console.log(data)
               return (
                 data.skill_name ?
                 <View>
-                  <TouchableHighlight onPress={this.onPressSession.bind(this, data.skill_id)} underlayColor='#999'>
+                  <TouchableHighlight onPress={this.onPressSkill.bind(this, data.skill_id)} underlayColor='#999'>
                     <View style={styles.result}>
                       <Text style={styles.h2}>{data.skill_name}</Text>
                       <Text>{data.skill_category}</Text>
@@ -73,7 +75,7 @@ class Home extends Component {
                   </TouchableHighlight>
                 </View> :
                 <View>
-                  <TouchableHighlight onPress={this.onPressSession.bind(this, data.calendar_id)} underlayColor='#999'>
+                  <TouchableHighlight onPress={this.onPressCalendar.bind(this, data.calendar_id)} underlayColor='#999'>
                     <View style={styles.result}>
                       <Text style={styles.h2}>{data.service_name}</Text>
                       <Text>{data.description}</Text>
@@ -91,7 +93,7 @@ class Home extends Component {
                 renderRow={(rowData, i) => {
                   return (
                     <View>
-                      <TouchableHighlight onPress={this.onPressSession.bind(this, rowData._id)} underlayColor='#999'>
+                      <TouchableHighlight onPress={this.onPressSkill.bind(this, rowData.skill_id)} underlayColor='#999'>
                         <View style={styles.result}>
                           <Text style={styles.h2}>{rowData.name}</Text>
                           <Text>{rowData.description}</Text>
@@ -110,9 +112,15 @@ class Home extends Component {
   onPress() {
 
   }
-  onPressSession(id) {
-    setActiveSession(id);
-    Actions.sessionDetails()
+
+  onPressSkill(skillId) {
+    setListingSkillFilter(skillId);
+    this.props.onNavigation({type: 'push', key: 'SkillAvailability'})
+  }
+
+  onPressCalendar(listingId) {
+    setActiveListing(listingId);
+    this.props.onNavigation({type: 'push', key: 'ListingDetails'})
   }
 }
 
