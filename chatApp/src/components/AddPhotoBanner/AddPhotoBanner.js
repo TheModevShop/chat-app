@@ -57,6 +57,9 @@ export default class AddPhotoBanner extends React.Component {
         this.setState({
           avatarSource: source
         });
+        if (this.props.onImageLoad) {
+          this.props.onImageLoad(source.uri);
+        }
       }
     });
   }

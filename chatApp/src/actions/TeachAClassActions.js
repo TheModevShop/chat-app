@@ -18,11 +18,12 @@ export async function getCurrentAddServiceProgress() {
   try {
     value = JSON.parse(value);
     teachAClassFlow.set(value);
-  } catch(e) {
-
-  }
+  } catch(e) {};
 }
 
+export async function setImage(image) {
+  teachAClassFlow.set('image', image);
+}
 
 export async function addSkillCategory(value) {
   teachAClassFlow.set('category', value);
@@ -111,8 +112,10 @@ function formatService() {
     skill: _.get(data, 'skill.id'),
     long: data.long || -97.7582270, // TODO
     lat: data.lat || 30.2915410, // TODO
-    equipment: data.equipment || []
+    equipment: data.equipment || [],
+    image: data.image
   }
+  console.log(service)
   return service;
 }
 

@@ -65,7 +65,7 @@ class CreateService extends Component {
         <View style={{marginTop: 65, flex: 1}}>
           <ScrollView style={{flex: 1}}>
             
-            <AddPhotoBanner />
+            <AddPhotoBanner onImageLoad={(img) => actions.setImage(img)} />
             <SectionHeader title="Class title" />
             <View style={[formStyles.inputWrapper, {}]}>
               <TextInput
