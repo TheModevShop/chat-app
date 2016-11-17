@@ -25,7 +25,7 @@ class ConfirmationErrorLightBox extends Component {
 
   render() {
     return (
-      <View style={{flex: 1, position: 'relative'}}>
+      <View style={{flex: 1, position: 'relative', justifyContent: 'center', alignItems: 'center'}}>
         <Button
           containerStyle={{padding:10, height:45, overflow:'hidden', borderRadius:4, backgroundColor: '#ccc'}}
           style={{fontSize: 20, color: '#999'}}

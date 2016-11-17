@@ -6,7 +6,7 @@ import moment from 'moment';
 import NavBar from '../../components/NavBar/NavBar';
 import * as actions from '../../actions/TeachAClassActions';
 import buttonStyles from '../../styles/buttonStyle';
-import {openLightBox} from '../../actions/ModalActions';
+import {openLightBox, openHud, closeHud} from '../../actions/ModalActions';
 import currency from '../../utility/currency';
 import MapViewPreview from '../../components/MapViewPreview/MapViewPreview.js';
 import ResponsiveImage from 'react-native-responsive-image';
@@ -34,6 +34,7 @@ class TeachAClass extends Component {
   render() {
     const agent = _.get(this.props, 'user.details', {});
     const service = _.get(this.props, 'teachAClassFlow', {});
+    const equipment = _.groupBy(_.get(service, 'equipment', []), 'provided');
     const name = _.get(service, 'serviceBasicData.title.value', '');
     const capacity = _.get(service, 'serviceBasicData.capacity.value');
     const duration = _.get(service, 'serviceBasicData.duration.value');
@@ -49,7 +50,24 @@ class TeachAClass extends Component {
               <Text>{currency(price)}</Text> 
               <Text>{duration} minutes</Text> 
               <Text>max capacity: {capacity}</Text> 
-              <Text>Instructed by {agent.first_name} {agent.last_name}</Text> 
+              <Text>Instructed by {agent.first_name} {agent.last_name}</Text>
+              <Text>Provided Equipment:</Text> 
+              {
+                _.map(equipment.true, (eq, i) => {
+                  return (
+                    <Text key={i}>{eq.item}</Text> 
+                  );
+                })
+              }
+
+              <Text>Must Bring Equipment:</Text> 
+              {
+                _.map(equipment.false, (eq, i) => {
+                  return (
+                    <Text key={i}>{eq.item}</Text> 
+                  );
+                })
+              }
             </View>
             <View style={{
               position: 'absolute',
@@ -87,6 +105,9 @@ class TeachAClass extends Component {
   }
 
   async goToCategory() {
+    openHud({
+      hudTitle: 'savings service', 
+    });
     const success = await actions.registerResourceAndService();
     if (success) {
       this.props.onNavigation({ type: 'push', key: 'ServiceCreatedConfirmation' })
@@ -95,6 +116,7 @@ class TeachAClass extends Component {
         type: 'confirmationErrorLightBox', 
       });
     }
+    closeHud();
   }
 
 

@@ -2,10 +2,12 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
+import * as constants from '../../styles/styleConstants';
 import {
   Text,
   View,
-  StyleSheet, TouchableHighlight
+  StyleSheet, 
+  ActivityIndicator
 } from 'react-native';
 
 
@@ -18,8 +20,8 @@ class Initial extends Component {
 
   render() {
     return (
-      <View style={{margin: 128}}>
-       <Text>Loading</Text>
+      <View style={[constants.APP_FULLSCREEN, {justifyContent: 'center', alignItems: 'center'}]}>
+       <ActivityIndicator />
       </View>
     );
   }

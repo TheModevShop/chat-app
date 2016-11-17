@@ -31,7 +31,31 @@ import {
 } from 'react-native';
 
 const schema = {
-  price: {}
+  price: {
+    testFunc: (value) => {
+      return !isNaN(value) && Number(value) > 1
+    },
+    format:(value) => {
+      if (!value || isNaN(value)) { return value }
+      const digits = value.match(/\d/g) || ['0']
+      if (digits.length === 1) {
+        digits.unshift('0')
+      }
+      digits.splice(digits.length - 2, 0, '.')
+      return Number(digits.join('')).toFixed(2)
+    }
+  },
+  duration: {
+    testFunc: (value) => {
+      return !isNaN(value)
+    }
+  },
+  capacity: {
+    testFunc: (value) => {
+      return !isNaN(value)
+    }
+  },
+  title: {}
 }
 
 
@@ -57,6 +81,7 @@ class CreateService extends Component {
 
   render() {
     const values = this.props.outputData || {};
+    console.log(this.props.formComplete)
     const equipmentRequired = _.get(this.props, 'teachAClassFlow.equipmentRequired', null);
     const hasAnsweredEquipmentRequired = _.has(this.props, 'teachAClassFlow.equipmentRequired', null);
     const formComplte = this.props.formComplete && hasAnsweredEquipmentRequired;
@@ -91,6 +116,7 @@ class CreateService extends Component {
                 placeholder="Price"
                 style={[formStyles.textInput, this.props.addErrorStyling(values, 'price')]}
                 returnKeyType = {"next"}
+                keyboardType={"numeric"}
                 ref="price"
                 autoCapitalize='words'
                 autoCorrect={false}
@@ -184,7 +210,7 @@ class CreateService extends Component {
 
 }
 
-const makeComponent = _.flowRight(formHigherOrder, branch);
+const makeComponent = _.flowRight(_.partialRight(formHigherOrder, schema), branch);
 export default makeComponent(CreateService, {
   cursors: {
     user: ['user'],

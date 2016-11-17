@@ -44,8 +44,6 @@ class Home extends Component {
   componentWillMount() {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     // StatusBar.setBarStyle('light-content', true);
-
-    
   }
 
   componentDidUpdate(prevProps, prevState) {

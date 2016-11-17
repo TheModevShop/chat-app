@@ -23,3 +23,11 @@ export const PADDING_SMALL = 12;
 export const NAV_HEIGHT = 20 + 45
 export const BUTTON_HEIGHT = 60
 export const ROW_HEIGHT = 60;
+
+export const APP_FULLSCREEN = {
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  right: 0,
+  top: 0
+}

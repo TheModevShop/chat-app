@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {ScrollView, View, Text, StyleSheet, TextInput, TouchableOpacity, Switch, TouchableWithoutFeedback } from 'react-native';
 import dismissKeyboard from 'dismissKeyboard';
 import tree from '../state/StateTree';
+import styles from '../styles/formStyles';
 import _ from 'lodash';
 const browser = tree.select('browser');
 
@@ -64,6 +65,8 @@ export default function formHigherOrder(Comp, schema) {
         if (value.regex && inputValue) {
           valid = !!inputValue.toString().match(value.regex)
           valid = _.has(value, 'regexResult') ? value.regexResult === valid : valid;
+        } else if (value.testFunc && inputValue) {
+          valid = value.testFunc(inputValue)
         } else {
           valid = !!inputValue
         }
@@ -112,6 +115,8 @@ export default function formHigherOrder(Comp, schema) {
       if (key === 'price') {
         // value = formatCurrency(Number(value));
       }
+
+      value = schema && _.get(schema[key], 'format') ? schema[key].format(value) : value;
 
       _.assign(outputData[key], {value: value});
       this.setState({

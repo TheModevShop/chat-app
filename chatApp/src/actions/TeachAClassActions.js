@@ -40,6 +40,7 @@ export async function addServiceBasicData(data) {
 
 
 export async function setEquipmentRequired(value) {
+  // true false value if equipment is needed
   teachAClassFlow.set('equipmentRequired', value);
 }
 
@@ -108,7 +109,7 @@ function formatService() {
     name:  _.get(data, 'serviceBasicData.title.value', ''),
     capacity: _.get(data, 'serviceBasicData.capacity.value'),
     duration: _.get(data, 'serviceBasicData.duration.value', 60),
-    price: _.get(data, 'serviceBasicData.price.value', 0),
+    price: _.get(data, 'serviceBasicData.price.value', 0) * 100,
     skill_level: _.get(data, 'skillLevel'),
     skill: _.get(data, 'skill.id'),
     long: data.long || -97.7582270, // TODO
@@ -116,7 +117,6 @@ function formatService() {
     equipment: data.equipment || [],
     image: data.image
   }
-  console.log(service)
   return service;
 }
 

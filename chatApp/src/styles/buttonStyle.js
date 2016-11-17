@@ -12,6 +12,16 @@ export default StyleSheet.create({
     backgroundColor: '#497ea6',
     padding: 20,
   },
+
+  regularButton: {
+    position: 'relative',
+    flexDirection: 'row',
+    backgroundColor: '#497ea6',
+    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
   buttonText: {
     textAlign: 'center',
     color: '#fff',

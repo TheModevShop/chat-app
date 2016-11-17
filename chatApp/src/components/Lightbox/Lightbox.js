@@ -4,6 +4,7 @@ import {branch} from 'baobab-react/higher-order';
 import _ from 'lodash';
 import {closeModal} from '../../actions/ModalActions';
 import ConfirmationErrorLightBox from './Lightboxes/ConfirmationErrorLightBox.js';
+import CompleteUserProfile from './Lightboxes/CompleteUserProfile.js';
 import * as Animatable from 'react-native-animatable';
 import Modal from 'react-native-modalbox';
 import {
@@ -33,12 +34,18 @@ class Lightbox extends Component {
   }
 
   render() { 
+    const type = _.get(this.props, 'lightBox.type');
     var BContent = <TouchableHighlight onPress={this.onClose.bind(this)}><Text>X</Text></TouchableHighlight>;
     return (
+      type === 'confirmationErrorLightBox' ?
       <Modal isOpen={this.state.isOpen} onClosed={this.onClose.bind(this)} style={[styles.modal, styles.modal4]} position={"center"} backdropContent={BContent}>
         <ConfirmationErrorLightBox/>
-      </Modal>
-    );
+      </Modal> : 
+      type === 'completeUserProfile' ?
+      <Modal isOpen={this.state.isOpen} onClosed={this.onClose.bind(this)} style={[styles.modal, styles.modal4]} position={"center"} backdropContent={BContent}>
+        <CompleteUserProfile/>
+      </Modal>  : null
+    ) 
   }
 
   toggleDisable() {

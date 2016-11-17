@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
+import _ from 'lodash';
 import {checkSession} from '../../actions/AuthenticationActions';
 import {openLightBox} from '../../actions/ModalActions';
 
@@ -18,6 +19,7 @@ import * as styleConstants from '../../styles/styleConstants';
 // EXTRAS
 import Modal from '../../components/Modal/Modal';
 import Lightbox from '../../components/Lightbox/Lightbox';
+import Hud from '../../components/Hud/Hud';
 
 import {
   AppRegistry,
@@ -58,7 +60,12 @@ class ApplicationController extends Component {
     const session = await checkSession();
     if (session) {
       setTimeout(() => {
-        this._handleAction({ type: 'push', key: 'ApplicationTabs' })
+        this._handleAction({ type: 'push', key: 'ApplicationTabs' });
+         setTimeout(() => {
+          openLightBox({
+            type: 'completeUserProfile'
+          }); 
+        }, 500)
       }, 800)
     } else {
       this._handleAction({ type: 'push', key: 'Login' })
@@ -99,12 +106,14 @@ class ApplicationController extends Component {
   }
 
   _renderScene(props) {
+    const hudTitle = _.get(this.props, 'hud.hudTitle') 
     const ComponentToRender = this._renderRoute(props.scene.route.key)
     return (
       <View style={styles.scrollView}>
         {ComponentToRender}
         <Modal />
         <Lightbox />
+        {hudTitle ? <Hud title={hudTitle} /> : null}
       </View>
     );
   }
@@ -136,6 +145,7 @@ const styles = StyleSheet.create({
 
 export default branch(ApplicationController, {
   cursors: {
-    authentication: ['authentication', 'sessionData']
+    authentication: ['authentication', 'sessionData'],
+    hud: ['hud']
   }
 });
