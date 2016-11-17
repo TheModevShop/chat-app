@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import {checkSession} from '../../actions/AuthenticationActions';
+import {openLightBox} from '../../actions/ModalActions';
 
 import ApplicationTabs from './ApplicationTabs';
 import AccountSettingsController from './Controllers/AccountSettingsController';
@@ -13,6 +14,10 @@ import Settings from '../AccountSettings/Settings';
 
 // Styles
 import * as styleConstants from '../../styles/styleConstants';
+
+// EXTRAS
+import Modal from '../../components/Modal/Modal';
+import Lightbox from '../../components/Lightbox/Lightbox';
 
 import {
   AppRegistry,
@@ -98,6 +103,8 @@ class ApplicationController extends Component {
     return (
       <View style={styles.scrollView}>
         {ComponentToRender}
+        <Modal />
+        <Lightbox />
       </View>
     );
   }

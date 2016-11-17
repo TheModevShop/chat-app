@@ -22,8 +22,6 @@ import TeachAClassController from './Controllers/TeachAClassController';
 import AddService from '../AddService/AddService';
 import AddSession from '../AddSession/AddSession';
 
-// EXTRAS
-import Modal from '../../components/Modal/Modal';
 
 // CONSTANTS
 import * as styleConstants from '../../styles/styleConstants';
@@ -83,7 +81,6 @@ class Application extends React.Component {
           </View>
 
         </Drawer>
-        <Modal />
       </View>
 
     );

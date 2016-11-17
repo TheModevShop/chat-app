@@ -65,7 +65,7 @@ class CreateService extends Component {
         <View style={{marginTop: 65, flex: 1}}>
           <ScrollView style={{flex: 1}}>
             
-            <AddPhotoBanner onImageLoad={(img) => actions.setImage(img)} />
+            <AddPhotoBanner image={_.get(this.props, 'teachAClassFlow.image')} onImageLoad={(img) => actions.setImage(img)} />
             <SectionHeader title="Class title" />
             <View style={[formStyles.inputWrapper, {}]}>
               <TextInput
@@ -98,6 +98,24 @@ class CreateService extends Component {
                 onBlur={this.props.onInputBlur.bind(this, 'price')}
                 onFocus={this.props.onInputFocus.bind(this, 'price')}
                 value={_.get(values, 'price.value')}
+                onSubmitEditing={(event) => {
+                  this.refs.duration.focus();
+                }} />
+            </View>
+
+            <SectionHeader title="class duration" />
+            <View style={[formStyles.inputWrapper, {}]}>
+              <TextInput
+                placeholder="Duration"
+                style={[formStyles.textInput, this.props.addErrorStyling(values, 'duration')]}
+                returnKeyType = {"next"}
+                ref="duration"
+                autoCapitalize='words'
+                autoCorrect={false}
+                onChangeText={this.props.updateInput.bind(this, 'duration')}
+                onBlur={this.props.onInputBlur.bind(this, 'duration')}
+                onFocus={this.props.onInputFocus.bind(this, 'duration')}
+                value={_.get(values, 'duration.value')}
                 onSubmitEditing={(event) => {
                   this.refs.capacity.focus();
                 }} />

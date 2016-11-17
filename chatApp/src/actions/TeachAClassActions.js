@@ -72,8 +72,10 @@ export async function registerResourceAndService() {
     const resource = formatResource();
     await api.registerResourceAndService(service, resource);
     resetTeachAClassFlow();
+    return true;
   } catch(err) {
     teachAClassFlow.set('error', err);
+    return false;
   }
 }
 
@@ -104,7 +106,6 @@ function formatService() {
   var service = {
     description: _.get(data, 'serviceBasicData.description.value', ''),
     name:  _.get(data, 'serviceBasicData.title.value', ''),
-    image: _.get(data, 'serviceBasicData.image', ''),
     capacity: _.get(data, 'serviceBasicData.capacity.value'),
     duration: _.get(data, 'serviceBasicData.duration.value', 60),
     price: _.get(data, 'serviceBasicData.price.value', 0),

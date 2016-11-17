@@ -60,6 +60,7 @@ export default function getInitialState() {
       classes: {},
 
       modal: {},
+      lightBox: {},
 
       chat: {
         listingDetailsChat: {

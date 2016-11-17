@@ -92,6 +92,15 @@ export default class AddPhotoBanner extends React.Component {
     });
   }
 
+  componentWillMount() {
+    if (this.props.image) {
+      const source = {uri: this.props.image, isStatic: true};
+      this.setState({
+        avatarSource: source
+      });
+    }
+  }
+
   render() {
     return (
       <TouchableOpacity style={styles.wrapper} onPress={this.selectPhotoTapped.bind(this)}>
