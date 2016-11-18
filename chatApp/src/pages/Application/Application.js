@@ -84,6 +84,7 @@ class ApplicationController extends Component {
     if (newState === this.state.navState) {
       return false;
     }
+
     this.setState({
       navState: newState,
       activeView: action.key
@@ -98,7 +99,7 @@ class ApplicationController extends Component {
   _renderRoute (key) {
     if (key === 'ApplicationTabs') return <ApplicationTabs onNavigation={this._handleAction.bind(this)} />
     if (key === 'Login') return <Login goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
-    if (key === 'AccountSettings') return <AccountSettingsController goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    if (key === 'AccountSettings') return <AccountSettingsController onLogout={this._handleAction.bind(this, {type: 'push', key: 'Login'})} goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
     if (key === 'Settings') return <Settings goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
     if (key === 'Initial') return <Initial />
     if (key === 'TeachAClass') return <TeachAClassController goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />

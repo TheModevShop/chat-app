@@ -2,11 +2,12 @@
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import _ from 'lodash';
-import {closeModal} from '../../actions/ModalActions';
+import {closeLightBox} from '../../actions/ModalActions';
 import ConfirmationErrorLightBox from './Lightboxes/ConfirmationErrorLightBox.js';
 import CompleteUserProfile from './Lightboxes/CompleteUserProfile.js';
 import * as Animatable from 'react-native-animatable';
 import Modal from 'react-native-modalbox';
+
 import {
   View,
   StyleSheet,
@@ -57,7 +58,7 @@ class Lightbox extends Component {
   }
 
   onClose() {
-    console.log('Modal just closed');
+    closeLightBox();
   }
 
   onOpen() {

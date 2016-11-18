@@ -47,21 +47,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     zIndex: 2,
     paddingTop: 350,
-  },
-  bookingWrapper: {
-    flexDirection: 'row',
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    backgroundColor: "#fff",
-    flex: 1
-  },
-  bookingWrapperImage: {
-    height: 60,
-    width: 60,
-    marginRight: 10,
-    borderRadius: 120,
-    overflow: 'hidden'
   }
 });
 

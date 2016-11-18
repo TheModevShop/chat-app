@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import FullTappableRow from '../../components/FullTappableRow/FullTappableRow'
 import NavBar from '../../components/NavBar/NavBar';
+import {logOut} from '../../actions/AuthenticationActions';
 
 // Styles
 import * as constants from '../../styles/styleConstants';
@@ -39,7 +40,10 @@ class Account extends Component {
           {this.sectionHeader('Account')}
           <FullTappableRow title={`Password`} />
           <FullTappableRow title={'email'} />
-          <FullTappableRow title={'zipcode'} bottomBorder={false} />
+          <FullTappableRow title={'zipcode'} />
+
+          {this.sectionHeader('Log Out')}
+          <FullTappableRow title={'log out'} bottomBorder={false} onPress={this.logout.bind(this)} />
         </View>
         <NavBar title={'Account'} leftAction={this.props.goBack.bind(this)} leftActionIcon={'ios-close'} />
       </View>
@@ -52,6 +56,13 @@ class Account extends Component {
         <Text style={styles.title}>{title.toUpperCase()}</Text>
       </View>
     )
+  }
+
+  async logout() {
+    const success = await logOut();
+    if (success) {
+      this.props.onLogout()
+    }
   }
 }
 

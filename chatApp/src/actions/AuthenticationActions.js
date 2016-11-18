@@ -1,7 +1,7 @@
 import tree from '../state/StateTree';
 import bluebird from 'bluebird';
 import {fetchToken} from '../api/authApi';
-import {getMe} from '../actions/UserActions';
+import {getMe, addFacebookCredentials} from '../actions/UserActions';
 import resetState from '../state/ResetStateTree';
 import {AppRegistry, AsyncStorage} from 'react-native';
 import {FBLoginManager} from 'react-native-facebook-login';
@@ -35,11 +35,8 @@ function checkFacebookForSession() {
 
 export async function checkSession() {
   try {
-    console.log('fhsdkjfhsdjkfh')
     const user = await getMe();
-    console.log(user)
     const facebook = await checkFacebookForSession();
-    console.log(facebook)
     if (user.id && !facebook.error) {
       const session = await AsyncStorage.getItem('sessionData');
       authentication.set(['sessionData'], session);
@@ -63,9 +60,28 @@ async function buildSession(session) {
   return await getMe();
 }
 
+
+export async function logOut() {
+  let logout;
+  try {
+    await addFacebookCredentials({});
+    await teardownSession();
+    FBLoginManager.logout((error, data) => {
+      if (error) {
+        throw new Error('error logging out')
+      }
+    });
+    logout = true;
+  } catch(err) {}
+  return logout;
+
+}
+
+
 export async function teardownSession() {
   resetState();
   await AsyncStorage.removeItem('sessionData');
+  
   authentication.set({});
   tree.commit();
 

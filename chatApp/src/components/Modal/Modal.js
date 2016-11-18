@@ -26,14 +26,12 @@ class Modal extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(_.get(nextProps, 'modal.type'))
     if (!this.state.rendered && !this.state.initialRender && _.get(nextProps, 'modal.type')) {
       this.setState({initialRender: true, in: true, rendered: true})
     }
   }
 
   render() {
-    console.log(this.outterDelay)
     return (
       this.state.initialRender ?
       <View style={styles.wrapper}>

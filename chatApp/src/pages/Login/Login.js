@@ -67,16 +67,20 @@ class Login extends Component {
             permissions={["email","user_friends", "public_profile", "user_about_me", "user_photos", "user_likes", "user_work_history", "user_website"]}
             loginBehavior={FBLoginManager.LoginBehaviors.Native}
             onLogin={async (data) => {
+              console.log('ON LOGIN')
               await getAuthentication({userId: _.get(data, 'credentials.userId'), token: _.get(data, 'credentials.token'), tokenExpirationDate: _.get(data, 'credentials.tokenExpirationDate')});
-              await addFacebookCredentials(data.credentials); // MAY NOT NEED
+              addFacebookCredentials(data.credentials); // MAY NOT NEED // await?
+              this.props.onNavigation({ type: 'push', key: 'ApplicationTabs' })
+
             }}
             onLogout={() => {
               teardownSession();
             }}
-            onLoginFound={(data) => {
+            onLoginFound={async (data) => {
               console.log("Existing login found.");
-              getAuthentication({userId: _.get(data, 'credentials.userId'), token: _.get(data, 'credentials.token'), tokenExpirationDate: _.get(data, 'credentials.tokenExpirationDate')});
-              console.log(data);
+              await getAuthentication({userId: _.get(data, 'credentials.userId'), token: _.get(data, 'credentials.token'), tokenExpirationDate: _.get(data, 'credentials.tokenExpirationDate')});
+              addFacebookCredentials(data.credentials); // MAY NOT NEED // await?
+              this.props.onNavigation({ type: 'push', key: 'ApplicationTabs' })
               // this.setState({ user : data.credentials });
             }}
             onLoginNotFound={() => {
