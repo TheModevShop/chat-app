@@ -6,6 +6,7 @@ import CreateService from '../../TeachAClass/CreateService';
 import EquipmentRequired from '../../TeachAClass/EquipmentRequired';
 import ServiceOverview from '../../TeachAClass/ServiceOverview';
 import ServiceCreatedConfirmation from '../../TeachAClass/ServiceCreatedConfirmation';
+import ServiceLocation from '../../TeachAClass/ServiceLocation';
 import * as actions from '../../../actions/TeachAClassActions';
 
 // Styles
@@ -18,8 +19,11 @@ import {
   View,
   TouchableHighlight,
   NavigationExperimental,
-  ScrollView
-} from 'react-native'
+  ScrollView,
+  Dimensions
+} from 'react-native';
+
+const windowWidth = Dimensions.get('window').width;
 
 const {
   CardStack: NavigationCardStack,
@@ -73,14 +77,38 @@ class TeachAClassController extends Component {
   }
 
   _renderRoute (key) {
-    if (key === 'TeachAClass') return <TeachAClass goBack={this.props.goBack ? this.props.goBack.bind(this) : () => {}} onNavigation={this._handleAction.bind(this)} />
-    if (key === 'ChooseASkill') return <ChooseASkill goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
-    if (key === 'SkillLevel') return <SkillLevel goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
-    if (key === 'SkillLevel') return <SkillLevel goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
-    if (key === 'CreateService') return <CreateService goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
-    if (key === 'EquipmentRequired') return <EquipmentRequired goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
-    if (key === 'ServiceOverview') return <ServiceOverview goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
-    if (key === 'ServiceCreatedConfirmation') return <ServiceCreatedConfirmation onComplete={this.props.goBack ? this.props.goBack.bind(this) : () => {}} onNavigation={this._handleAction.bind(this)} />
+    if (key === 'TeachAClass') { 
+      this.percentComplete = 0;
+      return <TeachAClass goBack={this.props.goBack ? this.props.goBack.bind(this) : () => {}} onNavigation={this._handleAction.bind(this)} />
+    }
+    else if (key === 'ChooseASkill') { 
+      this.percentComplete = 0.14;
+      return <ChooseASkill goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    }
+    else if (key === 'SkillLevel') { 
+      this.percentComplete = 0.28;
+      return <SkillLevel goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    }
+    else if (key === 'CreateService') { 
+      this.percentComplete = 0.42;
+      return <CreateService goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    }
+    else if (key === 'ServiceLocation') { 
+      this.percentComplete = 0.56;
+      return <ServiceLocation goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    }
+    else if (key === 'EquipmentRequired') { 
+      this.percentComplete = 0.7;
+      return <EquipmentRequired goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    }
+    else if (key === 'ServiceOverview') { 
+      this.percentComplete = 0.84;
+      return <ServiceOverview goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    }
+    else if (key === 'ServiceCreatedConfirmation') { 
+      this.percentComplete = 1;
+      return <ServiceCreatedConfirmation onComplete={this.props.goBack ? this.props.goBack.bind(this) : () => {}} onNavigation={this._handleAction.bind(this)} />
+    }
   }
 
   _renderScene(props) {
@@ -88,6 +116,9 @@ class TeachAClassController extends Component {
     return (
       <View style={styles.scrollView}>
         {ComponentToRender}
+        <View style={{position: 'absolute', zIndex: 100, top: 60, backgroundColor: styleConstants.ALUMINUM, height: 10, left:0, right: 0}}>
+          <View style={{position: 'absolute', backgroundColor: styleConstants.DARKBLUE, height: 10, left: 0, width: windowWidth*this.percentComplete }}></View>
+        </View>
       </View>
     );
   }

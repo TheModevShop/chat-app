@@ -22,11 +22,7 @@ import {
   Text,
   TextInput,
   View,
-  Dimensions,
-  ListView,
   Image,
-  TouchableHighlight,
-  Easing,
   ScrollView
 } from 'react-native';
 
@@ -191,7 +187,7 @@ class CreateService extends Component {
     if (equipmentRequired) {
       this.props.onNavigation({ type: 'push', key: 'EquipmentRequired' });
     } else {
-      this.props.onNavigation({ type: 'push', key: 'ServiceOverview' });
+      this.props.onNavigation({ type: 'push', key: 'ServiceLocation' });
     }
   }
 

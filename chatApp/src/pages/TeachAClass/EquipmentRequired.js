@@ -109,7 +109,7 @@ class EquipmentRequired extends Component {
   }
 
   goToCategory() {
-    this.props.onNavigation({ type: 'push', key: 'ServiceOverview' })
+    this.props.onNavigation({ type: 'push', key: 'ServiceLocation' })
   }
 
 }

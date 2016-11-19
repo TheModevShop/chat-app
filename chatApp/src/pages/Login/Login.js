@@ -4,7 +4,7 @@ import {FBLogin, FBLoginManager} from 'react-native-facebook-login';
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 import {addFacebookCredentials} from '../../actions/UserActions';
-import {getAuthentication, teardownSession} from '../../actions/AuthenticationActions';
+import {getAuthentication, teardownSession, logOut} from '../../actions/AuthenticationActions';
 import {
   Text,
   View,
@@ -67,10 +67,15 @@ class Login extends Component {
             permissions={["email","user_friends", "public_profile", "user_about_me", "user_photos", "user_likes", "user_work_history", "user_website"]}
             loginBehavior={FBLoginManager.LoginBehaviors.Native}
             onLogin={async (data) => {
-              console.log('ON LOGIN')
-              await getAuthentication({userId: _.get(data, 'credentials.userId'), token: _.get(data, 'credentials.token'), tokenExpirationDate: _.get(data, 'credentials.tokenExpirationDate')});
-              addFacebookCredentials(data.credentials); // MAY NOT NEED // await?
-              this.props.onNavigation({ type: 'push', key: 'ApplicationTabs' })
+              try {
+                const auth = await getAuthentication({userId: _.get(data, 'credentials.userId'), token: _.get(data, 'credentials.token'), tokenExpirationDate: _.get(data, 'credentials.tokenExpirationDate')});
+                if (auth) {
+                  addFacebookCredentials(data.credentials); // MAY NOT NEED // await?
+                  this.props.onNavigation({ type: 'push', key: 'ApplicationTabs' })
+                } else {
+                  logOut();
+                }
+              } catch (err) {}
 
             }}
             onLogout={() => {
@@ -78,10 +83,15 @@ class Login extends Component {
             }}
             onLoginFound={async (data) => {
               console.log("Existing login found.");
-              await getAuthentication({userId: _.get(data, 'credentials.userId'), token: _.get(data, 'credentials.token'), tokenExpirationDate: _.get(data, 'credentials.tokenExpirationDate')});
-              addFacebookCredentials(data.credentials); // MAY NOT NEED // await?
-              this.props.onNavigation({ type: 'push', key: 'ApplicationTabs' })
-              // this.setState({ user : data.credentials });
+              try {
+                const auth = await getAuthentication({userId: _.get(data, 'credentials.userId'), token: _.get(data, 'credentials.token'), tokenExpirationDate: _.get(data, 'credentials.tokenExpirationDate')});
+                if (auth) {
+                  addFacebookCredentials(data.credentials); // MAY NOT NEED // await?
+                  this.props.onNavigation({ type: 'push', key: 'ApplicationTabs' })
+                } else {
+                  logOut();
+                }
+              } catch (err) {}
             }}
             onLoginNotFound={() => {
               console.log("No user logged in.");

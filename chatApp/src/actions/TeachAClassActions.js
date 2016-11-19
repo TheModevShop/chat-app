@@ -29,6 +29,10 @@ export async function addSkillCategory(value) {
   teachAClassFlow.set('category', value);
 }
 
+export async function setServiceLocation(location) {
+  teachAClassFlow.set('location', location);
+}
+
 export async function addSKill(value) {
   teachAClassFlow.set('skill', value);
 }
