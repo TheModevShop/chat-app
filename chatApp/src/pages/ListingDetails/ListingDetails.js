@@ -8,6 +8,7 @@ import {resetActiveListing, favoriteListing} from '../../actions/ListingActions'
 import {openModal} from '../../actions/ModalActions';
 import MapViewPreview from '../../components/MapViewPreview/MapViewPreview.js';
 import {openNewChatWithAgent} from '../../actions/ChatActions';
+import Button from '../../components/Button/Button';
 
 import {
   StyleSheet,
@@ -39,7 +40,9 @@ class ListingDetails extends Component {
     const isInstructor = _.get(this.props, 'user.details.id', '') === _.get(details, 'instructor.id', null);
     const image = service.image && service.image !== 'test' ? service.image : skill.image;
 
-    console.log(this.props)
+    let equipment = _.get(service, 'equipment', []);
+    equipment = _.groupBy(equipment, 'provided');
+
 
     return (
        <View style={{marginTop: 0, flex: 1, flexDirection: 'column'}}>
@@ -65,33 +68,67 @@ class ListingDetails extends Component {
                 marginTop: 50
               }}>
 
-            <View style={{paddingHorizontal: constants.PADDING_LARGE}}>
-                <Text style={[textStyle.h1, textStyle.bold]}>{service.service_name}</Text>
+              <View style={{paddingHorizontal: constants.PADDING_LARGE}}>
+                <Text style={[textStyle.h1, textStyle.bold]}>{_.get(service, 'skill.name')}: {service.service_name}</Text>
+                <Text style={[textStyle.h3, textStyle.bold]}>with {agent.first_name} {agent.last_name}</Text>
+                <Text style={[textStyle.h4 , {marginTop: constants.PADDING_LARGE}]}>{service.service_description}</Text>
               </View>
-              <MapViewPreview y={service.y} x={service.x} disabled={true} />
+
+              {
+                _.get(equipment, 'true.length') ?
+                <View style={{paddingTop: constants.PADDING_LARGE, paddingHorizontal: constants.PADDING_LARGE}}>
+                  <Text style={[textStyle.h4, textStyle.bold]}>Items Provided:</Text>
+                  <View>
+                    {
+                      _.map(equipment.true, (item, i) => {
+                        return (
+                          <Text key={`${i}-provided`} style={[textStyle.h4]}>• {item.item}</Text>
+                        );
+                      })
+                    }
+                  </View>
+                </View> : null
+              }
+
+
+              {
+                _.get(equipment, 'false.length') ?
+                <View style={{paddingTop: constants.PADDING_LARGE, paddingHorizontal: constants.PADDING_LARGE}}>
+                  <Text style={[textStyle.h4, textStyle.bold]}>Please Bring:</Text>
+                  <View>
+                    {
+                      _.map(equipment.false, (item, i) => {
+                        return (
+                          <Text key={`${i}-not-provided`} style={[textStyle.h4]}>• {item.item}</Text>
+                        );
+                      })
+                    }
+                  </View>
+                </View> : null
+              }
+
+
+              <View style={{marginTop: 50, marginBottom: 50}}>
+                <MapViewPreview y={service.y} x={service.x} disabled={true} />
+              </View>
+
               <View>
-                <Text>{service.name}</Text> 
-                <Text>Instructed by {agent.first_name} {agent.last_name}</Text> 
-                <TouchableHighlight onPress={this.props.goBack.bind(this)} underlayColor='#999'><Text>Back</Text></TouchableHighlight>
                 
                 {
-                  !isInstructor ? // CHANGE
+                  isInstructor ? // CHANGE
                   <View>
                     <TouchableHighlight onPress={this.messageAgent.bind(this, agent)} underlayColor='#999'><Text>Message</Text></TouchableHighlight>
                     <TouchableHighlight onPress={this.viewAvailability.bind(this)} underlayColor='#999'><Text>Book Now</Text></TouchableHighlight>
                     <TouchableHighlight onPress={this.addSessionForListing.bind(this)} underlayColor='#999'><Text>Add Session For Listing</Text></TouchableHighlight>
                     <TouchableHighlight onPress={this.setAvailability.bind(this)} underlayColor='#999'><Text>Add Session For Listing</Text></TouchableHighlight>
                     <TouchableHighlight onPress={this.favoriteListing.bind(this)} underlayColor='#999'><Text>Favorite Listing</Text></TouchableHighlight>
-
-                  </View> : 
-                  <View>
-                    <TouchableHighlight onPress={this.viewAvailability.bind(this)} underlayColor='#999'><Text>Book Now</Text></TouchableHighlight>
-                  </View>
+                  </View> : null
                 }
               </View>
             </View>
           </ScrollView> : null
         }
+        <Button cta="Book Session" onPress={this.viewAvailability.bind(this)} />
         <NavBar rightAction={this.editAvailability.bind(this)} rightActionIcon={"ios-calendar-outline"} title={'Listing Details'} leftAction={this.props.goBack.bind(this)} />
       </View>
     );
@@ -111,9 +148,7 @@ class ListingDetails extends Component {
   }
 
   viewAvailability() {
-    openModal({
-      type: 'bookSessionModal', 
-    });
+    this.props.bookSession();
   }
 
   setAvailability() {

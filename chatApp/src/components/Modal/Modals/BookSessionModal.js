@@ -4,6 +4,7 @@ import {branch} from 'baobab-react/higher-order';
 import _ from 'lodash';
 import moment from 'moment';
 import CalendarView from '../../Calendar/Calendar';
+import NavBar from '../../../components/NavBar/NavBar';
 import {setSessionListingFilter, setSessionDateRange, invalidateCalendarDayView, bookListingCalendar} from '../../../actions/SessionActions';
 import {
   View,
@@ -25,28 +26,31 @@ class BookSessionModal extends Component {
   render() {
     return (
       <View style={{flex: 1, position: 'relative'}}>
-        <View style={this.state.scroll ? {zIndex: 1} : {zIndex: 3}}>
-           <CalendarView onSelectedDay={this.onSelectedDay.bind(this)} events={this.props.availability}/>
-        </View>
-       <ScrollView scrollEventThrottle={1} style={styles.scrollWrapper} onScroll={this.scrollEvent.bind(this)}>
-          {
-            _.map(this.props.calendarTimes, (booking, i) => {
-              return (
-                <TouchableHighlight key={i}  onPress={this.bookSession.bind(this, booking)} style={{flex: 1}}>
-                  <View style={styles.bookingWrapper}>
-                   <View style={styles.bookingWrapperImage}>
-                    <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(booking, 'facebook_user_id')}/picture?width=200&height=200`}}/>
-                   </View>
-                   <View style={styles.bookingWrapperContent}>
-                      <Text>{`${_.get(booking, 'name')}`}</Text>
-                      <Text>{`${_.get(booking, 'start')} - ${_.get(booking, 'end')}`}</Text>
+        <View style={{marginTop: 60}}>
+          <View style={this.state.scroll ? {zIndex: 1} : {zIndex: 3}}>
+             <CalendarView onSelectedDay={this.onSelectedDay.bind(this)} events={this.props.availability}/>
+          </View>
+         <ScrollView scrollEventThrottle={1} style={styles.scrollWrapper} onScroll={this.scrollEvent.bind(this)}>
+            {
+              _.map(this.props.calendarTimes, (booking, i) => {
+                return (
+                  <TouchableHighlight key={i}  onPress={this.bookSession.bind(this, booking)} style={{flex: 1}}>
+                    <View style={styles.bookingWrapper}>
+                     <View style={styles.bookingWrapperImage}>
+                      <Image style={{height: 60, width: 60}} source={{uri: `https://graph.facebook.com/${_.get(booking, 'facebook_user_id')}/picture?width=200&height=200`}}/>
+                     </View>
+                     <View style={styles.bookingWrapperContent}>
+                        <Text>{`${_.get(booking, 'name')}`}</Text>
+                        <Text>{`${_.get(booking, 'start')} - ${_.get(booking, 'end')}`}</Text>
+                      </View>
                     </View>
-                  </View>
-                </TouchableHighlight>
-              );
-            })
-          }
-        </ScrollView>
+                  </TouchableHighlight>
+                );
+              })
+            }
+          </ScrollView>
+        </View>
+        <NavBar leftActionIcon={'ios-close'} title={'Book Session'} leftAction={this.props.goBack.bind(this)} />
       </View>
     );
   }

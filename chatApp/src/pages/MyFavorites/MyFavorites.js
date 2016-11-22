@@ -71,7 +71,7 @@ class MyFavorites extends Component {
                        <ResponsiveImage source={{uri: rowData.listing.image}} initWidth="100%" initHeight="250"/>
                        <View style={styles.backgroundImage}>
                           <Text style={styles.text}>{rowData.listing.name}</Text> 
-                          <Text style={styles.subtext}>{ellipsize(rowData.listing.description, 60)}</Text> 
+                          <Text style={styles.subtext}>{<Text style={styles.subtext}>{_.get(rowData.listing, 'skill.name')}</Text>}</Text> 
                        </View>
                     </View>
                   </TouchableHighlight>
