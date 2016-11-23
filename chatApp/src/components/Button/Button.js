@@ -15,7 +15,7 @@ export default class Button extends Component {
     } = this.props
 
     return (
-      <TouchableHighlight style={[buttonStyles.bottomButton, disabled ? buttonStyles.buttonDisabled : {}, type === 'regular' ? buttonStyles.regularButton : {}]} onPress={!disabled ? this.props.onPress.bind(this) : () => {}} underlayColor={disabled ? '#ccc' : '#99d9f4'}>
+      <TouchableHighlight style={[buttonStyles.bottomButton, disabled ? buttonStyles.buttonDisabled : {}, type === 'regular' ? buttonStyles.regularButton : {}, this.props.style || {}]} onPress={!disabled ? this.props.onPress.bind(this) : () => {}} underlayColor={disabled ? '#ccc' : '#99d9f4'}>
         <Text style={[buttonStyles.buttonText, disabled ? buttonStyles.buttonDisabledText : {}]}>
           {cta}
         </Text>

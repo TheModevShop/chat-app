@@ -5,6 +5,7 @@ import _ from 'lodash';
 import {closeLightBox} from '../../actions/ModalActions';
 import ConfirmationErrorLightBox from './Lightboxes/ConfirmationErrorLightBox.js';
 import CompleteUserProfile from './Lightboxes/CompleteUserProfile.js';
+import ConfirmBookSession from './Lightboxes/ConfirmBookSession.js';
 import * as Animatable from 'react-native-animatable';
 import Modal from 'react-native-modalbox';
 
@@ -36,6 +37,7 @@ class Lightbox extends Component {
 
   render() { 
     const type = _.get(this.props, 'lightBox.type');
+    const data = _.get(this.props, 'lightBox.data');
     var BContent = <TouchableHighlight onPress={this.onClose.bind(this)}><Text>X</Text></TouchableHighlight>;
     return (
       type === 'confirmationErrorLightBox' ?
@@ -45,6 +47,10 @@ class Lightbox extends Component {
       type === 'completeUserProfile' ?
       <Modal isOpen={this.state.isOpen} onClosed={this.onClose.bind(this)} style={[styles.modal, styles.modal4]} position={"center"} backdropContent={BContent}>
         <CompleteUserProfile/>
+      </Modal>  :
+      type === 'confirmBookSession' ?
+      <Modal isOpen={this.state.isOpen} onClosed={this.onClose.bind(this)} style={[styles.modal, styles.modal5]} position={"center"} backdropContent={BContent}>
+        <ConfirmBookSession booking={data}/>
       </Modal>  : null
     ) 
   }
@@ -84,6 +90,12 @@ const styles = StyleSheet.create({
 
   modal4: {
     height: 300,
+    width: WINDOW_WIDTH - 50,
+    borderRadius: 5
+  },
+
+  modal5: {
+    height: 400,
     width: WINDOW_WIDTH - 50,
     borderRadius: 5
   }

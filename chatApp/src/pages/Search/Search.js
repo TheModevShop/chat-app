@@ -63,7 +63,6 @@ class Home extends Component {
             dataSource={this.state.dataSource}
             renderRow={(rowData, i) => {
               const data = _.get(rowData, '_source');
-              console.log(data)
               return (
                 data.skill_name ?
                 <View>
