@@ -79,7 +79,7 @@ class ListingsController extends Component {
   _renderRoute (key) {
     verticle = false;
     if (key === 'Listings') return <Listings onNavigation={this._handleAction.bind(this, { type: 'push', key: 'ListingDetails' })} />
-    if (key === 'ListingDetails') return <ListingDetails admin={true} goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    if (key === 'ListingDetails') return <ListingDetails admin={true} goBack={this.handleBackAction.bind(this)} toggleTimeToggle={this.props.onNavigation.bind(this, { type: 'push', key: 'AvailabilityToggle' })} onNavigation={this._handleAction.bind(this)} />
     //if (key === 'AddSessionForListing') return <AddSession goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
     if (key === 'setListingAvailability') {
       return <CustomCalendar goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} /> 

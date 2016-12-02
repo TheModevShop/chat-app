@@ -65,6 +65,7 @@ export async function addSession(session) {
 
 
 export async function bookListingCalendar(calendar) {
+  let success;
   const start = moment(calendar.date).set('hour', calendar.start.split(':')[0]).set('minute', calendar.start.split(':')[1]).format();
   const end = moment(calendar.date).set('hour', calendar.end.split(':')[0]).set('minute', calendar.end.split(':')[1]).format();
   calendar = {
@@ -72,10 +73,14 @@ export async function bookListingCalendar(calendar) {
     start: start,
     end: end
   }
-  console.log(calendar)
   try {
     await api.bookListingCalendar(JSON.stringify([calendar]));
-  } catch (e) {
-    throw new Error('error');
+    success = true;
+  } catch (err) {
+    return {
+      error: _.get(err.body, 'error')
+    }
   }
+
+  return {success};
 }

@@ -14,24 +14,34 @@ import {
   image
 } from 'react-native';
 
+import {bookListingCalendar} from '../../../actions/SessionActions';
 import textStyle from '../../../styles/textStyle';
 import * as constants from '../../../styles/styleConstants';
+import {openHud, closeHud} from '../../../actions/ModalActions';
 
 
 class ConfirmBookSession extends Component {
   constructor(...args) {
     super(...args);
-    this.state = {};
+    this.state = {
+      loading: false
+    };
   }
 
-  handlePress() {
-    console.log('Pressed!');
+  async bookSession() {
+    this.setState({loading: true});
+    const {success, error} = await bookListingCalendar(this.props.booking);
+    if (success) {
+      this.props.close()
+    } else if(error) {
+      this.setState({error: error})
+    }
+    this.setState({loading: false});
   }
 
   render() {
     const booking = this.props.booking;
     const data = _.get(booking, 'data', {});
-    console.log(booking)
     return (
       <View style={{flex: 1, position: 'relative', alignItems: 'center'}}>
         <Image style={{borderRadius: 50, height: 100, width: 100, marginTop: constants.PADDING_LARGE}} source={{uri: `https://graph.facebook.com/${_.get(booking, 'facebook_user_id')}/picture?width=200&height=200`}}/>
@@ -42,7 +52,11 @@ class ConfirmBookSession extends Component {
             <Text>{`${_.get(booking, 'raw_date')} from ${_.get(booking, 'start')} - ${_.get(booking, 'end')}`}</Text>
           </View>
         </View>
-        <Button style={{position: 'absolute', bottom: 0, left: -30, right: -30, flex: 1}} cta="Book Now" type="regular"  onPress={() => this.handlePress()}/>
+        {
+          this.state.error ?
+          <Text style={{left: -30, right: -30, padding: 10, position: 'absolute', bottom: -50, backgroundColor: 'white'}}>{this.state.error}</Text> : null
+        }
+        <Button loading={this.state.loading} style={{position: 'absolute', bottom: -1, left: -31, right: -31, flex: 1, borderBottomLeftRadius: 5, borderBottomRightRadius: 5}} cta="Book Now" type="regular"  onPress={this.bookSession.bind(this)}/>
       </View>
     );
   }

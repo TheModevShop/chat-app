@@ -6,6 +6,7 @@ import TimeToggle  from '../../components/TimeToggle/TimeToggle.js';
 import {addDayToAvailability} from '../../actions/AvailabilityActions'
 import FullTappableRow from '../../components/FullTappableRow/FullTappableRow';
 import Button from '../../components/Button/Button';
+import SetAvailabilityOverlay from './components/SetAvailabilityOverlay'
 
 import {
   StyleSheet,
@@ -36,14 +37,17 @@ class ChooseDaysToSetAvailability extends Component {
             )
           })
         }
-
       </ScrollView>
-      <Button cta="Contine" onPress={this.constinueToTimes.bind(this)} />
+      
+      <View style={{flex: 1, position: 'absolute', left: 0, right: 0, bottom: 0, backgroundColor: '#fff'}}>
+        <SetAvailabilityOverlay/>
+      </View>
+
       <NavBar title={'Choose Availability'} />
     </View>
     );
   }
-
+// <Button cta="Contine" onPress={this.constinueToTimes.bind(this)} />
   toggleDay(dow) {
     addDayToAvailability(dow);
   }
