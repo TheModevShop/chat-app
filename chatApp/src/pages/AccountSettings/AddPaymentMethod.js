@@ -1,5 +1,7 @@
 'use strict';
 import _ from 'lodash';
+import addStripeCard from '../../utility/stripe'
+import {submitPaymentMethod} from '../../actions/PaymentMethodActions';
 import React, { Component } from 'react';
 import {branch} from 'baobab-react/higher-order';
 
@@ -24,7 +26,8 @@ class CreditCard extends Component {
     return (
       <View style={{flex: 1}}>
         <View style={{flex: 1, marginTop: constants.NAV_HEIGHT}}>
-         <PaymentMethodForm 
+         <PaymentMethodForm
+          submitPaymentMethod={this.submitPaymentMethod.bind(this)} 
           paymentMethods={[]} 
           paymentMethod={this.props.newPaymentMethod.card}/>
         </View>
@@ -33,8 +36,8 @@ class CreditCard extends Component {
     );
   }
   
-  submit() {
-
+  async submitPaymentMethod(data) {
+    submitPaymentMethod(data);
   }
 }
 

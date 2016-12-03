@@ -1,7 +1,9 @@
 "use strict";
+import {STRIPE_PK} from '../env.js'
+import _ from 'lodash';
 
 const stripe_url = 'https://api.stripe.com/v1/';
-// const secret_key = 'pk_live_HiksX6RjAZboFZEBLMya7iG8'; //TODO ENV
+const secret_key = STRIPE_PK
 
 export default async function addStripeCard(card) {
   const cardDetails = {

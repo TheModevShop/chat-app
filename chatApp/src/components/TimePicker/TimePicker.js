@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
 import {
   Animated,
   Text,
   View,
   Picker,
-  Item,
-  StyleSheet
+  StyleSheet,
+  TouchableOpacity
 } from 'react-native';
 import {View as AnimatedView, Text as AnimatedText} from 'react-native-animatable';
 import globalStyles from '../../styles/globalStyles';
@@ -14,7 +15,22 @@ import * as constants from '../../styles/styleConstants';
 class TimePicker extends Component {
   constructor(...args) {
     super(...args);
-    this.state = {};
+    this.state = {
+      hour: '5',
+      minute: '00',
+      type: 'pm'
+    };
+    
+    this.hours = [];
+    this.minutes = [];
+    for (var i = 1; i < 13; i++) {
+      this.hours.push(String(i));
+    };
+    for (var i = 0; i < 60; i++) {
+      let p = i;
+      p = p < 10 ? `0${i}` : i;
+      this.minutes.push(String(p));
+    };
   }
 
   render() {
@@ -24,58 +40,69 @@ class TimePicker extends Component {
         <View style={{flexDirection: 'row'}}>
          <View style={{flex: 1, height: 75}}>
             <Text>start</Text>
-            <View style={{flex: 1, backgroundColor: '#fff', height: 50, borderBottomColor: '#D4D4D4', borderBottomWidth: 1, borderTopColor: '#D4D4D4', borderTopWidth: 1, alignItems: 'center', justifyContent: 'center'}}>
-              <Text>5:00 pm</Text>
-           </View>
+            <TouchableOpacity onPress={() => this.setState({active: 'left'})} style={[{flex: 1, backgroundColor: '#fff', height: 50, borderBottomColor: '#D4D4D4', borderBottomWidth: 1, borderTopColor: '#D4D4D4', borderTopWidth: 1, alignItems: 'center', justifyContent: 'center'}, this.state.active === 'left' ? {borderBottomWidth: 0} : this.state.active === 'right' ? {backgroundColor: '#ccc'} : {}]}>
+              <Text>{`${this.state.hour}:${this.state.minute} ${this.state.type}`}</Text>
+           </TouchableOpacity>
          </View>
          
          <View style={{flex: 1, height: 75}}>
            <Text>end</Text>
-           <View style={{flex: 1, backgroundColor: '#fff', height: 50, borderBottomColor: '#D4D4D4', borderBottomWidth: 1, borderTopColor: '#D4D4D4', borderTopWidth: 1, alignItems: 'center', justifyContent: 'center'}}>
+           <TouchableOpacity onPress={() => this.setState({active: 'right'})} style={[{flex: 1, backgroundColor: '#fff', height: 50, borderBottomColor: '#D4D4D4', borderBottomWidth: 1, borderTopColor: '#D4D4D4', borderTopWidth: 1, alignItems: 'center', justifyContent: 'center'}, this.state.active === 'right' ? {borderBottomWidth: 0} : this.state.active === 'left' ? {backgroundColor: '#ccc'} : {}]}>
               <Text>7:00 pm</Text>
-           </View>
+           </TouchableOpacity>
          </View>
         </View>
 
-         <View style={{flexDirection: 'row', height: 180, backgroundColor: '#fff'}}>
-          <Picker style={{flex: 1, paddingLeft: 40, paddingRight: 40}} itemStyle={styles.item} selectedValue={'key3'} onValueChange={this.onValueChange.bind(this, 'selected3')} prompt="Pick one, just one">
-            <Item style={styles.item} label="hello" value="key0" />
-            <Item style={styles.item} label="world" value="key1" />
-            <Item style={styles.item} label="world" value="key2" />
-            <Item style={styles.item} label="world" value="key3" />
-            <Item style={styles.item} label="world" value="key4" />
-            <Item style={styles.item} label="world" value="key5" />
-            <Item style={styles.item} label="world" value="key6" />
-          </Picker>
+        {
+          this.state.active ?
+           <View style={{flexDirection: 'row', height: 180, backgroundColor: '#fff'}}>
+            <Picker style={{flex: 4}} itemStyle={[styles.item, {textAlign: 'right'}]} selectedValue={this.state.hour} onValueChange={this.onValueChange.bind(this, 'hour')} prompt="Pick one, just one">
+              {
+                _.map(this.hours, (hour, i) => {
+                  return (
+                    <Picker.Item label={hour} value={hour} key={hour} />
+                  );
+                })
+              }
+            </Picker>
 
-          <Picker style={{flex: 1, paddingLeft: 40, paddingRight: 40}} itemStyle={styles.item} selectedValue={'key3'} onValueChange={this.onValueChange.bind(this, 'selected3')} prompt="Pick one, just one">
-            <Item style={styles.item} label="hello" value="key0" />
-            <Item style={styles.item} label="world" value="key1" />
-            <Item style={styles.item} label="world" value="key2" />
-            <Item style={styles.item} label="world" value="key3" />
-            <Item style={styles.item} label="world" value="key4" />
-            <Item style={styles.item} label="world" value="key5" />
-            <Item style={styles.item} label="world" value="key6" />
-          </Picker>
+            <Picker style={{flex: 2}} itemStyle={[styles.item, {textAlign: 'center'}]} selectedValue={this.state.minute} onValueChange={this.onValueChange.bind(this, 'minute')} prompt="Pick one, just one">
+              {
+                _.map(this.minutes, (minute, i) => {
+                  return (
+                    <Picker.Item label={minute} value={minute} key={minute} />
+                  );
+                })
+              }
+            </Picker>
 
-          <Picker style={{flex: 1, paddingLeft: 40, paddingRight: 40}} itemStyle={styles.item} selectedValue={'key1'} onValueChange={this.onValueChange.bind(this, 'selected3')} prompt="Pick one, just one">
-            <Item style={styles.item} label="hello" value="key0" />
-            <Item style={styles.item} label="world" value="key1" />
-          </Picker>
-         </View>
+            <Picker style={{flex: 4}} itemStyle={[styles.item]} selectedValue={this.state.type} onValueChange={this.onValueChange.bind(this, 'type')} prompt="Pick one, just one">
+              <Picker.Item label="am" value="am" />
+              <Picker.Item label="pm" value="pm" />
+            </Picker>
+           </View> : null
+        }
+
       </View>
     )
   }
 
-  onValueChange(val, title) {
-    console.log(val, title)
+  onValueChange(title, val) {
+    if (title === 'hour') {
+      this.setState({hour: val})
+    } else if (title === 'minute') {
+      this.setState({minute: val})
+    } else {
+      this.setState({type: val})
+    }
   }
 }
 
 let styles = StyleSheet.create({
   item: {
     fontSize: 14,
-    height: 170
+    height: 170,
+    textAlign: 'left'
   },
   timeCell: {
     flex: 1,

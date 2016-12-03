@@ -6,11 +6,19 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
+    "babel-eslint": "^6.0.4",
     "baobab": "^2.3.3",
     "baobab-react": "^1.0.1",
     "bluebird": "^2.10.2",
     "creditcardutils": "^1.0.0",
+    "dotenv": "^2.0.0",
     "ellipsize": "0.0.2",
+    "eslint": "^2.11.1",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-import": "^1.8.1",
+    "eslint-plugin-jsx-a11y": "^1.2.2",
+    "eslint-plugin-react": "^5.1.1",
+    "gulp-eslint": "^2.0.0",
     "i": "^0.3.5",
     "invariant": "^2.2.2",
     "lodash": "^4.13.1",
@@ -48,14 +56,7 @@
     "string-width": "^1.0.2",
     "superagent": "^1.8.3",
     "tcomb-form-native": "^0.5.1",
-    "truncate": "^2.0.0",
-    "babel-eslint": "^6.0.4",
-    "eslint": "^2.11.1",
-    "eslint-config-airbnb": "^9.0.1",
-    "eslint-plugin-import": "^1.8.1",
-    "eslint-plugin-jsx-a11y": "^1.2.2",
-    "eslint-plugin-react": "^5.1.1",
-    "gulp-eslint": "^2.0.0"
+    "truncate": "^2.0.0"
   },
   "rnpm": {
     "assets": [
