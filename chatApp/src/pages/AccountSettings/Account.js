@@ -36,6 +36,10 @@ class Account extends Component {
           </View> 
 
           <FullTappableRow title={'Add Payment Method'} onPress={this.props.onNavigation.bind(this, { type: 'push', key: 'AddPaymentMethod' })} />
+
+          <FullTappableRow title={'Add Verification Data'} onPress={this.props.onNavigation.bind(this, { type: 'push', key: 'AddStripeVerificationData' })} />
+
+          <FullTappableRow title={'Payment Methods'} onPress={this.props.onNavigation.bind(this, { type: 'push', key: 'PaymentMethodList' })} />
           
           {this.sectionHeader('Account')}
           <FullTappableRow title={`Password`} />

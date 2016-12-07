@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Account from '../../AccountSettings/Account';
 import AddPaymentMethod from '../../AccountSettings/AddPaymentMethod';
+import AddStripeVerificationData from '../../AccountSettings/AddStripeVerificationData';
 import PaymentMethodList from '../../AccountSettings/PaymentMethodList';
 import SetPassword from '../../AccountSettings/SetPassword';
 import Profile from '../../AccountSettings/Profile';
@@ -81,6 +82,7 @@ class AccountSettingsController extends Component {
     verticle = false;
     if (key === 'Account') return <Account onLogout={this.props.onLogout.bind(this)} goBack={this.props.goBack.bind(this)} onNavigation={this._handleAction.bind(this)} />
     if (key === 'AddPaymentMethod') return <AddPaymentMethod goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
+    if (key === 'AddStripeVerificationData') return <AddStripeVerificationData goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
     if (key === 'PaymentMethodList') return <PaymentMethodList goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
     if (key === 'Profile') return <Profile goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
   }

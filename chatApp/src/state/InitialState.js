@@ -20,17 +20,16 @@ const BookingDetailsFacet = require('./facets/BookingDetailsFacet').default();
 const MyUpcomingBookingsFacet = require('./facets/MyUpcomingBookingsFacet').default();
 const MyFavoritesCalendarsFacet = require('./facets/MyFavoritesCalendarsFacet').default();
 const CalendarAvailabilityForDayFacet = require('./facets/CalendarAvailabilityForDayFacet').default();
+
+const PaymentMethodsFacet = require('./facets/PaymentMethodsFacet').default();
+
 export default function getInitialState() {
   return {
     cursors: {
       // Facets Loaders
-
-      teachAClassFlow: {
-
-      },
-
+      teachAClassFlow: {},
       sessions: {},
-
+      paymentMethods: null,
       availability: {
         dow: [],
         calendars: [],
@@ -116,7 +115,9 @@ export default function getInitialState() {
 
         MyUpcomingBookings: MyUpcomingBookingsFacet,
 
-        MyFavoritesCalendars: MyFavoritesCalendarsFacet
+        MyFavoritesCalendars: MyFavoritesCalendarsFacet,
+
+        PaymentMethods: PaymentMethodsFacet
       }
     }
   };

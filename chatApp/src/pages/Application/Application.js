@@ -149,6 +149,7 @@ const styles = StyleSheet.create({
 export default branch(ApplicationController, {
   cursors: {
     authentication: ['authentication', 'sessionData'],
+    paymentMethods: ['facets', 'PaymentMethods'],
     hud: ['hud']
   }
 });

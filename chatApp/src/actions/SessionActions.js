@@ -40,14 +40,14 @@ export async function resetActiveSession() {
   })
 }
 
-export async function addSession(session) {
-  try {
-    const addedSession = await api.addSession(JSON.stringify(session));
-    console.log(addedSession);
-  } catch(err) {
-    console.log(err)
-  }
-}
+// export async function addSession(session) {
+//   try {
+//     const addedSession = await api.addSession(JSON.stringify(session));
+//     console.log(addedSession);
+//   } catch(err) {
+//     console.log(err)
+//   }
+// }
 
 
 // export async function buildSessionRequest(newAvailability, currentAvailability, listing) {

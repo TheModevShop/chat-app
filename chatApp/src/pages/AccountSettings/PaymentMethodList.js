@@ -4,7 +4,6 @@ import {branch} from 'baobab-react/higher-order';
 import _ from 'lodash'
 import NavBar from '../../components/NavBar/NavBar'
 import * as constants from '../../styles/styleConstants'
-import FixedButton from '../../components/FixedButton/FixedButton';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 class PaymentMethodList extends Component {
@@ -39,67 +38,37 @@ class PaymentMethodList extends Component {
   render() {
     const loading = _.get(this.props, 'paymentMethods.$isLoading');
     return (
-      <View style={{flex: 1, backgroundColor: constants.SILVER}}>
+      <View style={{flex: 1}}>
         {
         loading && !_.get(this.props, 'paymentMethods.items.length') ?
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <ActivityIndicator
-            animating={true}
-            style={[{height: 30}]}
-            size="small" /> 
+          <ActivityIndicator /> 
         </View> :
         <ListView
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this.onRefresh.bind(this)}
-              tintColor={constants.DARKBLUE}
-            />
-          }
-          scrollsToTop={true}
-          keyboardShouldPersistTaps={true}
-          enableEmptySections={true}
           style={styles.addressList}
-          initialListSize={10}
           dataSource={this.state.paymentMethods}
           renderRow={this.renderRow.bind(this)} />
         }
 
-        <FixedButton style={{backgroundColor: constants.DARKGRAY}} onScreen={true} title={'Add New Payment Method'} onPress={() => {}} />
-        <NavBar title='Payment Methods' />
+        <NavBar title={'Payment Methods'} leftAction={this.props.goBack.bind(this)} />
       </View>
     )
   }
   
   async onRefresh() {
     this.setState({refreshing: true});
-    await actions.invalidateAddressCacheAndFetch();
+    // await actions.invalidateAddressCacheAndFetch();
     this.setState({refreshing: false});
   }
 
 
   renderRow(card, section, row) {
+    card = _.get(card, 'card.card', {});
     return (
       <View style={styles.cardWrapper}>
-        <TouchableOpacity onPress={card.default ? null : this.onSetDefault.bind(this, card)} style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+        <TouchableOpacity onPress={null} style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
           <View style={styles.cardInnerWrapper}>
-            <Text>Card</Text>
-          </View>
-          <View style={styles.defaultWrapper}>
-            {
-              card.default ?
-              <Icon name={'ios-checkmark-circle-outline'} size={25} color="#ccc" /> :
-              <View style={styles.row}>
-                {
-                  this.state.loading === card.id ?
-                  <ActivityIndicator
-                    animating={true}
-                    style={[{height: 30}]}
-                    size="small"
-                  /> : null
-                }
-              </View>
-            }
+            <Text>{card.brand} ending in {card.last4} </Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -114,24 +83,22 @@ class PaymentMethodList extends Component {
     })
   }
 
-  onEditAddress() {
-
-  }
-
 }
 
 const styles = StyleSheet.create({
   cardWrapper: {
     backgroundColor: constants.WHITE,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc'
+    flex: 1,
+    borderBottomColor: '#ccc',
+    height: constants.ROW_HEIGHT,
+    justifyContent: 'center'
   },
   cardInnerWrapper: {
     padding: constants.SPACE_STANDARD,
   },
   addressList: {
-    marginTop:  constants.NAVBAR_TOTAL_HEIGHT,
-    marginBottom: 52
+    marginTop:  65
   },
   defaultWrapper: {
     padding: constants.SPACE_STANDARD,
@@ -144,7 +111,8 @@ const styles = StyleSheet.create({
 })
 
 
-
-export default branch({
-  paymentMethods: ['paymentMethods']
-}, PaymentMethodList)
+export default branch(PaymentMethodList, {
+  cursors: {
+    paymentMethods: ['facets', 'PaymentMethods']
+  }
+});

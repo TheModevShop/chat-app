@@ -8,26 +8,26 @@ import {
   Alert
 } from 'react-native'
 
-const newPaymentMethod = tree.select(['newPaymentMethod', 'card']);
+const identityVerification = tree.select(['identityVerification']);
 
-export function resetNewPaymentMethod() {
-  newPaymentMethod.set({});
+export function resetIdentityVerification() {
+  identityVerification.set({});
 }
 
 
-export function setAllCardValues(addressObject) {
-  newPaymentMethod.set(addressObject);
+export function setAllVerificationValues(identityVerification) {
+  identityVerification.set(identityVerification);
   tree.commit();
 }
 
-export function setCardValue(type, value) {
+export function setVerificationValue(type, value) {
   newPaymentMethod.set(type, value);
   tree.commit();
 }
 
-export async function submitPaymentMethod(card, reset = true) {
+export async function submitVerification(card, reset = true) {
   let newCard;
-  openHud({hudTitle: 'Saving Payment Method'});
+  openHud({hudTitle: 'Saving Verificiation'});
   try {
     const tokenResponse = await addStripeCard(card)
     const stripeCard = await tokenResponse.text()
@@ -37,7 +37,7 @@ export async function submitPaymentMethod(card, reset = true) {
     if (newCardResp) {
       newCard = newCardResp;
       if (reset) {
-        resetNewPaymentMethod()
+        resetIdentityVerification()
       }
     } else {
       closeHud();

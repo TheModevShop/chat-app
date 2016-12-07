@@ -9,7 +9,7 @@ const loader = new RESTLoader({
   getResourceUrl: (queryParams = {}) => {
     const startDate = moment().subtract(3, 'months').format();
     const endDate = moment().add(3, 'months').format();
-    return `${BASE}/me/bookings?start=${startDate}&end=${endDate}&limit=200`; //may be able to get rid of instructor true, save on server
+    return `${BASE}/me/bookings?start=${startDate}&end=${endDate}&limit=200&status=upcoming&role=agent`; //may be able to get rid of instructor true, save on server
   },
   successTransformer: (data, current) => {
     return data.body
