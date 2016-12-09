@@ -63,13 +63,32 @@ class ApplicationController extends Component {
       setTimeout(() => {
         this._handleAction({ type: 'push', key: 'ApplicationTabs' });
          setTimeout(() => {
-          openLightBox({
-            type: 'completeUserProfile'
-          }); 
+          this.setState({session: true});
+          this.openLightboxes(this.props);
         }, 500)
       }, 800)
     } else {
       this._handleAction({ type: 'push', key: 'Login' })
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.state.session) {
+      this.openLightboxes(nextProps)
+    }
+  }
+
+  openLightboxes(props) {
+    if (!this.state.bookingsWithAttention && _.get(props, 'bookingsThatNeedCompletion.length')) {
+      this.setState({bookingsWithAttention: true}, () => {
+        openLightBox({
+          type: 'BookingNeedsCompletion'
+        }); 
+      })
+    } else if(false) {
+      openLightBox({
+        type: 'completeUserProfile'
+      }); 
     }
   }
 
@@ -150,6 +169,7 @@ export default branch(ApplicationController, {
   cursors: {
     authentication: ['authentication', 'sessionData'],
     paymentMethods: ['facets', 'PaymentMethods'],
+    bookingsThatNeedCompletion: ['facets', 'BookingsThatNeedCompletion'],
     hud: ['hud']
   }
 });

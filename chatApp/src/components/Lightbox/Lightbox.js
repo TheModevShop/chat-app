@@ -6,6 +6,7 @@ import {closeLightBox} from '../../actions/ModalActions';
 import ConfirmationErrorLightBox from './Lightboxes/ConfirmationErrorLightBox.js';
 import CompleteUserProfile from './Lightboxes/CompleteUserProfile.js';
 import ConfirmBookSession from './Lightboxes/ConfirmBookSession.js';
+import BookingNeedsCompletion from './Lightboxes/BookingNeedsCompletion.js';
 import * as Animatable from 'react-native-animatable';
 import Modal from 'react-native-modalbox';
 
@@ -51,7 +52,11 @@ class Lightbox extends Component {
       type === 'confirmBookSession' ?
       <Modal isOpen={this.state.isOpen} onClosed={this.onClose.bind(this)} style={[styles.modal, styles.modal5]} position={"center"} backdropContent={BContent}>
         <ConfirmBookSession close={this.onClose.bind(this)} booking={data}/>
-      </Modal>  : null
+      </Modal>  : 
+      type === 'BookingNeedsCompletion' ?
+      <Modal isOpen={this.state.isOpen} onClosed={this.onClose.bind(this)} style={[styles.modal, styles.modal5]} position={"center"} backdropContent={BContent}>
+        <BookingNeedsCompletion close={this.onClose.bind(this)} booking={data}/>
+      </Modal> : null
     ) 
   }
 
