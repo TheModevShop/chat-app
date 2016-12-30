@@ -85,6 +85,12 @@ class ApplicationController extends Component {
           type: 'BookingNeedsCompletion'
         }); 
       })
+    } else if (!this.state.bookingsNeedsReview && _.get(props, 'bookingsNeedsReview.length')) {
+      this.setState({bookingsNeedsReview: true}, () => {
+        openLightBox({
+          type: 'BookingsNeedsReview'
+        }); 
+      })
     } else if(false) {
       openLightBox({
         type: 'completeUserProfile'
@@ -170,6 +176,7 @@ export default branch(ApplicationController, {
     authentication: ['authentication', 'sessionData'],
     paymentMethods: ['facets', 'PaymentMethods'],
     bookingsThatNeedCompletion: ['facets', 'BookingsThatNeedCompletion'],
+    bookingsNeedsReview: ['facets', 'BookingsNeedsReview'],
     hud: ['hud']
   }
 });

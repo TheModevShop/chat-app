@@ -9,6 +9,7 @@ import {resetActiveListing, favoriteListing} from '../../actions/ListingActions'
 import {openModal} from '../../actions/ModalActions';
 import MapViewPreview from '../../components/MapViewPreview/MapViewPreview.js';
 import {openNewChatWithAgent} from '../../actions/ChatActions';
+import {cancelBooking, dropBooking, completeBooking} from '../../actions/BookingActions';
 
 import {
   StyleSheet,
@@ -88,7 +89,9 @@ class BookingDetails extends Component {
           </ScrollView> : null
         }
         {
-          moment().isAfter(moment(_.get(this.props, 'view.end'))) ?
+          details.booking_status === 'cancelled' ?
+          <Button cta="Cancelled" disabled={true} style={{backgroundColor: 'red'}} /> :
+          moment().isAfter(moment(details.end)) ?
           <Button cta="Cancel Booking" onPress={this.cancelBooking.bind(this)} /> :
           <Button cta="Complete Booking" onPress={this.completeBooking.bind(this)} />
         }
@@ -104,11 +107,15 @@ class BookingDetails extends Component {
   }
 
   cancelBooking() {
-    
+    cancelBooking(_.get(this.props, 'view.id'));
+  }
+
+  dropBooking() {
+    dropBooking(_.get(this.props, 'view.id'));
   }
 
   completeBooking() {
-    
+    completeBooking(_.get(this.props, 'view.id'));
   }
 
 }

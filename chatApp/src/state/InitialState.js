@@ -23,6 +23,7 @@ const CalendarAvailabilityForDayFacet = require('./facets/CalendarAvailabilityFo
 
 const PaymentMethodsFacet = require('./facets/PaymentMethodsFacet').default();
 const BookingsThatNeedCompletionFacet = require('./facets/BookingsThatNeedCompletionFacet').default();
+const BookingsNeedsReviewFacet = require('./facets/BookingsNeedsReviewFacet').default();
 
 
 export default function getInitialState() {
@@ -120,7 +121,8 @@ export default function getInitialState() {
         MyFavoritesCalendars: MyFavoritesCalendarsFacet,
 
         PaymentMethods: PaymentMethodsFacet,
-        BookingsThatNeedCompletion: BookingsThatNeedCompletionFacet
+        BookingsThatNeedCompletion: BookingsThatNeedCompletionFacet,
+        BookingsNeedsReview: BookingsNeedsReviewFacet
       }
     }
   };

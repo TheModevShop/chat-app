@@ -56,6 +56,10 @@ class Lightbox extends Component {
       type === 'BookingNeedsCompletion' ?
       <Modal isOpen={this.state.isOpen} onClosed={this.onClose.bind(this)} style={[styles.modal, styles.modal5]} position={"center"} backdropContent={BContent}>
         <BookingNeedsCompletion close={this.onClose.bind(this)} booking={data}/>
+      </Modal> :
+      type === 'BookingNeedsReview' ?
+      <Modal isOpen={this.state.isOpen} onClosed={this.onClose.bind(this)} style={[styles.modal, styles.modal5]} position={"center"} backdropContent={BContent}>
+        <BookingNeedsReview close={this.onClose.bind(this)} booking={data}/>
       </Modal> : null
     ) 
   }

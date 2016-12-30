@@ -3,22 +3,18 @@ import {branch} from 'baobab-react/higher-order';
 import moment from 'moment';
 import ResponsiveImage from 'react-native-responsive-image';
 import Icon from 'react-native-vector-icons/Ionicons';
-import ellipsize from 'ellipsize';
 import _ from 'lodash';
 import NavBar from '../../components/NavBar/NavBar';
+
+import {setActiveBooking} from '../../actions/BookingActions';
+
 import {
-  StatusBar,
   StyleSheet,
-  Animated,
-  LayoutAnimation,
   Text,
-  TextInput,
   View,
-  Dimensions,
   ListView,
   Image,
-  TouchableHighlight,
-  Easing
+  TouchableHighlight
 } from 'react-native';
 
 
@@ -88,8 +84,9 @@ class MyBookings extends Component {
     );
   }
 
-  onPress(id) {
-    
+  onPress(bookingId) {
+    setActiveBooking(bookingId);
+    this.props.onNavigation({ type: 'push', key: 'BookingDetails'})
   }
 
 }

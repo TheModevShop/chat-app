@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MyBookings from '../../MyBookings/MyBookings';
+import BookingDetails from '../../BookingDetails/BookingDetails';
 
 // Styles
 import * as styleConstants from '../../../styles/styleConstants';
@@ -63,7 +64,8 @@ class HistoryController extends Component {
   }
 
   _renderRoute (key) {
-    if (key === 'MyBookings') return <MyBookings onNavigation={this._handleAction.bind(this, { type: 'push', key: 'SessionDetails' })} />
+    if (key === 'MyBookings') return <MyBookings onNavigation={this._handleAction.bind(this)} />
+    if (key === 'BookingDetails') return <BookingDetails admin={false} goBack={this.handleBackAction.bind(this)} onNavigation={this._handleAction.bind(this)} />
   }
 
   _renderScene(props) {

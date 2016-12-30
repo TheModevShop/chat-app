@@ -16,7 +16,7 @@ class Hud extends Component {
       <AnimatedView
         {...this.props}
         animation='fadeIn'
-        duration={200}
+        duration={100}
         style={[constants.APP_FULLSCREEN]}
       >
         <View style={[constants.APP_FULLSCREEN, {justifyContent: 'center', alignItems: 'center'}]} >
